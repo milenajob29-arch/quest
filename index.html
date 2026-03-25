@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Конструктор квеста | Найди предмет</title>
+    <title>Конструктор игры "Поймай насекомое" | Genially</title>
     <style>
         * {
             margin: 0;
@@ -12,13 +12,13 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c2c 0%, #0a2a1a 100%);
             min-height: 100vh;
             padding: 20px;
         }
 
-        .main {
+        .container {
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -27,126 +27,130 @@
             text-align: center;
             color: white;
             margin-bottom: 20px;
+            font-size: 2rem;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
         }
 
-        .row {
+        .two-columns {
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
         }
 
         /* Левая панель */
-        .left {
+        .editor-panel {
             flex: 1;
             min-width: 350px;
             background: white;
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             max-height: 85vh;
             overflow-y: auto;
         }
 
         /* Правая панель */
-        .right {
+        .preview-panel {
             flex: 1;
-            min-width: 450px;
+            min-width: 500px;
             background: white;
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        .block {
+        .section {
             margin-bottom: 25px;
             padding-bottom: 20px;
             border-bottom: 1px solid #eee;
         }
 
-        .block-title {
-            font-size: 18px;
+        .section-title {
+            font-size: 1.2rem;
             font-weight: bold;
             margin-bottom: 15px;
             color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         label {
             display: block;
-            font-size: 12px;
+            font-size: 0.75rem;
             font-weight: bold;
             color: #666;
             margin-bottom: 5px;
+            text-transform: uppercase;
         }
 
         input, textarea {
             width: 100%;
-            padding: 10px;
-            border: 2px solid #ddd;
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
             border-radius: 12px;
             font-size: 14px;
+            font-family: inherit;
         }
 
         input:focus, textarea:focus {
-            border-color: orange;
             outline: none;
+            border-color: #ff9800;
         }
 
-        .color-row {
+        .insect-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .insect-option {
+            background: #f5f5f5;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .insect-option:hover {
+            background: #ff9800;
+            transform: scale(1.05);
+        }
+
+        .insect-option.selected {
+            background: #ff9800;
+            border-color: #ff9800;
+        }
+
+        .insect-item {
             display: flex;
             gap: 10px;
             align-items: center;
-        }
-
-        .color-row input {
-            flex: 1;
-        }
-
-        .color-box {
-            width: 50px;
-            height: 50px;
+            background: #fff5e8;
             border-radius: 12px;
-            border: 2px solid #ddd;
-        }
-
-        .emoji-grid {
-            display: grid;
-            grid-template-columns: repeat(8, 1fr);
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .emoji {
-            background: #f0f0f0;
-            border: 2px solid #ddd;
-            border-radius: 12px;
-            padding: 8px;
-            text-align: center;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        .emoji:hover {
-            background: orange;
-            border-color: orange;
-        }
-
-        .question-item {
-            background: #f9f9f9;
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 12px;
-            border-left: 4px solid orange;
-        }
-
-        .question-header {
-            display: flex;
-            justify-content: space-between;
+            padding: 10px;
             margin-bottom: 10px;
         }
 
-        .del-btn {
+        .insect-item input:first-child {
+            width: 60px;
+            text-align: center;
+            font-size: 28px;
+        }
+
+        .insect-item input:nth-child(2) {
+            flex: 1;
+        }
+
+        .delete-btn {
             background: #ff6b6b;
             color: white;
             border: none;
-            padding: 4px 12px;
+            padding: 5px 12px;
             border-radius: 20px;
             cursor: pointer;
         }
@@ -163,31 +167,26 @@
             font-weight: bold;
         }
 
-        .obstacle-item {
+        .question-item {
+            background: #f9f9f9;
+            border-radius: 16px;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid #ff9800;
+        }
+
+        .question-header {
             display: flex;
-            gap: 10px;
-            background: #fff5e8;
-            border-radius: 12px;
-            padding: 10px;
+            justify-content: space-between;
             margin-bottom: 10px;
-        }
-
-        .obstacle-item input:first-child {
-            width: 60px;
-            text-align: center;
-            font-size: 20px;
-        }
-
-        .obstacle-item input:last-child {
-            flex: 1;
         }
 
         .preview-frame {
             width: 100%;
-            height: 450px;
+            height: 500px;
             border: none;
             border-radius: 16px;
-            background: #f0f0f0;
+            background: #f0f8e8;
             margin-bottom: 15px;
         }
 
@@ -233,213 +232,221 @@
             flex: 1;
         }
 
-        .help {
+        .help-text {
             font-size: 11px;
             color: #888;
             text-align: center;
             margin-top: 10px;
         }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .speed-control input {
+            flex: 1;
+        }
     </style>
 </head>
 <body>
-<div class="main">
-    <h1>🔍 Конструктор квеста "Найди предмет"</h1>
+<div class="container">
+    <h1>🦗 ИГРА "ПОЙМАЙ НАСЕКОМОЕ" 🐞</h1>
     
-    <div class="row">
-        <!-- ЛЕВАЯ ПАНЕЛЬ -->
-        <div class="left">
-            <!-- Фон -->
-            <div class="block">
-                <div class="block-title">🏠 ФОН КОМНАТЫ</div>
-                <div class="color-row">
-                    <input type="text" id="bgImage" placeholder="Ссылка на картинку">
-                    <div id="colorPreview" class="color-box" style="background: #f5e6d3;"></div>
-                </div>
-                <input type="color" id="bgColor" value="#f5e6d3" style="margin-top: 10px;">
+    <div class="two-columns">
+        <!-- ЛЕВАЯ ПАНЕЛЬ - НАСТРОЙКИ -->
+        <div class="editor-panel">
+            <!-- Выбор главного насекомого -->
+            <div class="section">
+                <div class="section-title">🦋 КОГО ЛОВИМ?</div>
+                <input type="text" id="targetInsect" value="🐞">
+                <div class="insect-grid" id="insectGrid"></div>
+                <div class="help-text">Выбери насекомое, которое нужно поймать</div>
             </div>
-            
-            <!-- Название комнаты -->
-            <div class="block">
-                <div class="block-title">📝 НАЗВАНИЕ КОМНАТЫ</div>
-                <input type="text" id="roomName" value="Таинственная комната">
+
+            <!-- Летающие объекты (другие насекомые) -->
+            <div class="section">
+                <div class="section-title">🦟 ДРУГИЕ НАСЕКОМЫЕ (мешают)</div>
+                <div id="insectsList"></div>
+                <button class="add-btn" id="addInsectBtn">+ Добавить насекомое</button>
+                <div class="help-text">При клике на них — теряешь очки</div>
             </div>
-            
-            <!-- Эмодзи предмета -->
-            <div class="block">
-                <div class="block-title">🎁 ЭМОДЗИ ПРЕДМЕТА</div>
-                <input type="text" id="itemEmoji" value="🔑">
-                <div class="emoji-grid" id="emojiGrid"></div>
-            </div>
-            
+
             <!-- Вопросы -->
-            <div class="block">
-                <div class="block-title">❓ ВОПРОСЫ</div>
-                <div id="questionsBlock"></div>
-                <button class="add-btn" id="addQuestion">+ Добавить вопрос</button>
+            <div class="section">
+                <div class="section-title">❓ ВОПРОСЫ (после поимки)</div>
+                <div id="questionsList"></div>
+                <button class="add-btn" id="addQuestionBtn">+ Добавить вопрос</button>
             </div>
-            
-            <!-- Летающие объекты -->
-            <div class="block">
-                <div class="block-title">✈️ ЛЕТАЮЩИЕ ОБЪЕКТЫ</div>
-                <div id="obstaclesBlock"></div>
-                <button class="add-btn" id="addObstacle">+ Добавить объект</button>
-            </div>
-            
-            <!-- Название игры -->
-            <div class="block">
-                <div class="block-title">🎮 НАЗВАНИЕ ИГРЫ</div>
-                <input type="text" id="gameTitle" value="🔍 Найди сокровище!">
+
+            <!-- Настройки игры -->
+            <div class="section">
+                <div class="section-title">⚙️ НАСТРОЙКИ ИГРЫ</div>
+                <label>Скорость появления (мс)</label>
+                <div class="speed-control">
+                    <input type="range" id="spawnSpeed" min="500" max="3000" value="1500" step="100">
+                    <span id="speedValue">1.5 сек</span>
+                </div>
+                <label style="margin-top: 10px;">Фон игры</label>
+                <input type="color" id="bgColor" value="#87CEEB">
+                <label style="margin-top: 10px;">Название игры</label>
+                <input type="text" id="gameTitle" value="🐞 ПОЙМАЙ ЖУКА! 🐞">
             </div>
         </div>
-        
-        <!-- ПРАВАЯ ПАНЕЛЬ -->
-        <div class="right">
-            <div class="block-title">👁️ ПРЕДПРОСМОТР</div>
-            <iframe id="preview" class="preview-frame"></iframe>
+
+        <!-- ПРАВАЯ ПАНЕЛЬ - ПРЕВЬЮ -->
+        <div class="preview-panel">
+            <div class="section-title">👁️ ПРЕДПРОСМОТР ИГРЫ</div>
+            <iframe id="previewFrame" class="preview-frame"></iframe>
             
             <div class="flex-buttons">
                 <button class="btn btn-orange" id="refreshBtn">🔄 ОБНОВИТЬ</button>
                 <button class="btn btn-blue" id="copyBtn">📋 КОПИРОВАТЬ КОД</button>
             </div>
             
-            <div class="block-title" style="margin-top: 15px;">📦 КОД ДЛЯ GENIALLY</div>
-            <div id="codeArea" class="code-box">Нажми "Обновить"</div>
-            <div class="help">✅ В Genially: Вставить → HTML-код → вставь код</div>
+            <div class="section-title" style="margin-top: 15px;">📦 КОД ДЛЯ GENIALLY</div>
+            <div id="codeBox" class="code-box">Нажми "Обновить"</div>
+            <div class="help-text">✅ В Genially: Вставить → HTML-код → вставь код</div>
         </div>
     </div>
 </div>
 
 <script>
-    // Начальные данные
-    let questionsList = [
-        { text: "Назови столицу Франции?", answer: "париж", hint: "Город любви" }
+    // Данные
+    let questions = [
+        { text: "Назови столицу Франции?", answer: "париж", hint: "Город любви" },
+        { text: "Сколько будет 2+2?", answer: "4", hint: "Два плюс два" }
     ];
     
-    let obstaclesList = [
-        { emoji: "🦇", name: "Летучая мышь" },
-        { emoji: "👻", name: "Призрак" }
+    let otherInsects = [
+        { emoji: "🦟", name: "Комар" },
+        { emoji: "🕷️", name: "Паук" },
+        { emoji: "🐛", name: "Гусеница" }
     ];
     
-    const allEmojis = ["🔑", "🎁", "💎", "👑", "🗝️", "🏆", "💍", "🔮", "📿", "🌟", "⭐", "🔔", "🎈", "🧸", "🦄", "🐉"];
+    const allInsects = ["🐞", "🦋", "🐝", "🦗", "🐜", "🕷️", "🦟", "🐛", "🐌", "🦂", "🐞", "🦋"];
     
-    // Функции отображения
-    function showEmojiGrid() {
-        const container = document.getElementById('emojiGrid');
+    // Рендер сетки насекомых
+    function renderInsectGrid() {
+        const container = document.getElementById('insectGrid');
         if (!container) return;
         container.innerHTML = '';
-        const current = document.getElementById('itemEmoji').value;
+        const current = document.getElementById('targetInsect').value;
         
-        for (let emoji of allEmojis) {
-            const div = document.createElement('div');
-            div.className = 'emoji';
-            div.textContent = emoji;
-            if (emoji === current) div.style.background = '#ff9800';
-            div.onclick = function() {
-                document.getElementById('itemEmoji').value = emoji;
-                showEmojiGrid();
+        for (let insect of allInsects) {
+            const btn = document.createElement('div');
+            btn.className = 'insect-option';
+            btn.textContent = insect;
+            if (insect === current) btn.classList.add('selected');
+            btn.onclick = () => {
+                document.getElementById('targetInsect').value = insect;
+                renderInsectGrid();
                 updatePreview();
             };
-            container.appendChild(div);
+            container.appendChild(btn);
         }
     }
     
-    function showQuestions() {
-        const container = document.getElementById('questionsBlock');
+    // Рендер вопросов
+    function renderQuestions() {
+        const container = document.getElementById('questionsList');
         if (!container) return;
         container.innerHTML = '';
         
-        for (let i = 0; i < questionsList.length; i++) {
-            const q = questionsList[i];
+        for (let i = 0; i < questions.length; i++) {
+            const q = questions[i];
             const div = document.createElement('div');
             div.className = 'question-item';
             div.innerHTML = `
                 <div class="question-header">
-                    <span style="font-weight:bold;">Вопрос ${i+1}</span>
-                    <button class="del-btn" data-idx="${i}">Удалить</button>
+                    <span style="font-weight: bold;">Вопрос ${i+1}</span>
+                    <button class="delete-btn" data-idx="${i}">Удалить</button>
                 </div>
                 <label>Текст вопроса</label>
                 <textarea data-idx="${i}" class="q-text" rows="2">${escapeHtml(q.text)}</textarea>
-                <label style="margin-top:8px;">✅ Правильный ответ</label>
+                <label style="margin-top: 8px;">✅ Правильный ответ</label>
                 <input type="text" data-idx="${i}" class="q-answer" value="${escapeHtml(q.answer)}">
-                <label style="margin-top:8px;">💡 Подсказка</label>
+                <label style="margin-top: 8px;">💡 Подсказка</label>
                 <input type="text" data-idx="${i}" class="q-hint" value="${escapeHtml(q.hint)}">
             `;
             container.appendChild(div);
         }
         
-        // Привязываем события
-        document.querySelectorAll('#questionsBlock .del-btn').forEach(btn => {
-            btn.onclick = function() {
-                const idx = parseInt(this.getAttribute('data-idx'));
-                questionsList.splice(idx, 1);
-                showQuestions();
+        // События
+        document.querySelectorAll('#questionsList .delete-btn').forEach(btn => {
+            btn.onclick = () => {
+                const idx = parseInt(btn.dataset.idx);
+                questions.splice(idx, 1);
+                renderQuestions();
                 updatePreview();
             };
         });
         
-        document.querySelectorAll('#questionsBlock .q-text').forEach(ta => {
-            ta.oninput = function() {
-                const idx = parseInt(this.getAttribute('data-idx'));
-                questionsList[idx].text = this.value;
+        document.querySelectorAll('#questionsList .q-text').forEach(ta => {
+            ta.oninput = () => {
+                const idx = parseInt(ta.dataset.idx);
+                questions[idx].text = ta.value;
                 updatePreview();
             };
         });
         
-        document.querySelectorAll('#questionsBlock .q-answer').forEach(inp => {
-            inp.oninput = function() {
-                const idx = parseInt(this.getAttribute('data-idx'));
-                questionsList[idx].answer = this.value.toLowerCase().trim();
+        document.querySelectorAll('#questionsList .q-answer').forEach(inp => {
+            inp.oninput = () => {
+                const idx = parseInt(inp.dataset.idx);
+                questions[idx].answer = inp.value.toLowerCase().trim();
                 updatePreview();
             };
         });
         
-        document.querySelectorAll('#questionsBlock .q-hint').forEach(inp => {
-            inp.oninput = function() {
-                const idx = parseInt(this.getAttribute('data-idx'));
-                questionsList[idx].hint = this.value;
+        document.querySelectorAll('#questionsList .q-hint').forEach(inp => {
+            inp.oninput = () => {
+                const idx = parseInt(inp.dataset.idx);
+                questions[idx].hint = inp.value;
                 updatePreview();
             };
         });
     }
     
-    function showObstacles() {
-        const container = document.getElementById('obstaclesBlock');
+    // Рендер других насекомых
+    function renderInsects() {
+        const container = document.getElementById('insectsList');
         if (!container) return;
         container.innerHTML = '';
         
-        for (let i = 0; i < obstaclesList.length; i++) {
-            const obs = obstaclesList[i];
+        for (let i = 0; i < otherInsects.length; i++) {
+            const ins = otherInsects[i];
             const div = document.createElement('div');
-            div.className = 'obstacle-item';
+            div.className = 'insect-item';
             div.innerHTML = `
-                <input type="text" data-idx="${i}" class="obs-emoji" value="${escapeHtml(obs.emoji)}" style="width:60px;font-size:20px;">
-                <input type="text" data-idx="${i}" class="obs-name" value="${escapeHtml(obs.name)}" placeholder="Название">
-                <button class="del-btn" data-idx="${i}" style="background:#ff6b6b;">🗑️</button>
+                <input type="text" data-idx="${i}" class="insect-emoji" value="${escapeHtml(ins.emoji)}">
+                <input type="text" data-idx="${i}" class="insect-name" value="${escapeHtml(ins.name)}" placeholder="Название">
+                <button class="delete-btn" data-idx="${i}">🗑️</button>
             `;
             container.appendChild(div);
         }
         
-        document.querySelectorAll('#obstaclesBlock .del-btn').forEach(btn => {
-            btn.onclick = function() {
-                const idx = parseInt(this.getAttribute('data-idx'));
-                obstaclesList.splice(idx, 1);
-                showObstacles();
+        document.querySelectorAll('#insectsList .delete-btn').forEach(btn => {
+            btn.onclick = () => {
+                const idx = parseInt(btn.dataset.idx);
+                otherInsects.splice(idx, 1);
+                renderInsects();
                 updatePreview();
             };
         });
         
-        document.querySelectorAll('#obstaclesBlock .obs-emoji').forEach(inp => {
-            inp.oninput = function() {
-                const idx = parseInt(this.getAttribute('data-idx'));
-                obstaclesList[idx].emoji = this.value;
+        document.querySelectorAll('.insect-emoji').forEach(inp => {
+            inp.oninput = () => {
+                const idx = parseInt(inp.dataset.idx);
+                otherInsects[idx].emoji = inp.value;
                 updatePreview();
             };
         });
         
-        document.querySelectorAll('#obstaclesBlock .obs-name').forEach(inp => {
-            inp.oninput = function() {
-                const idx = parseInt(this.getAttribute('data-idx'));
-                obstaclesList[idx].name = this.value;
+        document.querySelectorAll('.insect-name').forEach(inp => {
+            inp.oninput = () => {
+                const idx = parseInt(inp.dataset.idx);
+                otherInsects[idx].name = inp.value;
                 updatePreview();
             };
         });
@@ -455,325 +462,458 @@
         });
     }
     
+    // Обновление скорости
+    function updateSpeedLabel() {
+        const speed = document.getElementById('spawnSpeed').value;
+        document.getElementById('speedValue').textContent = (speed / 1000).toFixed(1) + ' сек';
+        updatePreview();
+    }
+    
     // Генерация HTML игры
-    function buildGame() {
+    function buildGameHTML() {
         const gameTitle = document.getElementById('gameTitle').value;
-        const roomName = document.getElementById('roomName').value;
-        const itemEmoji = document.getElementById('itemEmoji').value;
+        const targetInsect = document.getElementById('targetInsect').value;
         const bgColor = document.getElementById('bgColor').value;
-        const bgImage = document.getElementById('bgImage').value;
+        const spawnSpeed = document.getElementById('spawnSpeed').value;
         
-        const bgStyle = (bgImage && bgImage.trim()) 
-            ? `url('${bgImage}') center/cover no-repeat` 
-            : bgColor;
-        
-        const questionsData = questionsList.filter(q => q.text && q.text.trim());
-        const obstaclesData = obstaclesList.filter(o => o.emoji && o.emoji.trim());
+        const questionsData = questions.filter(q => q.text && q.text.trim());
+        const insectsData = otherInsects.filter(i => i.emoji && i.emoji.trim());
         
         return `<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Найди предмет</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Поймай насекомое</title>
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; user-select:none; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+        
         body {
-            min-height:100vh;
-            background:transparent;
-            font-family:Arial,sans-serif;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            padding:20px;
+            min-height: 100vh;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Arial, sans-serif;
         }
-        .game {
-            max-width:500px;
-            width:100%;
-            background:rgba(255,255,255,0.95);
-            border-radius:40px;
-            padding:25px;
-            box-shadow:0 20px 40px rgba(0,0,0,0.2);
-            position:relative;
-            overflow:hidden;
+        
+        .game-area {
+            width: 100%;
+            max-width: 800px;
+            background: ${bgColor};
+            border-radius: 32px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            cursor: crosshair;
         }
-        h2 {
-            text-align:center;
-            margin-bottom:20px;
-            color:#333;
+        
+        .game-header {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
-        .room {
-            background:${bgStyle};
-            border-radius:30px;
-            text-align:center;
-            padding:50px 20px;
-            cursor:pointer;
-            border:3px solid #ff9800;
-            min-height:350px;
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            justify-content:center;
+        
+        .game-title {
+            font-size: 1.3rem;
+            font-weight: bold;
         }
-        .room:active { transform:scale(0.98); }
-        .room.disabled { opacity:0.7; cursor:default; }
-        .item { font-size:90px; margin-bottom:15px; }
-        .room-name {
-            background:rgba(0,0,0,0.7);
-            color:white;
-            padding:8px 20px;
-            border-radius:40px;
-            font-size:18px;
-            font-weight:bold;
-            margin-bottom:10px;
+        
+        .score-box {
+            background: #ff9800;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.2rem;
         }
-        .hint-text { font-size:13px; color:white; background:rgba(0,0,0,0.5); padding:5px 15px; border-radius:30px; }
-        .floating {
-            position:absolute;
-            font-size:35px;
-            cursor:pointer;
-            animation:fly 3s infinite;
-            z-index:10;
+        
+        .lives-box {
+            display: flex;
+            gap: 5px;
+            font-size: 1.3rem;
         }
-        @keyframes fly {
-            0%,100%{transform:translateY(0);}
-            50%{transform:translateY(-12px);}
+        
+        .game-field {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            cursor: pointer;
         }
+        
+        .insect {
+            position: absolute;
+            font-size: 50px;
+            cursor: pointer;
+            transition: transform 0.1s;
+            animation: wiggle 0.3s ease-in-out infinite;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+            z-index: 10;
+        }
+        
+        .insect:active {
+            transform: scale(0.9);
+        }
+        
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            75% { transform: rotate(-5deg); }
+        }
+        
         .modal {
-            display:none;
-            position:fixed;
-            top:0;left:0;
-            width:100%;height:100%;
-            background:rgba(0,0,0,0.85);
-            justify-content:center;
-            align-items:center;
-            z-index:1000;
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
+        
         .modal-content {
-            background:white;
-            max-width:400px;
-            width:90%;
-            border-radius:40px;
-            padding:25px;
-            text-align:center;
-            border-top:6px solid #ff9800;
+            background: white;
+            max-width: 400px;
+            width: 90%;
+            border-radius: 40px;
+            padding: 25px;
+            text-align: center;
+            border-top: 6px solid #ff9800;
         }
-        .question {
-            background:#f5f5f5;
-            padding:20px;
-            border-radius:25px;
-            margin:15px 0;
-            font-weight:bold;
+        
+        .question-text {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 25px;
+            margin: 15px 0;
+            font-weight: bold;
+            font-size: 1.1rem;
         }
-        .answer {
-            width:100%;
-            padding:12px;
-            border:2px solid #ddd;
-            border-radius:40px;
-            margin:15px 0;
-            text-align:center;
-            font-size:16px;
+        
+        .answer-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 40px;
+            margin: 15px 0;
+            text-align: center;
+            font-size: 1rem;
         }
+        
         .btn-ok {
-            background:#4caf50;
-            color:white;
-            border:none;
-            padding:10px 25px;
-            border-radius:40px;
-            cursor:pointer;
-            margin:5px;
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 40px;
+            cursor: pointer;
+            margin: 5px;
         }
+        
         .btn-close {
-            background:#ff9800;
-            color:white;
-            border:none;
-            padding:10px 25px;
-            border-radius:40px;
-            cursor:pointer;
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 40px;
+            cursor: pointer;
         }
+        
         .feedback {
-            margin-top:10px;
-            padding:8px;
-            border-radius:25px;
-            font-size:14px;
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 25px;
         }
-        .correct { background:#c8e6c9; color:#2e7d32; }
-        .wrong { background:#ffcdd2; color:#c62828; }
-        .panel {
-            display:flex;
-            justify-content:space-between;
-            background:#f5f5f5;
-            border-radius:60px;
-            padding:10px 20px;
-            margin-top:20px;
+        
+        .correct { background: #c8e6c9; color: #2e7d32; }
+        .wrong { background: #ffcdd2; color: #c62828; }
+        
+        .hint-text {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 10px;
         }
-        .reset {
-            background:#ff9800;
-            color:white;
-            border:none;
-            padding:8px 20px;
-            border-radius:40px;
-            cursor:pointer;
+        
+        .reset-btn {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
         }
+        
         .toast {
-            position:fixed;
-            bottom:30px;
-            left:50%;
-            transform:translateX(-50%);
-            background:#b71c1c;
-            color:white;
-            padding:10px 20px;
-            border-radius:40px;
-            z-index:2000;
-            animation:fade 2s forwards;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #b71c1c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 40px;
+            z-index: 2000;
+            animation: fadeOut 2s forwards;
+            white-space: nowrap;
         }
-        @keyframes fade {
-            0%{opacity:1;}
-            70%{opacity:1;}
-            100%{opacity:0;visibility:hidden;}
+        
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
         }
-        .small-hint { font-size:12px; color:#888; margin-top:10px; }
+        
+        .good-toast {
+            background: #4caf50;
+        }
+        
+        .game-over {
+            text-align: center;
+            padding: 50px;
+        }
+        
+        .game-over h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-<div class="game">
-    <h2>${escapeHtml(gameTitle)}</h2>
-    <div id="roomDiv" class="room">
-        <div class="item" id="itemDiv">${escapeHtml(itemEmoji)}</div>
-        <div class="room-name">${escapeHtml(roomName)}</div>
-        <div class="hint-text">🔍 нажми, чтобы найти</div>
+<div class="game-area">
+    <div class="game-header">
+        <div class="game-title">${escapeHtml(gameTitle)}</div>
+        <div class="score-box">🎯 Счёт: <span id="scoreValue">0</span></div>
+        <div class="lives-box" id="livesBox">❤️❤️❤️</div>
+        <button class="reset-btn" id="resetGameBtn">🔄 Новая игра</button>
     </div>
-    <div class="panel">
-        <span>🎯 Статус:</span>
-        <span id="status">🔍 Ищем...</span>
-        <button class="reset" id="resetBtn">🔄 Новая игра</button>
-    </div>
+    <div class="game-field" id="gameField"></div>
 </div>
 
-<div id="modalWin" class="modal">
+<div id="questionModal" class="modal">
     <div class="modal-content">
-        <h3>📖 ЗАДАНИЕ</h3>
-        <div class="question" id="qText">...</div>
-        <input type="text" id="answerInput" class="answer" placeholder="Введи ответ">
+        <h3>📖 ВОПРОС</h3>
+        <div class="question-text" id="modalQuestion">...</div>
+        <input type="text" id="modalAnswer" class="answer-input" placeholder="Введи ответ">
         <div>
-            <button class="btn-ok" id="submitBtn">✅ ОТВЕТИТЬ</button>
-            <button class="btn-close" id="closeBtn">❌ ЗАКРЫТЬ</button>
+            <button class="btn-ok" id="submitAnswerBtn">✅ ОТВЕТИТЬ</button>
+            <button class="btn-close" id="closeModalBtn">❌ ЗАКРЫТЬ</button>
         </div>
-        <div id="fb" class="feedback"></div>
-        <div class="small-hint" id="hintDisplay">💡 Подсказка: ...</div>
+        <div id="modalFeedback" class="feedback"></div>
+        <div class="hint-text" id="modalHint">💡 Подсказка: ...</div>
     </div>
 </div>
 
 <script>
+    const TARGET_INSECT = "${escapeHtml(targetInsect)}";
     const QUESTIONS = ${JSON.stringify(questionsData)};
-    const OBSTACLES = ${JSON.stringify(obstaclesData)};
-    const ITEM = "${escapeHtml(itemEmoji)}";
+    const OTHER_INSECTS = ${JSON.stringify(insectsData)};
+    const SPAWN_SPEED = ${spawnSpeed};
     
-    let qIndex = 0;
-    let finished = false;
+    let score = 0;
+    let lives = 3;
+    let gameActive = true;
+    let currentQuestionIndex = 0;
+    let pendingInsect = null;
+    let spawnInterval = null;
     
-    function toast(msg) {
-        let t = document.createElement('div');
-        t.className = 'toast';
-        t.textContent = msg;
-        document.body.appendChild(t);
-        setTimeout(() => t.remove(), 2000);
+    function showToast(msg, isGood = false) {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        if (isGood) toast.classList.add('good-toast');
+        toast.textContent = msg;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2000);
     }
     
-    function createFloaters() {
-        const container = document.querySelector('.game');
-        for(let i=0; i<OBSTACLES.length; i++) {
-            let o = OBSTACLES[i];
-            let el = document.createElement('div');
-            el.className = 'floating';
-            el.textContent = o.emoji;
-            el.title = o.name;
-            el.style.left = (Math.random() * 80 + 10) + '%';
-            el.style.top = (Math.random() * 60 + 20) + '%';
-            el.style.animationDuration = (Math.random() * 2 + 2) + 's';
-            el.onclick = (e) => {
-                e.stopPropagation();
-                toast("❌ Это не предмет! Ищи " + ITEM);
-            };
-            container.appendChild(el);
+    function updateUI() {
+        document.getElementById('scoreValue').textContent = score;
+        const livesBox = document.getElementById('livesBox');
+        livesBox.innerHTML = '❤️'.repeat(lives) + '🖤'.repeat(3 - lives);
+    }
+    
+    function spawnInsect() {
+        if (!gameActive) return;
+        
+        const field = document.getElementById('gameField');
+        const isTarget = Math.random() < 0.4; // 40% шанс что появится целевое насекомое
+        
+        const insect = document.createElement('div');
+        insect.className = 'insect';
+        
+        if (isTarget) {
+            insect.textContent = TARGET_INSECT;
+            insect.dataset.type = 'target';
+        } else {
+            const randomInsect = OTHER_INSECTS[Math.floor(Math.random() * OTHER_INSECTS.length)];
+            insect.textContent = randomInsect.emoji;
+            insect.dataset.type = 'bad';
+            insect.title = randomInsect.name;
         }
+        
+        // Случайная позиция
+        const maxX = field.clientWidth - 80;
+        const maxY = field.clientHeight - 80;
+        const x = Math.random() * Math.max(0, maxX);
+        const y = Math.random() * Math.max(0, maxY);
+        
+        insect.style.left = x + 'px';
+        insect.style.top = y + 'px';
+        insect.style.position = 'absolute';
+        
+        insect.onclick = (e) => {
+            e.stopPropagation();
+            if (!gameActive) return;
+            
+            if (insect.dataset.type === 'target') {
+                // Поймал нужное насекомое
+                insect.remove();
+                pendingInsect = insect.textContent;
+                openQuestionModal();
+            } else {
+                // Поймал неправильное
+                insect.remove();
+                lives--;
+                updateUI();
+                showToast("❌ Это " + (insect.title || 'не то насекомое') + "! -1 жизнь");
+                
+                if (lives <= 0) {
+                    gameOver();
+                }
+            }
+        };
+        
+        field.appendChild(insect);
+        
+        // Удалить через 3 секунды если не поймали
+        setTimeout(() => {
+            if (insect.parentNode) {
+                insect.remove();
+            }
+        }, 3000);
     }
     
-    function openQuestion() {
-        if(finished) return;
-        if(qIndex >= QUESTIONS.length) {
-            finished = true;
-            document.getElementById('roomDiv').classList.add('disabled');
-            document.getElementById('itemDiv').innerHTML = '🏆';
-            document.getElementById('status').innerHTML = '🏆 ПОБЕДА! 🏆';
-            toast("🎉 ПОБЕДА! Ты нашёл предмет!");
+    function openQuestionModal() {
+        if (!gameActive) return;
+        if (currentQuestionIndex >= QUESTIONS.length) {
+            // Все вопросы пройдены - победа
+            gameWin();
             return;
         }
-        let q = QUESTIONS[qIndex];
-        document.getElementById('qText').innerHTML = q.text;
-        document.getElementById('hintDisplay').innerHTML = '💡 Подсказка: ' + (q.hint || 'нет');
-        document.getElementById('answerInput').value = '';
-        document.getElementById('fb').innerHTML = '';
-        document.getElementById('modalWin').style.display = 'flex';
-        document.getElementById('answerInput').focus();
+        
+        const q = QUESTIONS[currentQuestionIndex];
+        document.getElementById('modalQuestion').innerHTML = q.text;
+        document.getElementById('modalHint').innerHTML = '💡 Подсказка: ' + (q.hint || 'нет');
+        document.getElementById('modalAnswer').value = '';
+        document.getElementById('modalFeedback').innerHTML = '';
+        document.getElementById('questionModal').style.display = 'flex';
+        document.getElementById('modalAnswer').focus();
     }
     
-    function check() {
-        let ans = document.getElementById('answerInput').value.trim().toLowerCase();
-        let q = QUESTIONS[qIndex];
-        let fb = document.getElementById('fb');
+    function checkAnswer() {
+        const answer = document.getElementById('modalAnswer').value.trim().toLowerCase();
+        const q = QUESTIONS[currentQuestionIndex];
+        const feedback = document.getElementById('modalFeedback');
         
-        if(ans === q.answer.toLowerCase().trim()) {
-            fb.innerHTML = '✨ ВЕРНО! ✨';
-            fb.className = 'feedback correct';
-            qIndex++;
+        if (answer === q.answer.toLowerCase().trim()) {
+            feedback.innerHTML = '✨ ВЕРНО! +10 очков ✨';
+            feedback.className = 'feedback correct';
+            score += 10;
+            updateUI();
+            currentQuestionIndex++;
+            
             setTimeout(() => {
-                document.getElementById('modalWin').style.display = 'none';
-                if(qIndex >= QUESTIONS.length) {
-                    finished = true;
-                    document.getElementById('roomDiv').classList.add('disabled');
-                    document.getElementById('itemDiv').innerHTML = '🏆';
-                    document.getElementById('status').innerHTML = '🏆 ПОБЕДА! 🏆';
-                    toast("🎉 ПОБЕДА!");
-                } else {
-                    toast("✅ Правильно! Следующий вопрос!");
+                document.getElementById('questionModal').style.display = 'none';
+                showToast("✅ +10 очков! Продолжай ловить!", true);
+                
+                if (currentQuestionIndex >= QUESTIONS.length) {
+                    gameWin();
                 }
-            }, 800);
+            }, 1000);
         } else {
-            fb.innerHTML = '❌ НЕВЕРНО! Ответ "' + ans + '" неправильный. Попробуй ещё!';
-            fb.className = 'feedback wrong';
-            document.getElementById('answerInput').value = '';
-            document.getElementById('answerInput').focus();
+            feedback.innerHTML = '❌ НЕВЕРНО! Ответ "' + answer + '" неправильный. Попробуй ещё!';
+            feedback.className = 'feedback wrong';
+            document.getElementById('modalAnswer').value = '';
+            document.getElementById('modalAnswer').focus();
         }
     }
     
     function closeModal() {
-        document.getElementById('modalWin').style.display = 'none';
+        document.getElementById('questionModal').style.display = 'none';
+    }
+    
+    function gameOver() {
+        gameActive = false;
+        if (spawnInterval) clearInterval(spawnInterval);
+        
+        const field = document.getElementById('gameField');
+        field.innerHTML = \`
+            <div class="game-over">
+                <h2>💀 ИГРА ОКОНЧЕНА 💀</h2>
+                <p style="font-size: 1.5rem;">Счёт: \${score}</p>
+                <button class="reset-btn" onclick="location.reload()">🔄 Играть снова</button>
+            </div>
+        \`;
+        showToast("💀 Игра окончена! Нажми 'Новая игра'");
+    }
+    
+    function gameWin() {
+        gameActive = false;
+        if (spawnInterval) clearInterval(spawnInterval);
+        
+        const field = document.getElementById('gameField');
+        field.innerHTML = \`
+            <div class="game-over">
+                <h2>🏆 ПОБЕДА! 🏆</h2>
+                <p style="font-size: 1.5rem;">Финальный счёт: \${score}</p>
+                <p style="font-size: 1.2rem;">Ты ответил на все вопросы!</p>
+                <button class="reset-btn" onclick="location.reload()">🔄 Играть снова</button>
+            </div>
+        \`;
+        showToast("🏆 ПОБЕДА! Ты справился со всеми вопросами!", true);
     }
     
     function resetGame() {
-        qIndex = 0;
-        finished = false;
-        document.getElementById('roomDiv').classList.remove('disabled');
-        document.getElementById('itemDiv').innerHTML = ITEM;
-        document.getElementById('status').innerHTML = '🔍 Ищем...';
-        toast("🔄 Игра перезапущена!");
+        score = 0;
+        lives = 3;
+        currentQuestionIndex = 0;
+        gameActive = true;
+        updateUI();
+        
+        const field = document.getElementById('gameField');
+        field.innerHTML = '';
+        
+        if (spawnInterval) clearInterval(spawnInterval);
+        spawnInterval = setInterval(() => spawnInsect(), SPAWN_SPEED);
     }
     
-    document.getElementById('roomDiv').onclick = openQuestion;
-    document.getElementById('submitBtn').onclick = check;
-    document.getElementById('closeBtn').onclick = closeModal;
-    document.getElementById('resetBtn').onclick = resetGame;
-    document.getElementById('answerInput').onkeypress = function(e) {
-        if(e.key === 'Enter') check();
+    // События
+    document.getElementById('submitAnswerBtn').onclick = checkAnswer;
+    document.getElementById('closeModalBtn').onclick = closeModal;
+    document.getElementById('resetGameBtn').onclick = resetGame;
+    document.getElementById('modalAnswer').onkeypress = (e) => {
+        if (e.key === 'Enter') checkAnswer();
     };
-    document.getElementById('modalWin').onclick = function(e) {
-        if(e.target === this) closeModal();
+    document.getElementById('questionModal').onclick = (e) => {
+        if (e.target === document.getElementById('questionModal')) closeModal();
     };
     
-    createFloaters();
-    if(QUESTIONS.length === 0) {
-        document.getElementById('status').innerHTML = '⚠️ Добавьте вопросы';
+    // Запуск
+    updateUI();
+    spawnInterval = setInterval(() => spawnInsect(), SPAWN_SPEED);
+    
+    if (QUESTIONS.length === 0) {
+        showToast("⚠️ Добавьте вопросы в редакторе!");
     }
 </script>
 </body>
@@ -782,57 +922,49 @@
     
     // Обновление предпросмотра
     function updatePreview() {
-        const html = buildGame();
-        const iframe = document.getElementById('preview');
+        const html = buildGameHTML();
+        const iframe = document.getElementById('previewFrame');
         iframe.srcdoc = html;
         
         const code = `<iframe srcdoc="${html.replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" width="100%" height="600" frameborder="0" style="background:transparent;display:block" allow="autoplay"></iframe>`;
-        document.getElementById('codeArea').textContent = code;
+        document.getElementById('codeBox').textContent = code;
     }
     
     // Копирование
     function copyCode() {
-        const code = document.getElementById('codeArea').textContent;
+        const code = document.getElementById('codeBox').textContent;
         navigator.clipboard.writeText(code).then(() => {
-            alert('✅ Код скопирован! Вставь в Genially');
+            alert('✅ Код скопирован! Вставь в Genially через "Вставить HTML"');
         }).catch(() => {
             alert('❌ Выдели текст вручную Ctrl+C');
         });
     }
     
-    // Обновление цвета
-    function updateColor() {
-        const color = document.getElementById('bgColor').value;
-        document.getElementById('colorPreview').style.background = color;
-        updatePreview();
-    }
-    
     // События
     document.getElementById('refreshBtn').onclick = updatePreview;
     document.getElementById('copyBtn').onclick = copyCode;
-    document.getElementById('roomName').oninput = updatePreview;
-    document.getElementById('itemEmoji').oninput = function() { showEmojiGrid(); updatePreview(); };
-    document.getElementById('bgColor').oninput = updateColor;
-    document.getElementById('bgImage').oninput = updatePreview;
+    document.getElementById('targetInsect').oninput = () => { renderInsectGrid(); updatePreview(); };
+    document.getElementById('spawnSpeed').oninput = () => { updateSpeedLabel(); updatePreview(); };
+    document.getElementById('bgColor').oninput = updatePreview;
     document.getElementById('gameTitle').oninput = updatePreview;
     
-    document.getElementById('addQuestion').onclick = function() {
-        questionsList.push({ text: "Новый вопрос", answer: "ответ", hint: "подсказка" });
-        showQuestions();
+    document.getElementById('addQuestionBtn').onclick = () => {
+        questions.push({ text: "Новый вопрос", answer: "ответ", hint: "подсказка" });
+        renderQuestions();
         updatePreview();
     };
     
-    document.getElementById('addObstacle').onclick = function() {
-        obstaclesList.push({ emoji: "🦇", name: "Новый объект" });
-        showObstacles();
+    document.getElementById('addInsectBtn').onclick = () => {
+        otherInsects.push({ emoji: "🦟", name: "Новое насекомое" });
+        renderInsects();
         updatePreview();
     };
     
-    // Запуск
-    showEmojiGrid();
-    showQuestions();
-    showObstacles();
-    updateColor();
+    // Инициализация
+    renderInsectGrid();
+    renderQuestions();
+    renderInsects();
+    updateSpeedLabel();
     updatePreview();
 </script>
 </body>
