@@ -13,32 +13,33 @@
 
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #1e3c2c 0%, #0a2a1a 100%);
+            background: linear-gradient(135deg, #1a472a 0%, #0a2a1a 100%);
             min-height: 100vh;
             padding: 20px;
         }
 
-        .main {
-            max-width: 1300px;
+        .wrapper {
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         h1 {
             text-align: center;
             color: white;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            font-size: 28px;
         }
 
-        .row {
+        .flex {
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
         }
 
         /* Левая панель */
-        .left {
+        .sidebar {
             flex: 1;
-            min-width: 350px;
+            min-width: 320px;
             background: white;
             border-radius: 20px;
             padding: 20px;
@@ -47,7 +48,7 @@
         }
 
         /* Правая панель */
-        .right {
+        .main-panel {
             flex: 1;
             min-width: 500px;
             background: white;
@@ -55,13 +56,13 @@
             padding: 20px;
         }
 
-        .block {
+        .group {
             margin-bottom: 25px;
             padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #e0e0e0;
         }
 
-        .block-title {
+        .group-title {
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 15px;
@@ -79,75 +80,83 @@
         input, textarea {
             width: 100%;
             padding: 10px;
-            border: 2px solid #ddd;
+            border: 1px solid #ddd;
             border-radius: 10px;
             font-size: 14px;
             margin-bottom: 10px;
         }
 
         input:focus, textarea:focus {
-            border-color: orange;
+            border-color: #ff9800;
             outline: none;
         }
 
-        .insect-grid {
-            display: grid;
-            grid-template-columns: repeat(8, 1fr);
+        .emoji-selector {
+            display: flex;
+            flex-wrap: wrap;
             gap: 8px;
             margin: 10px 0;
         }
 
-        .insect-option {
+        .emoji-btn {
+            width: 50px;
+            height: 50px;
             background: #f0f0f0;
             border: 2px solid #ddd;
-            border-radius: 10px;
-            padding: 8px;
-            text-align: center;
-            font-size: 24px;
+            border-radius: 12px;
+            font-size: 28px;
             cursor: pointer;
-        }
-
-        .insect-option:hover {
-            background: orange;
-        }
-
-        .insect-option.selected {
-            background: orange;
-            border-color: orange;
-        }
-
-        .insect-item {
             display: flex;
-            gap: 10px;
             align-items: center;
-            background: #fff5e8;
-            border-radius: 10px;
+            justify-content: center;
+        }
+
+        .emoji-btn:hover {
+            background: #ff9800;
+            border-color: #ff9800;
+        }
+
+        .emoji-btn.active {
+            background: #ff9800;
+            border-color: #ff9800;
+        }
+
+        .item-list {
+            margin-bottom: 10px;
+        }
+
+        .item-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: #f9f9f9;
             padding: 8px;
+            border-radius: 10px;
             margin-bottom: 8px;
         }
 
-        .insect-item input:first-child {
+        .item-row input:first-child {
             width: 60px;
             text-align: center;
             font-size: 24px;
             margin-bottom: 0;
         }
 
-        .insect-item input:last-child {
+        .item-row input:nth-child(2) {
             flex: 1;
             margin-bottom: 0;
         }
 
-        .delete-btn {
+        .delete {
             background: #ff6b6b;
             color: white;
             border: none;
-            padding: 5px 12px;
-            border-radius: 15px;
+            padding: 6px 12px;
+            border-radius: 8px;
             cursor: pointer;
         }
 
-        .add-btn {
+        .add-button {
             background: #4caf50;
             color: white;
             border: none;
@@ -159,12 +168,12 @@
             font-weight: bold;
         }
 
-        .question-item {
+        .question-block {
             background: #f9f9f9;
             border-radius: 12px;
             padding: 12px;
             margin-bottom: 12px;
-            border-left: 4px solid orange;
+            border-left: 4px solid #ff9800;
         }
 
         .question-header {
@@ -184,16 +193,16 @@
             margin-bottom: 0;
         }
 
-        .preview-frame {
+        .preview {
             width: 100%;
             height: 450px;
             border: 2px solid #ddd;
             border-radius: 16px;
-            background: #f0f8e8;
+            background: #f5f5f5;
             margin-bottom: 15px;
         }
 
-        .code-box {
+        .code {
             background: #1e1e1e;
             color: #0f0;
             padding: 12px;
@@ -207,13 +216,18 @@
             margin: 15px 0;
         }
 
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
         .btn {
+            flex: 1;
             padding: 12px;
             border: none;
             border-radius: 25px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 14px;
         }
 
         .btn-orange {
@@ -226,16 +240,7 @@
             color: white;
         }
 
-        .flex-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .flex-buttons .btn {
-            flex: 1;
-        }
-
-        .help {
+        .hint {
             font-size: 11px;
             color: #888;
             text-align: center;
@@ -244,41 +249,41 @@
     </style>
 </head>
 <body>
-<div class="main">
-    <h1>🐞 ИГРА "ПОЙМАЙ НАСЕКОМОЕ" 🦋</h1>
+<div class="wrapper">
+    <h1>🐞 ПОЙМАЙ НАСЕКОМОЕ 🦋</h1>
     
-    <div class="row">
+    <div class="flex">
         <!-- ЛЕВАЯ ПАНЕЛЬ -->
-        <div class="left">
-            <!-- Кого ловим -->
-            <div class="block">
-                <div class="block-title">🎯 КОГО ЛОВИМ?</div>
+        <div class="sidebar">
+            <!-- Целевое насекомое -->
+            <div class="group">
+                <div class="group-title">🎯 КОГО ЛОВИМ?</div>
                 <input type="text" id="targetBug" value="🐞">
-                <div class="insect-grid" id="bugGrid"></div>
+                <div class="emoji-selector" id="targetSelector"></div>
             </div>
 
             <!-- Другие насекомые -->
-            <div class="block">
-                <div class="block-title">🦟 ДРУГИЕ НАСЕКОМЫЕ (мешают)</div>
-                <div id="bugsList"></div>
-                <button class="add-btn" id="addBugBtn">+ Добавить насекомое</button>
-                <div class="help">При клике на них — теряешь жизнь</div>
+            <div class="group">
+                <div class="group-title">🦟 ДРУГИЕ НАСЕКОМЫЕ</div>
+                <div id="otherBugsList"></div>
+                <button class="add-button" id="addBugBtn">+ Добавить насекомое</button>
+                <div class="hint">⚠️ При клике на них — теряешь жизнь</div>
             </div>
 
             <!-- Вопросы -->
-            <div class="block">
-                <div class="block-title">❓ ВОПРОСЫ (после поимки)</div>
+            <div class="group">
+                <div class="group-title">❓ ВОПРОСЫ</div>
                 <div id="questionsList"></div>
-                <button class="add-btn" id="addQuestionBtn">+ Добавить вопрос</button>
+                <button class="add-button" id="addQuestionBtn">+ Добавить вопрос</button>
             </div>
 
             <!-- Настройки -->
-            <div class="block">
-                <div class="block-title">⚙️ НАСТРОЙКИ</div>
+            <div class="group">
+                <div class="group-title">⚙️ НАСТРОЙКИ</div>
                 <label>Скорость появления (сек)</label>
                 <div class="speed-row">
                     <input type="range" id="speedRange" min="0.5" max="3" step="0.1" value="1.5">
-                    <span id="speedValue">1.5 сек</span>
+                    <span id="speedLabel">1.5 сек</span>
                 </div>
                 <label style="margin-top: 10px;">Фон игры</label>
                 <input type="color" id="bgColor" value="#87CEEB">
@@ -288,88 +293,134 @@
         </div>
 
         <!-- ПРАВАЯ ПАНЕЛЬ -->
-        <div class="right">
-            <div class="block-title">👁️ ПРЕДПРОСМОТР</div>
-            <iframe id="preview" class="preview-frame"></iframe>
+        <div class="main-panel">
+            <div class="group-title">👁️ ПРЕДПРОСМОТР</div>
+            <iframe id="previewFrame" class="preview"></iframe>
             
-            <div class="flex-buttons">
+            <div class="buttons">
                 <button class="btn btn-orange" id="refreshBtn">🔄 ОБНОВИТЬ</button>
                 <button class="btn btn-blue" id="copyBtn">📋 КОПИРОВАТЬ КОД</button>
             </div>
             
-            <div class="block-title" style="margin-top: 15px;">📦 КОД ДЛЯ GENIALLY</div>
-            <div id="codeArea" class="code-box">Нажми "Обновить"</div>
-            <div class="help">✅ В Genially: Вставить → HTML-код → вставь код</div>
+            <div class="group-title" style="margin-top: 15px;">📦 КОД ДЛЯ GENIALLY</div>
+            <div id="codeDisplay" class="code">Нажми "Обновить"</div>
+            <div class="hint">✅ В Genially: Вставить → HTML-код → вставь код</div>
         </div>
     </div>
 </div>
 
 <script>
-    // Начальные данные
-    let questions = [
+    // НАЧАЛЬНЫЕ ДАННЫЕ
+    let allQuestions = [
         { text: "Назови столицу Франции?", answer: "париж", hint: "Город любви" }
     ];
     
-    let otherBugs = [
+    let otherInsects = [
         { emoji: "🦟", name: "Комар" },
         { emoji: "🕷️", name: "Паук" },
         { emoji: "🐛", name: "Гусеница" }
     ];
     
-    const allBugs = ["🐞", "🦋", "🐝", "🦗", "🐜", "🕷️", "🦟", "🐛", "🐌", "🦂"];
+    const insectEmojis = ["🐞", "🦋", "🐝", "🦗", "🐜", "🕷️", "🦟", "🐛", "🐌", "🦂", "🐞", "🦋"];
     
-    // Показать сетку насекомых
-    function showBugGrid() {
-        const container = document.getElementById('bugGrid');
+    // === ОТРИСОВКА ЭМОДЗИ ===
+    function drawTargetSelector() {
+        const container = document.getElementById('targetSelector');
         if (!container) return;
         container.innerHTML = '';
         const current = document.getElementById('targetBug').value;
         
-        for (let bug of allBugs) {
-            const div = document.createElement('div');
-            div.className = 'insect-option';
-            if (bug === current) div.classList.add('selected');
-            div.textContent = bug;
-            div.onclick = function() {
-                document.getElementById('targetBug').value = bug;
-                showBugGrid();
+        for (let emoji of insectEmojis) {
+            const btn = document.createElement('div');
+            btn.className = 'emoji-btn';
+            if (emoji === current) btn.classList.add('active');
+            btn.textContent = emoji;
+            btn.onclick = function() {
+                document.getElementById('targetBug').value = emoji;
+                drawTargetSelector();
                 updatePreview();
             };
-            container.appendChild(div);
+            container.appendChild(btn);
         }
     }
     
-    // Показать вопросы
-    function showQuestions() {
-        const container = document.getElementById('questionsList');
+    // === ОТРИСОВКА ДРУГИХ НАСЕКОМЫХ ===
+    function drawOtherBugs() {
+        const container = document.getElementById('otherBugsList');
         if (!container) return;
         container.innerHTML = '';
         
-        for (let i = 0; i < questions.length; i++) {
-            const q = questions[i];
+        for (let i = 0; i < otherInsects.length; i++) {
+            const bug = otherInsects[i];
             const div = document.createElement('div');
-            div.className = 'question-item';
+            div.className = 'item-row';
             div.innerHTML = `
-                <div class="question-header">
-                    <span style="font-weight:bold;">Вопрос ${i+1}</span>
-                    <button class="delete-btn" data-idx="${i}">Удалить</button>
-                </div>
-                <label>Текст вопроса</label>
-                <textarea data-idx="${i}" class="q-text" rows="2">${safeText(q.text)}</textarea>
-                <label>✅ Правильный ответ</label>
-                <input type="text" data-idx="${i}" class="q-answer" value="${safeText(q.answer)}">
-                <label>💡 Подсказка</label>
-                <input type="text" data-idx="${i}" class="q-hint" value="${safeText(q.hint)}">
+                <input type="text" data-idx="${i}" class="bug-emoji" value="${escapeHtml(bug.emoji)}">
+                <input type="text" data-idx="${i}" class="bug-name" value="${escapeHtml(bug.name)}" placeholder="Название">
+                <button class="delete" data-idx="${i}">🗑️</button>
             `;
             container.appendChild(div);
         }
         
         // Удаление
-        document.querySelectorAll('#questionsList .delete-btn').forEach(btn => {
+        document.querySelectorAll('#otherBugsList .delete').forEach(btn => {
             btn.onclick = function() {
                 const idx = parseInt(this.getAttribute('data-idx'));
-                questions.splice(idx, 1);
-                showQuestions();
+                otherInsects.splice(idx, 1);
+                drawOtherBugs();
+                updatePreview();
+            };
+        });
+        
+        // Редактирование
+        document.querySelectorAll('#otherBugsList .bug-emoji').forEach(inp => {
+            inp.oninput = function() {
+                const idx = parseInt(this.getAttribute('data-idx'));
+                otherInsects[idx].emoji = this.value;
+                updatePreview();
+            };
+        });
+        
+        document.querySelectorAll('#otherBugsList .bug-name').forEach(inp => {
+            inp.oninput = function() {
+                const idx = parseInt(this.getAttribute('data-idx'));
+                otherInsects[idx].name = this.value;
+                updatePreview();
+            };
+        });
+    }
+    
+    // === ОТРИСОВКА ВОПРОСОВ ===
+    function drawQuestions() {
+        const container = document.getElementById('questionsList');
+        if (!container) return;
+        container.innerHTML = '';
+        
+        for (let i = 0; i < allQuestions.length; i++) {
+            const q = allQuestions[i];
+            const div = document.createElement('div');
+            div.className = 'question-block';
+            div.innerHTML = `
+                <div class="question-header">
+                    <span style="font-weight: bold;">Вопрос ${i+1}</span>
+                    <button class="delete" data-idx="${i}">🗑️ Удалить</button>
+                </div>
+                <label>Текст вопроса</label>
+                <textarea data-idx="${i}" class="q-text" rows="2">${escapeHtml(q.text)}</textarea>
+                <label>✅ Правильный ответ</label>
+                <input type="text" data-idx="${i}" class="q-answer" value="${escapeHtml(q.answer)}">
+                <label>💡 Подсказка</label>
+                <input type="text" data-idx="${i}" class="q-hint" value="${escapeHtml(q.hint)}">
+            `;
+            container.appendChild(div);
+        }
+        
+        // Удаление
+        document.querySelectorAll('#questionsList .delete').forEach(btn => {
+            btn.onclick = function() {
+                const idx = parseInt(this.getAttribute('data-idx'));
+                allQuestions.splice(idx, 1);
+                drawQuestions();
                 updatePreview();
             };
         });
@@ -378,7 +429,7 @@
         document.querySelectorAll('#questionsList .q-text').forEach(ta => {
             ta.oninput = function() {
                 const idx = parseInt(this.getAttribute('data-idx'));
-                questions[idx].text = this.value;
+                allQuestions[idx].text = this.value;
                 updatePreview();
             };
         });
@@ -386,7 +437,7 @@
         document.querySelectorAll('#questionsList .q-answer').forEach(inp => {
             inp.oninput = function() {
                 const idx = parseInt(this.getAttribute('data-idx'));
-                questions[idx].answer = this.value.toLowerCase().trim();
+                allQuestions[idx].answer = this.value.toLowerCase().trim();
                 updatePreview();
             };
         });
@@ -394,57 +445,13 @@
         document.querySelectorAll('#questionsList .q-hint').forEach(inp => {
             inp.oninput = function() {
                 const idx = parseInt(this.getAttribute('data-idx'));
-                questions[idx].hint = this.value;
+                allQuestions[idx].hint = this.value;
                 updatePreview();
             };
         });
     }
     
-    // Показать других насекомых
-    function showOtherBugs() {
-        const container = document.getElementById('bugsList');
-        if (!container) return;
-        container.innerHTML = '';
-        
-        for (let i = 0; i < otherBugs.length; i++) {
-            const bug = otherBugs[i];
-            const div = document.createElement('div');
-            div.className = 'insect-item';
-            div.innerHTML = `
-                <input type="text" data-idx="${i}" class="bug-emoji" value="${safeText(bug.emoji)}">
-                <input type="text" data-idx="${i}" class="bug-name" value="${safeText(bug.name)}">
-                <button class="delete-btn" data-idx="${i}">🗑️</button>
-            `;
-            container.appendChild(div);
-        }
-        
-        document.querySelectorAll('#bugsList .delete-btn').forEach(btn => {
-            btn.onclick = function() {
-                const idx = parseInt(this.getAttribute('data-idx'));
-                otherBugs.splice(idx, 1);
-                showOtherBugs();
-                updatePreview();
-            };
-        });
-        
-        document.querySelectorAll('.bug-emoji').forEach(inp => {
-            inp.oninput = function() {
-                const idx = parseInt(this.getAttribute('data-idx'));
-                otherBugs[idx].emoji = this.value;
-                updatePreview();
-            };
-        });
-        
-        document.querySelectorAll('.bug-name').forEach(inp => {
-            inp.oninput = function() {
-                const idx = parseInt(this.getAttribute('data-idx'));
-                otherBugs[idx].name = this.value;
-                updatePreview();
-            };
-        });
-    }
-    
-    function safeText(str) {
+    function escapeHtml(str) {
         if (!str) return '';
         return String(str).replace(/[&<>]/g, function(m) {
             if (m === '&') return '&amp;';
@@ -455,405 +462,271 @@
     }
     
     // Обновление скорости
-    function updateSpeed() {
+    function updateSpeedLabel() {
         const val = document.getElementById('speedRange').value;
-        document.getElementById('speedValue').textContent = val + ' сек';
+        document.getElementById('speedLabel').textContent = val + ' сек';
         updatePreview();
     }
     
-    // Генерация HTML игры
-    function buildGame() {
+    // === ГЕНЕРАЦИЯ HTML ИГРЫ ===
+    function buildGameHTML() {
         const title = document.getElementById('gameTitle').value;
         const target = document.getElementById('targetBug').value;
         const bg = document.getElementById('bgColor').value;
-        const speed = parseFloat(document.getElementById('speedRange').value) * 1000;
+        const speedSec = parseFloat(document.getElementById('speedRange').value);
+        const speedMs = speedSec * 1000;
         
-        const qData = questions.filter(q => q.text && q.text.trim());
-        const bugsData = otherBugs.filter(b => b.emoji && b.emoji.trim());
+        const questionsData = allQuestions.filter(q => q.text && q.text.trim());
+        const insectsData = otherInsects.filter(i => i.emoji && i.emoji.trim());
         
         return `<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Поймай насекомое</title>
-    <style>
-        * { margin:0; padding:0; box-sizing:border-box; user-select:none; }
-        body {
-            min-height:100vh;
-            background:transparent;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            font-family:Arial;
-        }
-        .game {
-            width:100%;
-            max-width:700px;
-            background:${bg};
-            border-radius:30px;
-            overflow:hidden;
-            box-shadow:0 10px 30px rgba(0,0,0,0.2);
-        }
-        .header {
-            background:rgba(0,0,0,0.7);
-            color:white;
-            padding:15px;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            flex-wrap:wrap;
-            gap:10px;
-        }
-        .score {
-            background:#ff9800;
-            padding:5px 15px;
-            border-radius:20px;
-            font-weight:bold;
-        }
-        .lives { font-size:20px; }
-        .reset {
-            background:#ff9800;
-            border:none;
-            padding:5px 15px;
-            border-radius:20px;
-            cursor:pointer;
-            color:white;
-            font-weight:bold;
-        }
-        .field {
-            position:relative;
-            height:450px;
-            overflow:hidden;
-            cursor:crosshair;
-        }
-        .bug {
-            position:absolute;
-            font-size:55px;
-            cursor:pointer;
-            animation:wiggle 0.2s infinite;
-            filter:drop-shadow(2px 2px 5px rgba(0,0,0,0.3));
-        }
-        @keyframes wiggle {
-            0%,100%{transform:rotate(0deg);}
-            50%{transform:rotate(10deg);}
-        }
-        .modal {
-            display:none;
-            position:fixed;
-            top:0;left:0;
-            width:100%;height:100%;
-            background:rgba(0,0,0,0.85);
-            justify-content:center;
-            align-items:center;
-            z-index:1000;
-        }
-        .modal-content {
-            background:white;
-            max-width:400px;
-            width:90%;
-            border-radius:40px;
-            padding:25px;
-            text-align:center;
-            border-top:6px solid #ff9800;
-        }
-        .question {
-            background:#f5f5f5;
-            padding:20px;
-            border-radius:25px;
-            margin:15px 0;
-            font-weight:bold;
-        }
-        .answer {
-            width:100%;
-            padding:12px;
-            border:2px solid #ddd;
-            border-radius:40px;
-            margin:15px 0;
-            text-align:center;
-        }
-        .btn-ok {
-            background:#4caf50;
-            color:white;
-            border:none;
-            padding:10px 25px;
-            border-radius:40px;
-            cursor:pointer;
-            margin:5px;
-        }
-        .btn-close {
-            background:#ff9800;
-            color:white;
-            border:none;
-            padding:10px 25px;
-            border-radius:40px;
-            cursor:pointer;
-        }
-        .fb {
-            margin-top:10px;
-            padding:8px;
-            border-radius:25px;
-        }
-        .good { background:#c8e6c9; color:#2e7d32; }
-        .bad { background:#ffcdd2; color:#c62828; }
-        .hint { font-size:12px; color:#888; margin-top:10px; }
-        .toast {
-            position:fixed;
-            bottom:30px;
-            left:50%;
-            transform:translateX(-50%);
-            background:#b71c1c;
-            color:white;
-            padding:10px 20px;
-            border-radius:40px;
-            z-index:2000;
-            animation:fade 2s forwards;
-        }
-        @keyframes fade {
-            0%{opacity:1;}
-            70%{opacity:1;}
-            100%{opacity:0;visibility:hidden;}
-        }
-        .gameover {
-            text-align:center;
-            padding:80px 20px;
-        }
-        .gameover h2 { font-size:2rem; margin-bottom:20px; }
-        .gameover button { background:#ff9800; border:none; padding:10px 30px; border-radius:30px; cursor:pointer; font-size:1rem; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Поймай насекомое</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;user-select:none;}
+body{min-height:100vh;background:transparent;display:flex;justify-content:center;align-items:center;font-family:Arial;}
+.game{width:100%;max-width:700px;background:${bg};border-radius:30px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.2);}
+.header{background:rgba(0,0,0,0.7);color:white;padding:15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
+.score{background:#ff9800;padding:5px 15px;border-radius:20px;font-weight:bold;}
+.lives{font-size:20px;}
+.reset{background:#ff9800;border:none;padding:5px 15px;border-radius:20px;cursor:pointer;color:white;font-weight:bold;}
+.field{position:relative;height:450px;overflow:hidden;cursor:crosshair;}
+.bug{position:absolute;font-size:55px;cursor:pointer;animation:wobble 0.2s infinite;filter:drop-shadow(2px 2px 5px rgba(0,0,0,0.3));}
+@keyframes wobble{0%,100%{transform:rotate(0deg);}50%{transform:rotate(8deg);}}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);justify-content:center;align-items:center;z-index:1000;}
+.modal-box{background:white;max-width:400px;width:90%;border-radius:40px;padding:25px;text-align:center;border-top:6px solid #ff9800;}
+.question{background:#f5f5f5;padding:20px;border-radius:25px;margin:15px 0;font-weight:bold;}
+.answer{width:100%;padding:12px;border:2px solid #ddd;border-radius:40px;margin:15px 0;text-align:center;}
+.btn-ok{background:#4caf50;color:white;border:none;padding:10px 25px;border-radius:40px;cursor:pointer;margin:5px;}
+.btn-close{background:#ff9800;color:white;border:none;padding:10px 25px;border-radius:40px;cursor:pointer;}
+.feedback{margin-top:10px;padding:8px;border-radius:25px;}
+.good{background:#c8e6c9;color:#2e7d32;}
+.bad{background:#ffcdd2;color:#c62828;}
+.hint{font-size:12px;color:#888;margin-top:10px;}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#b71c1c;color:white;padding:10px 20px;border-radius:40px;z-index:2000;animation:fadeOut 2s forwards;}
+@keyframes fadeOut{0%{opacity:1;}70%{opacity:1;}100%{opacity:0;visibility:hidden;}}
+.end{text-align:center;padding:80px 20px;}
+.end h2{font-size:2rem;margin-bottom:20px;}
+.end button{background:#ff9800;border:none;padding:10px 30px;border-radius:30px;cursor:pointer;font-size:1rem;}
+</style>
 </head>
 <body>
 <div class="game">
-    <div class="header">
-        <div class="title">${safeText(title)}</div>
-        <div class="score">🎯 Счёт: <span id="score">0</span></div>
-        <div class="lives" id="lives">❤️❤️❤️</div>
-        <button class="reset" id="resetBtn">🔄 Новая</button>
-    </div>
-    <div class="field" id="field"></div>
+<div class="header">
+<div>${escapeHtml(title)}</div>
+<div class="score">🎯 Счёт: <span id="scoreVal">0</span></div>
+<div class="lives" id="livesVal">❤️❤️❤️</div>
+<button class="reset" id="resetGame">🔄 Новая</button>
 </div>
-
-<div id="modal" class="modal">
-    <div class="modal-content">
-        <h3>📖 ВОПРОС</h3>
-        <div class="question" id="qText">...</div>
-        <input type="text" id="answerInp" class="answer" placeholder="Введи ответ">
-        <div>
-            <button class="btn-ok" id="submitBtn">✅ ОТВЕТИТЬ</button>
-            <button class="btn-close" id="closeBtn">❌ ЗАКРЫТЬ</button>
-        </div>
-        <div id="fb" class="fb"></div>
-        <div class="hint" id="hint">💡 Подсказка: ...</div>
-    </div>
+<div class="field" id="field"></div>
 </div>
-
+<div id="modalWin" class="modal">
+<div class="modal-box">
+<h3>📖 ВОПРОС</h3>
+<div class="question" id="qText">...</div>
+<input type="text" id="answerInp" class="answer" placeholder="Введи ответ">
+<div>
+<button class="btn-ok" id="submitAns">✅ ОТВЕТИТЬ</button>
+<button class="btn-close" id="closeWin">❌ ЗАКРЫТЬ</button>
+</div>
+<div id="feedbackMsg" class="feedback"></div>
+<div class="hint" id="hintMsg">💡 Подсказка: ...</div>
+</div>
+</div>
 <script>
-    const TARGET = "${safeText(target)}";
-    const QUESTIONS = ${JSON.stringify(qData)};
-    const OTHER = ${JSON.stringify(bugsData)};
-    const SPEED = ${speed};
-    
-    let score = 0;
-    let lives = 3;
-    let gameActive = true;
-    let qIndex = 0;
-    let interval = null;
-    
-    function toast(msg, isGood) {
-        let t = document.createElement('div');
-        t.className = 'toast';
-        t.textContent = msg;
-        if(isGood) t.style.background = '#4caf50';
-        document.body.appendChild(t);
-        setTimeout(() => t.remove(), 2000);
-    }
-    
-    function updateUI() {
-        document.getElementById('score').textContent = score;
-        let hearts = '';
-        for(let i=0; i<lives; i++) hearts += '❤️';
-        for(let i=lives; i<3; i++) hearts += '🖤';
-        document.getElementById('lives').textContent = hearts;
-    }
-    
-    function spawn() {
-        if(!gameActive) return;
-        let field = document.getElementById('field');
-        let isTarget = Math.random() < 0.4;
-        
-        let bug = document.createElement('div');
-        bug.className = 'bug';
-        
-        if(isTarget) {
-            bug.textContent = TARGET;
-            bug.dataset.type = 'target';
-        } else {
-            let r = OTHER[Math.floor(Math.random() * OTHER.length)];
-            bug.textContent = r.emoji;
-            bug.dataset.type = 'bad';
-            bug.title = r.name;
-        }
-        
-        let maxX = field.clientWidth - 70;
-        let maxY = field.clientHeight - 70;
-        bug.style.left = Math.random() * Math.max(0, maxX) + 'px';
-        bug.style.top = Math.random() * Math.max(0, maxY) + 'px';
-        
-        bug.onclick = function(e) {
-            e.stopPropagation();
-            if(!gameActive) return;
-            if(this.dataset.type === 'target') {
-                this.remove();
-                openQuestion();
-            } else {
-                this.remove();
-                lives--;
-                updateUI();
-                toast("❌ " + (this.title || 'Не то') + "! -1 жизнь");
-                if(lives <= 0) gameOver();
-            }
-        };
-        
-        field.appendChild(bug);
-        
-        setTimeout(() => {
-            if(bug.parentNode) bug.remove();
-        }, 3000);
-    }
-    
-    function openQuestion() {
-        if(!gameActive) return;
-        if(qIndex >= QUESTIONS.length) {
-            win();
-            return;
-        }
-        let q = QUESTIONS[qIndex];
-        document.getElementById('qText').innerHTML = q.text;
-        document.getElementById('hint').innerHTML = '💡 Подсказка: ' + (q.hint || 'нет');
-        document.getElementById('answerInp').value = '';
-        document.getElementById('fb').innerHTML = '';
-        document.getElementById('modal').style.display = 'flex';
-        document.getElementById('answerInp').focus();
-    }
-    
-    function checkAnswer() {
-        let ans = document.getElementById('answerInp').value.trim().toLowerCase();
-        let q = QUESTIONS[qIndex];
-        let fb = document.getElementById('fb');
-        
-        if(ans === q.answer.toLowerCase().trim()) {
-            fb.innerHTML = '✨ ВЕРНО! +10 очков ✨';
-            fb.className = 'fb good';
-            score += 10;
-            updateUI();
-            qIndex++;
-            setTimeout(() => {
-                document.getElementById('modal').style.display = 'none';
-                toast("✅ +10 очков!", true);
-                if(qIndex >= QUESTIONS.length) win();
-            }, 800);
-        } else {
-            fb.innerHTML = '❌ НЕВЕРНО! Ответ "' + ans + '" неправильный. Попробуй ещё!';
-            fb.className = 'fb bad';
-            document.getElementById('answerInp').value = '';
-            document.getElementById('answerInp').focus();
-        }
-    }
-    
-    function closeModal() {
-        document.getElementById('modal').style.display = 'none';
-    }
-    
-    function gameOver() {
-        gameActive = false;
-        if(interval) clearInterval(interval);
-        let field = document.getElementById('field');
-        field.innerHTML = '<div class="gameover"><h2>💀 ИГРА ОКОНЧЕНА 💀</h2><p style="font-size:1.5rem">Счёт: ' + score + '</p><button onclick="location.reload()">🔄 Играть снова</button></div>';
-        toast("💀 Игра окончена!");
-    }
-    
-    function win() {
-        gameActive = false;
-        if(interval) clearInterval(interval);
-        let field = document.getElementById('field');
-        field.innerHTML = '<div class="gameover"><h2>🏆 ПОБЕДА! 🏆</h2><p style="font-size:1.5rem">Счёт: ' + score + '</p><button onclick="location.reload()">🔄 Играть снова</button></div>';
-        toast("🏆 ПОБЕДА!", true);
-    }
-    
-    function resetGame() {
-        score = 0;
-        lives = 3;
-        qIndex = 0;
-        gameActive = true;
-        updateUI();
-        document.getElementById('field').innerHTML = '';
-        if(interval) clearInterval(interval);
-        interval = setInterval(() => spawn(), SPEED);
-    }
-    
-    document.getElementById('submitBtn').onclick = checkAnswer;
-    document.getElementById('closeBtn').onclick = closeModal;
-    document.getElementById('resetBtn').onclick = resetGame;
-    document.getElementById('answerInp').onkeypress = function(e) {
-        if(e.key === 'Enter') checkAnswer();
-    };
-    document.getElementById('modal').onclick = function(e) {
-        if(e.target === this) closeModal();
-    };
-    
-    updateUI();
-    interval = setInterval(() => spawn(), SPEED);
-    if(QUESTIONS.length === 0) toast("⚠️ Добавьте вопросы в редакторе!");
+const TARGET = "${escapeHtml(target)}";
+const QUESTIONS = ${JSON.stringify(questionsData)};
+const OTHERS = ${JSON.stringify(insectsData)};
+const SPEED = ${speedMs};
+
+let score = 0;
+let lives = 3;
+let gameActive = true;
+let qIndex = 0;
+let gameInterval = null;
+
+function showMsg(msg, isGood) {
+let d = document.createElement('div');
+d.className = 'toast';
+if(isGood) d.style.background = '#4caf50';
+d.textContent = msg;
+document.body.appendChild(d);
+setTimeout(() => d.remove(), 2000);
+}
+
+function updateUI() {
+document.getElementById('scoreVal').textContent = score;
+let hearts = '';
+for(let i=0;i<lives;i++) hearts += '❤️';
+for(let i=lives;i<3;i++) hearts += '🖤';
+document.getElementById('livesVal').textContent = hearts;
+}
+
+function spawnBug() {
+if(!gameActive) return;
+let field = document.getElementById('field');
+let isTarget = Math.random() < 0.4;
+let bug = document.createElement('div');
+bug.className = 'bug';
+if(isTarget) {
+bug.textContent = TARGET;
+bug.dataset.type = 'target';
+} else {
+let r = OTHERS[Math.floor(Math.random() * OTHERS.length)];
+bug.textContent = r.emoji;
+bug.dataset.type = 'bad';
+bug.title = r.name;
+}
+let maxW = field.clientWidth - 70;
+let maxH = field.clientHeight - 70;
+bug.style.left = Math.random() * Math.max(0, maxW) + 'px';
+bug.style.top = Math.random() * Math.max(0, maxH) + 'px';
+bug.onclick = function(e) {
+e.stopPropagation();
+if(!gameActive) return;
+if(this.dataset.type === 'target') {
+this.remove();
+openQuestion();
+} else {
+this.remove();
+lives--;
+updateUI();
+showMsg("❌ " + (this.title || 'Не то') + "! -1 жизнь", false);
+if(lives <= 0) gameEnd(false);
+}
+};
+field.appendChild(bug);
+setTimeout(() => { if(bug.parentNode) bug.remove(); }, 3000);
+}
+
+function openQuestion() {
+if(!gameActive) return;
+if(qIndex >= QUESTIONS.length) {
+gameEnd(true);
+return;
+}
+let q = QUESTIONS[qIndex];
+document.getElementById('qText').innerHTML = q.text;
+document.getElementById('hintMsg').innerHTML = '💡 Подсказка: ' + (q.hint || 'нет');
+document.getElementById('answerInp').value = '';
+document.getElementById('feedbackMsg').innerHTML = '';
+document.getElementById('modalWin').style.display = 'flex';
+document.getElementById('answerInp').focus();
+}
+
+function checkAnswer() {
+let ans = document.getElementById('answerInp').value.trim().toLowerCase();
+let q = QUESTIONS[qIndex];
+let fb = document.getElementById('feedbackMsg');
+if(ans === q.answer.toLowerCase().trim()) {
+fb.innerHTML = '✨ ВЕРНО! +10 очков ✨';
+fb.className = 'feedback good';
+score += 10;
+updateUI();
+qIndex++;
+setTimeout(() => {
+document.getElementById('modalWin').style.display = 'none';
+showMsg("✅ +10 очков!", true);
+if(qIndex >= QUESTIONS.length) gameEnd(true);
+}, 800);
+} else {
+fb.innerHTML = '❌ НЕВЕРНО! Ответ "' + ans + '" неправильный. Попробуй ещё!';
+fb.className = 'feedback bad';
+document.getElementById('answerInp').value = '';
+document.getElementById('answerInp').focus();
+}
+}
+
+function closeModal() {
+document.getElementById('modalWin').style.display = 'none';
+}
+
+function gameEnd(isWin) {
+gameActive = false;
+if(gameInterval) clearInterval(gameInterval);
+let field = document.getElementById('field');
+if(isWin) {
+field.innerHTML = '<div class="end"><h2>🏆 ПОБЕДА! 🏆</h2><p style="font-size:1.5rem">Счёт: ' + score + '</p><button onclick="location.reload()">🔄 Играть снова</button></div>';
+showMsg("🏆 ПОБЕДА!", true);
+} else {
+field.innerHTML = '<div class="end"><h2>💀 ИГРА ОКОНЧЕНА 💀</h2><p style="font-size:1.5rem">Счёт: ' + score + '</p><button onclick="location.reload()">🔄 Играть снова</button></div>';
+showMsg("💀 Игра окончена!", false);
+}
+}
+
+function resetGame() {
+score = 0;
+lives = 3;
+qIndex = 0;
+gameActive = true;
+updateUI();
+document.getElementById('field').innerHTML = '';
+if(gameInterval) clearInterval(gameInterval);
+gameInterval = setInterval(() => spawnBug(), SPEED);
+}
+
+document.getElementById('submitAns').onclick = checkAnswer;
+document.getElementById('closeWin').onclick = closeModal;
+document.getElementById('resetGame').onclick = resetGame;
+document.getElementById('answerInp').onkeypress = function(e) { if(e.key === 'Enter') checkAnswer(); };
+document.getElementById('modalWin').onclick = function(e) { if(e.target === this) closeModal(); };
+
+updateUI();
+gameInterval = setInterval(() => spawnBug(), SPEED);
+if(QUESTIONS.length === 0) showMsg("⚠️ Добавьте вопросы в редакторе!", false);
 </script>
 </body>
 </html>`;
     }
     
-    // Обновление предпросмотра
+    // === ОБНОВЛЕНИЕ ПРЕВЬЮ ===
     function updatePreview() {
-        const html = buildGame();
-        const iframe = document.getElementById('preview');
+        const html = buildGameHTML();
+        const iframe = document.getElementById('previewFrame');
         iframe.srcdoc = html;
         
         const code = `<iframe srcdoc="${html.replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" width="100%" height="600" frameborder="0" style="background:transparent;display:block" allow="autoplay"></iframe>`;
-        document.getElementById('codeArea').textContent = code;
+        document.getElementById('codeDisplay').textContent = code;
     }
     
-    // Копирование
-    function copyCode() {
-        const code = document.getElementById('codeArea').textContent;
+    // === КОПИРОВАНИЕ ===
+    function copyToClipboard() {
+        const code = document.getElementById('codeDisplay').textContent;
         navigator.clipboard.writeText(code).then(() => {
-            alert('✅ Код скопирован!');
+            alert('✅ Код скопирован! Вставь в Genially через "Вставить HTML"');
         }).catch(() => {
             alert('❌ Выдели текст вручную Ctrl+C');
         });
     }
     
-    // События
+    // === СОБЫТИЯ ===
     document.getElementById('refreshBtn').onclick = updatePreview;
-    document.getElementById('copyBtn').onclick = copyCode;
-    document.getElementById('targetBug').oninput = function() { showBugGrid(); updatePreview(); };
-    document.getElementById('speedRange').oninput = function() { updateSpeed(); updatePreview(); };
+    document.getElementById('copyBtn').onclick = copyToClipboard;
+    document.getElementById('targetBug').oninput = function() { drawTargetSelector(); updatePreview(); };
+    document.getElementById('speedRange').oninput = function() { updateSpeedLabel(); updatePreview(); };
     document.getElementById('bgColor').oninput = updatePreview;
     document.getElementById('gameTitle').oninput = updatePreview;
     
-    document.getElementById('addQuestionBtn').onclick = function() {
-        questions.push({ text: "Новый вопрос", answer: "ответ", hint: "подсказка" });
-        showQuestions();
-        updatePreview();
-    };
-    
     document.getElementById('addBugBtn').onclick = function() {
-        otherBugs.push({ emoji: "🦟", name: "Новое насекомое" });
-        showOtherBugs();
+        otherInsects.push({ emoji: "🦟", name: "Новое насекомое" });
+        drawOtherBugs();
         updatePreview();
     };
     
-    // Запуск
-    showBugGrid();
-    showQuestions();
-    showOtherBugs();
-    updateSpeed();
+    document.getElementById('addQuestionBtn').onclick = function() {
+        allQuestions.push({ text: "Новый вопрос", answer: "ответ", hint: "подсказка" });
+        drawQuestions();
+        updatePreview();
+    };
+    
+    // === ЗАПУСК ===
+    drawTargetSelector();
+    drawOtherBugs();
+    drawQuestions();
+    updateSpeedLabel();
     updatePreview();
 </script>
 </body>
