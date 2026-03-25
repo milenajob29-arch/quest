@@ -1012,4 +1012,24 @@
     document.getElementById('generateBtn').onclick = updatePreview;
     document.getElementById('copyBtn').onclick = copyCode;
     
-    document
+    document.getElementById('addQuestionBtn').onclick = () => {
+        questions.push({ text: "Новый вопрос", answer: "ответ", hint: "подсказка" });
+        renderQuestions();
+        updatePreview();
+    };
+    
+    document.getElementById('addObstacleBtn').onclick = () => {
+        obstacles.push({ emoji: "🦇", name: "Новый объект" });
+        renderObstacles();
+        updatePreview();
+    };
+    
+    // Инициализация
+    renderEmojiGrid();
+    renderQuestions();
+    renderObstacles();
+    updateColorPreview();
+    updatePreview();
+</script>
+</body>
+</html>
