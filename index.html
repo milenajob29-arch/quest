@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Поймай насекомое</title>
+    <title>Поймай жука - конструктор</title>
     <style>
         body {
             font-family: Arial;
-            background: #1a472a;
+            background: #2d5a2c;
             padding: 20px;
         }
-        .main {
-            max-width: 1200px;
+        .container {
+            max-width: 1300px;
             margin: 0 auto;
         }
         h1 {
@@ -19,311 +19,338 @@
             color: white;
             margin-bottom: 20px;
         }
-        .row {
+        .flex {
             display: flex;
             gap: 20px;
         }
-        .left {
-            width: 40%;
+        .panel {
             background: white;
             border-radius: 20px;
             padding: 20px;
+        }
+        .left {
+            width: 35%;
         }
         .right {
-            width: 60%;
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
+            width: 65%;
         }
-        .block {
+        .section {
             margin-bottom: 25px;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #eee;
             padding-bottom: 15px;
         }
-        .block-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
+        .section h3 {
+            margin-bottom: 12px;
+            color: #333;
         }
         label {
             display: block;
             font-size: 12px;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-top: 8px;
+            margin-bottom: 4px;
         }
         input, textarea {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         button {
             background: #ff9800;
             color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 8px 16px;
             border-radius: 20px;
             cursor: pointer;
             margin-top: 5px;
         }
-        .bug-item {
+        .bug-row {
             display: flex;
             gap: 8px;
             margin-bottom: 8px;
+            align-items: center;
         }
-        .bug-item input {
-            margin-bottom: 0;
-        }
-        .bug-item input:first-child {
+        .bug-row input:first-child {
             width: 60px;
+            text-align: center;
+            font-size: 24px;
         }
-        .delete {
-            background: #ff6b6b;
+        .bug-row input:nth-child(2) {
+            flex: 1;
+        }
+        .del-btn {
+            background: #e74c3c;
             padding: 5px 10px;
+            font-size: 12px;
         }
-        .question-item {
+        .q-item {
             background: #f9f9f9;
             padding: 10px;
             border-radius: 10px;
             margin-bottom: 10px;
-            border-left: 3px solid orange;
+            border-left: 3px solid #ff9800;
         }
-        .preview {
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .preview-frame {
             width: 100%;
-            height: 400px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
+            height: 450px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            background: #f0f0f0;
             margin-bottom: 15px;
         }
-        .code {
+        .code-box {
             background: #1e1e1e;
             color: #0f0;
-            padding: 10px;
-            font-size: 11px;
+            padding: 12px;
             font-family: monospace;
+            font-size: 11px;
             white-space: pre-wrap;
             word-break: break-all;
             max-height: 150px;
             overflow: auto;
             margin: 10px 0;
+            border-radius: 8px;
         }
-        .flex {
+        .btn-row {
             display: flex;
             gap: 10px;
+            margin: 10px 0;
         }
-        .btn {
+        .btn-orange {
+            background: #ff9800;
             flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 25px;
-            font-weight: bold;
-            cursor: pointer;
         }
-        .orange { background: #ff9800; color: white; }
-        .blue { background: #2196f3; color: white; }
+        .btn-blue {
+            background: #2196f3;
+            flex: 1;
+        }
+        .hint-text {
+            font-size: 11px;
+            color: #888;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
-<div class="main">
+<div class="container">
     <h1>🐞 ПОЙМАЙ НАСЕКОМОЕ 🦋</h1>
-    <div class="row">
+    
+    <div class="flex">
         <!-- ЛЕВАЯ ПАНЕЛЬ -->
-        <div class="left">
-            <div class="block">
-                <div class="block-title">🎯 КОГО ЛОВИМ?</div>
-                <input type="text" id="targetBug" value="🐞">
+        <div class="panel left">
+            <div class="section">
+                <h3>🎯 КОГО ЛОВИМ?</h3>
+                <input type="text" id="targetBug" value="🐞" style="font-size: 24px; text-align: center;">
             </div>
-
-            <div class="block">
-                <div class="block-title">🦟 ДРУГИЕ НАСЕКОМЫЕ</div>
-                <div id="bugsContainer"></div>
+            
+            <div class="section">
+                <h3>🦟 ДРУГИЕ НАСЕКОМЫЕ</h3>
+                <div id="bugsList"></div>
                 <button onclick="addBug()">+ Добавить насекомое</button>
-                <div style="font-size: 11px; color: #888; margin-top: 5px;">⚠️ При клике на них — теряешь жизнь</div>
+                <div class="hint-text">⚠️ При клике на них — теряешь жизнь</div>
             </div>
-
-            <div class="block">
-                <div class="block-title">❓ ВОПРОСЫ</div>
-                <div id="questionsContainer"></div>
+            
+            <div class="section">
+                <h3>❓ ВОПРОСЫ</h3>
+                <div id="questionsList"></div>
                 <button onclick="addQuestion()">+ Добавить вопрос</button>
             </div>
-
-            <div class="block">
-                <div class="block-title">⚙️ НАСТРОЙКИ</div>
+            
+            <div class="section">
+                <h3>⚙️ НАСТРОЙКИ</h3>
                 <label>Скорость появления (сек)</label>
-                <input type="range" id="speed" min="0.5" max="3" step="0.1" value="1.5" oninput="document.getElementById('speedVal').innerText=this.value+' сек'">
-                <span id="speedVal">1.5 сек</span>
+                <input type="range" id="speedRange" min="0.5" max="3" step="0.1" value="1.5">
+                <span id="speedValue">1.5 сек</span>
+                
                 <label style="margin-top: 10px;">Фон игры</label>
                 <input type="color" id="bgColor" value="#87CEEB">
+                
                 <label style="margin-top: 10px;">Название игры</label>
                 <input type="text" id="gameTitle" value="🐞 ПОЙМАЙ ЖУКА! 🐞">
             </div>
         </div>
-
+        
         <!-- ПРАВАЯ ПАНЕЛЬ -->
-        <div class="right">
-            <div class="block-title">👁️ ПРЕДПРОСМОТР</div>
-            <iframe id="preview" class="preview"></iframe>
+        <div class="panel right">
+            <h3>👁️ ПРЕДПРОСМОТР</h3>
+            <iframe id="previewFrame" class="preview-frame"></iframe>
             
-            <div class="flex">
-                <button class="btn orange" onclick="updatePreview()">🔄 ОБНОВИТЬ</button>
-                <button class="btn blue" onclick="copyCode()">📋 КОПИРОВАТЬ КОД</button>
+            <div class="btn-row">
+                <button class="btn-orange" onclick="updatePreview()">🔄 ОБНОВИТЬ</button>
+                <button class="btn-blue" onclick="copyCode()">📋 КОПИРОВАТЬ КОД</button>
             </div>
             
-            <div class="block-title" style="margin-top: 15px;">📦 КОД ДЛЯ GENIALLY</div>
-            <div id="codeArea" class="code">Нажми "Обновить"</div>
-            <div style="font-size: 11px; text-align: center;">✅ В Genially: Вставить → HTML-код → вставь код</div>
+            <h3>📦 КОД ДЛЯ GENIALLY</h3>
+            <div id="codeBox" class="code-box">Нажми "Обновить"</div>
+            <div class="hint-text">✅ В Genially: Вставить → HTML-код → вставь код</div>
         </div>
     </div>
 </div>
 
 <script>
-    // ДАННЫЕ
-    let bugs = [
+    // НАЧАЛЬНЫЕ ДАННЫЕ
+    let bugsData = [
         { emoji: "🦟", name: "Комар" },
-        { emoji: "🕷️", name: "Паук" },
-        { emoji: "🐛", name: "Гусеница" }
+        { emoji: "🕷️", name: "Паук" }
     ];
     
-    let questions = [
+    let questionsData = [
         { text: "Назови столицу Франции?", answer: "париж", hint: "Город любви" }
     ];
     
-    // ОТРИСОВКА НАСЕКОМЫХ
-    function drawBugs() {
-        let container = document.getElementById('bugsContainer');
+    // ОТРИСОВКА СПИСКА НАСЕКОМЫХ
+    function renderBugs() {
+        let container = document.getElementById('bugsList');
         if (!container) return;
         container.innerHTML = '';
-        for (let i = 0; i < bugs.length; i++) {
+        for (let i = 0; i < bugsData.length; i++) {
             let div = document.createElement('div');
-            div.className = 'bug-item';
+            div.className = 'bug-row';
             div.innerHTML = `
-                <input type="text" id="bugEmoji_${i}" value="${bugs[i].emoji}" style="width:60px">
-                <input type="text" id="bugName_${i}" value="${bugs[i].name}" style="flex:1">
-                <button class="delete" onclick="deleteBug(${i})">🗑️</button>
+                <input type="text" class="bug-emoji" data-index="${i}" value="${bugsData[i].emoji}">
+                <input type="text" class="bug-name" data-index="${i}" value="${bugsData[i].name}">
+                <button class="del-btn" onclick="deleteBug(${i})">🗑️</button>
             `;
             container.appendChild(div);
         }
+        
+        // Привязываем события для редактирования
+        document.querySelectorAll('.bug-emoji').forEach(inp => {
+            inp.oninput = function() {
+                let idx = parseInt(this.dataset.index);
+                bugsData[idx].emoji = this.value;
+                updatePreview();
+            };
+        });
+        document.querySelectorAll('.bug-name').forEach(inp => {
+            inp.oninput = function() {
+                let idx = parseInt(this.dataset.index);
+                bugsData[idx].name = this.value;
+                updatePreview();
+            };
+        });
     }
     
     function deleteBug(index) {
-        bugs.splice(index, 1);
-        drawBugs();
+        bugsData.splice(index, 1);
+        renderBugs();
         updatePreview();
     }
     
     function addBug() {
-        bugs.push({ emoji: "🦟", name: "Новое насекомое" });
-        drawBugs();
+        bugsData.push({ emoji: "🦟", name: "Новое насекомое" });
+        renderBugs();
         updatePreview();
     }
     
     // ОТРИСОВКА ВОПРОСОВ
-    function drawQuestions() {
-        let container = document.getElementById('questionsContainer');
+    function renderQuestions() {
+        let container = document.getElementById('questionsList');
         if (!container) return;
         container.innerHTML = '';
-        for (let i = 0; i < questions.length; i++) {
+        for (let i = 0; i < questionsData.length; i++) {
             let div = document.createElement('div');
-            div.className = 'question-item';
+            div.className = 'q-item';
             div.innerHTML = `
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                    <b>Вопрос ${i+1}</b>
-                    <button class="delete" onclick="deleteQuestion(${i})">🗑️</button>
+                <div class="q-header">
+                    <strong>Вопрос ${i+1}</strong>
+                    <button class="del-btn" onclick="deleteQuestion(${i})">🗑️</button>
                 </div>
                 <label>Текст вопроса</label>
-                <textarea id="qText_${i}" rows="2">${questions[i].text}</textarea>
+                <textarea class="q-text" data-index="${i}" rows="2">${escapeHtml(questionsData[i].text)}</textarea>
                 <label>Правильный ответ</label>
-                <input type="text" id="qAnswer_${i}" value="${questions[i].answer}">
+                <input type="text" class="q-answer" data-index="${i}" value="${escapeHtml(questionsData[i].answer)}">
                 <label>Подсказка</label>
-                <input type="text" id="qHint_${i}" value="${questions[i].hint}">
+                <input type="text" class="q-hint" data-index="${i}" value="${escapeHtml(questionsData[i].hint)}">
             `;
             container.appendChild(div);
         }
+        
+        document.querySelectorAll('.q-text').forEach(ta => {
+            ta.oninput = function() {
+                let idx = parseInt(this.dataset.index);
+                questionsData[idx].text = this.value;
+                updatePreview();
+            };
+        });
+        document.querySelectorAll('.q-answer').forEach(inp => {
+            inp.oninput = function() {
+                let idx = parseInt(this.dataset.index);
+                questionsData[idx].answer = this.value.toLowerCase().trim();
+                updatePreview();
+            };
+        });
+        document.querySelectorAll('.q-hint').forEach(inp => {
+            inp.oninput = function() {
+                let idx = parseInt(this.dataset.index);
+                questionsData[idx].hint = this.value;
+                updatePreview();
+            };
+        });
     }
     
     function deleteQuestion(index) {
-        questions.splice(index, 1);
-        drawQuestions();
+        questionsData.splice(index, 1);
+        renderQuestions();
         updatePreview();
     }
     
     function addQuestion() {
-        questions.push({ text: "Новый вопрос", answer: "ответ", hint: "подсказка" });
-        drawQuestions();
+        questionsData.push({ text: "Новый вопрос", answer: "ответ", hint: "подсказка" });
+        renderQuestions();
         updatePreview();
     }
     
-    // СОБРАТЬ ДАННЫЕ ИЗ ФОРМ
-    function collectData() {
-        // Собираем насекомых
-        let newBugs = [];
-        for (let i = 0; i < bugs.length; i++) {
-            let emojiInput = document.getElementById(`bugEmoji_${i}`);
-            let nameInput = document.getElementById(`bugName_${i}`);
-            if (emojiInput && nameInput) {
-                newBugs.push({
-                    emoji: emojiInput.value,
-                    name: nameInput.value
-                });
-            }
-        }
-        if (newBugs.length) bugs = newBugs;
-        
-        // Собираем вопросы
-        let newQuestions = [];
-        for (let i = 0; i < questions.length; i++) {
-            let textInput = document.getElementById(`qText_${i}`);
-            let answerInput = document.getElementById(`qAnswer_${i}`);
-            let hintInput = document.getElementById(`qHint_${i}`);
-            if (textInput && answerInput) {
-                newQuestions.push({
-                    text: textInput.value,
-                    answer: answerInput.value.toLowerCase().trim(),
-                    hint: hintInput ? hintInput.value : ""
-                });
-            }
-        }
-        if (newQuestions.length) questions = newQuestions;
-        
-        return {
-            target: document.getElementById('targetBug').value,
-            bugs: bugs,
-            questions: questions,
-            speed: parseFloat(document.getElementById('speed').value),
-            bgColor: document.getElementById('bgColor').value,
-            title: document.getElementById('gameTitle').value
-        };
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            return m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;');
+        });
     }
     
-    // ГЕНЕРАЦИЯ ИГРЫ
-    function buildGame() {
-        let data = collectData();
+    // ГЕНЕРАЦИЯ HTML ИГРЫ
+    function generateGame() {
+        let target = document.getElementById('targetBug').value;
+        let speed = parseFloat(document.getElementById('speedRange').value);
+        let bg = document.getElementById('bgColor').value;
+        let title = document.getElementById('gameTitle').value;
+        
+        let bugs = bugsData.filter(b => b.emoji && b.emoji.trim());
+        let questions = questionsData.filter(q => q.text && q.text.trim());
+        
+        let speedMs = speed * 1000;
         
         return `<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Поймай насекомое</title>
+<title>Поймай жука</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:transparent;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:Arial;}
-.game{width:100%;max-width:650px;background:${data.bgColor};border-radius:30px;overflow:hidden;box-shadow:0 5px 20px rgba(0,0,0,0.2);}
-.header{background:rgba(0,0,0,0.7);color:white;padding:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
+.game{width:100%;max-width:600px;background:${bg};border-radius:30px;overflow:hidden;box-shadow:0 5px 20px rgba(0,0,0,0.2);}
+.header{background:rgba(0,0,0,0.7);color:white;padding:12px;display:flex;justify-content:space-between;align-items:center;}
 .score{background:#ff9800;padding:5px 12px;border-radius:20px;}
-.lives{font-size:18px;}
+.lives{font-size:20px;}
 .reset{background:#ff9800;border:none;padding:5px 12px;border-radius:20px;cursor:pointer;color:white;}
 .field{position:relative;height:450px;overflow:hidden;cursor:crosshair;}
-.bug{position:absolute;font-size:50px;cursor:pointer;animation:shake 0.2s infinite;}
-@keyframes shake{0%,100%{transform:rotate(0deg);}50%{transform:rotate(8deg);}}
+.bug{position:absolute;font-size:55px;cursor:pointer;animation:wobble 0.2s infinite;}
+@keyframes wobble{0%,100%{transform:rotate(0);}50%{transform:rotate(10deg);}}
 .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);justify-content:center;align-items:center;z-index:1000;}
 .modal-box{background:white;max-width:350px;width:90%;border-radius:30px;padding:20px;text-align:center;}
 .qtext{background:#f5f5f5;padding:15px;border-radius:20px;margin:15px 0;}
 .answer{width:100%;padding:10px;border:1px solid #ddd;border-radius:30px;margin:10px 0;}
 .btn{background:#4caf50;color:white;border:none;padding:8px 20px;border-radius:30px;cursor:pointer;margin:5px;}
 .close{background:#ff9800;}
-.feedback{margin-top:10px;padding:5px;border-radius:20px;}
+.feedback{margin:10px 0;padding:8px;border-radius:20px;}
 .good{background:#c8e6c9;color:green;}
 .bad{background:#ffcdd2;color:red;}
 .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#b71c1c;color:white;padding:8px 16px;border-radius:30px;z-index:2000;animation:fade 2s forwards;}
@@ -335,10 +362,10 @@ body{background:transparent;display:flex;justify-content:center;align-items:cent
 <body>
 <div class="game">
 <div class="header">
-<span>${escapeHtml(data.title)}</span>
-<span class="score">🎯 <span id="score">0</span></span>
-<span class="lives" id="lives">❤️❤️❤️</span>
-<button class="reset" id="resetBtn">Новая</button>
+<span>${escapeHtml(title)}</span>
+<span class="score">🎯 <span id="scoreVal">0</span></span>
+<span class="lives" id="livesVal">❤️❤️❤️</span>
+<button class="reset" id="resetBtn">🔄 Новая</button>
 </div>
 <div class="field" id="field"></div>
 </div>
@@ -346,20 +373,20 @@ body{background:transparent;display:flex;justify-content:center;align-items:cent
 <div class="modal-box">
 <h3>📖 ВОПРОС</h3>
 <div class="qtext" id="qText">...</div>
-<input type="text" id="answerInp" class="answer" placeholder="Введи ответ">
+<input type="text" id="answerInput" class="answer" placeholder="Введи ответ">
 <div>
 <button class="btn" id="submitBtn">✅ ОТВЕТИТЬ</button>
 <button class="btn close" id="closeBtn">❌ ЗАКРЫТЬ</button>
 </div>
-<div id="fb" class="feedback"></div>
-<div id="hint" style="font-size:12px;color:#888;margin-top:10px;">💡 Подсказка: ...</div>
+<div id="feedbackMsg" class="feedback"></div>
+<div id="hintMsg" style="font-size:12px;color:#888;">💡 Подсказка: ...</div>
 </div>
 </div>
 <script>
-const TARGET = "${escapeHtml(data.target)}";
-const QUESTIONS = ${JSON.stringify(data.questions)};
-const OTHER = ${JSON.stringify(data.bugs)};
-const SPEED = ${data.speed * 1000};
+const TARGET = "${escapeHtml(target)}";
+const QUESTIONS = ${JSON.stringify(questions)};
+const OTHERS = ${JSON.stringify(bugs)};
+const SPEED = ${speedMs};
 
 let score = 0, lives = 3, active = true, qIndex = 0, interval = null;
 
@@ -373,11 +400,11 @@ setTimeout(() => t.remove(), 2000);
 }
 
 function updateUI() {
-document.getElementById('score').innerText = score;
-let h = '';
-for(let i=0;i<lives;i++) h += '❤️';
-for(let i=lives;i<3;i++) h += '🖤';
-document.getElementById('lives').innerText = h;
+document.getElementById('scoreVal').innerText = score;
+let hearts = '';
+for(let i=0;i<lives;i++) hearts += '❤️';
+for(let i=lives;i<3;i++) hearts += '🖤';
+document.getElementById('livesVal').innerText = hearts;
 }
 
 function spawn() {
@@ -390,12 +417,12 @@ if(isTarget) {
 bug.textContent = TARGET;
 bug.dataset.type = 'target';
 } else {
-let r = OTHER[Math.floor(Math.random() * OTHER.length)];
+let r = OTHERS[Math.floor(Math.random() * OTHERS.length)];
 bug.textContent = r.emoji;
 bug.dataset.type = 'bad';
 }
-let w = field.clientWidth - 60;
-let h = field.clientHeight - 60;
+let w = field.clientWidth - 70;
+let h = field.clientHeight - 70;
 bug.style.left = Math.random() * Math.max(0, w) + 'px';
 bug.style.top = Math.random() * Math.max(0, h) + 'px';
 bug.onclick = function(e) {
@@ -403,7 +430,7 @@ e.stopPropagation();
 if(!active) return;
 if(this.dataset.type === 'target') {
 this.remove();
-openQuestion();
+openModal();
 } else {
 this.remove();
 lives--;
@@ -416,21 +443,21 @@ field.appendChild(bug);
 setTimeout(() => { if(bug.parentNode) bug.remove(); }, 3000);
 }
 
-function openQuestion() {
+function openModal() {
 if(!active) return;
 if(qIndex >= QUESTIONS.length) { win(); return; }
 let q = QUESTIONS[qIndex];
 document.getElementById('qText').innerHTML = q.text;
-document.getElementById('hint').innerHTML = '💡 ' + (q.hint || 'нет подсказки');
-document.getElementById('answerInp').value = '';
-document.getElementById('fb').innerHTML = '';
+document.getElementById('hintMsg').innerHTML = '💡 ' + (q.hint || 'нет');
+document.getElementById('answerInput').value = '';
+document.getElementById('feedbackMsg').innerHTML = '';
 document.getElementById('modal').style.display = 'flex';
 }
 
 function check() {
-let ans = document.getElementById('answerInp').value.trim().toLowerCase();
+let ans = document.getElementById('answerInput').value.trim().toLowerCase();
 let q = QUESTIONS[qIndex];
-let fb = document.getElementById('fb');
+let fb = document.getElementById('feedbackMsg');
 if(ans === q.answer.toLowerCase()) {
 fb.innerHTML = '✅ ВЕРНО! +10 очков';
 fb.className = 'feedback good';
@@ -445,7 +472,7 @@ if(qIndex >= QUESTIONS.length) win();
 } else {
 fb.innerHTML = '❌ НЕВЕРНО! Ответ "' + ans + '" неправильный';
 fb.className = 'feedback bad';
-document.getElementById('answerInp').value = '';
+document.getElementById('answerInput').value = '';
 }
 }
 
@@ -480,79 +507,52 @@ interval = setInterval(() => spawn(), SPEED);
 document.getElementById('submitBtn').onclick = check;
 document.getElementById('closeBtn').onclick = closeModal;
 document.getElementById('resetBtn').onclick = reset;
-document.getElementById('answerInp').onkeypress = (e) => { if(e.key === 'Enter') check(); };
+document.getElementById('answerInput').onkeypress = (e) => { if(e.key === 'Enter') check(); };
 document.getElementById('modal').onclick = (e) => { if(e.target === this) closeModal(); };
 
 updateUI();
 interval = setInterval(() => spawn(), SPEED);
 if(QUESTIONS.length === 0) toast("⚠️ Добавьте вопросы!");
-</script>
+<\/script>
 </body>
 </html>`;
     }
     
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
-    
     // ОБНОВЛЕНИЕ ПРЕВЬЮ
     function updatePreview() {
-        // Сначала сохраняем данные из форм
-        for (let i = 0; i < bugs.length; i++) {
-            let emojiInput = document.getElementById(`bugEmoji_${i}`);
-            let nameInput = document.getElementById(`bugName_${i}`);
-            if (emojiInput && nameInput) {
-                bugs[i].emoji = emojiInput.value;
-                bugs[i].name = nameInput.value;
-            }
-        }
-        for (let i = 0; i < questions.length; i++) {
-            let textInput = document.getElementById(`qText_${i}`);
-            let answerInput = document.getElementById(`qAnswer_${i}`);
-            let hintInput = document.getElementById(`qHint_${i}`);
-            if (textInput && answerInput) {
-                questions[i].text = textInput.value;
-                questions[i].answer = answerInput.value.toLowerCase().trim();
-                if (hintInput) questions[i].hint = hintInput.value;
-            }
-        }
-        
-        let html = buildGame();
-        let iframe = document.getElementById('preview');
+        let html = generateGame();
+        let iframe = document.getElementById('previewFrame');
         iframe.srcdoc = html;
         
         let code = `<iframe srcdoc="${html.replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" width="100%" height="600" frameborder="0" style="background:transparent;display:block" allow="autoplay"></iframe>`;
-        document.getElementById('codeArea').textContent = code;
+        document.getElementById('codeBox').innerHTML = code;
     }
     
+    // КОПИРОВАНИЕ
     function copyCode() {
-        let code = document.getElementById('codeArea').textContent;
+        let code = document.getElementById('codeBox').innerHTML;
         navigator.clipboard.writeText(code).then(() => {
-            alert('✅ Код скопирован!');
+            alert('✅ Код скопирован! Вставь в Genially через "Вставить HTML"');
         }).catch(() => {
-            alert('❌ Выделите текст вручную Ctrl+C');
+            alert('❌ Выдели текст вручную Ctrl+C');
         });
     }
     
-    // ЗАПУСК
-    drawBugs();
-    drawQuestions();
-    updatePreview();
-    
-    // Обновление при изменении
-    document.getElementById('targetBug').oninput = updatePreview;
-    document.getElementById('speed').oninput = function() {
-        document.getElementById('speedVal').innerText = this.value + ' сек';
+    // ОБНОВЛЕНИЕ СКОРОСТИ
+    document.getElementById('speedRange').oninput = function() {
+        document.getElementById('speedValue').innerText = this.value + ' сек';
         updatePreview();
     };
+    
+    // СОБЫТИЯ
+    document.getElementById('targetBug').oninput = updatePreview;
     document.getElementById('bgColor').oninput = updatePreview;
     document.getElementById('gameTitle').oninput = updatePreview;
+    
+    // ЗАПУСК
+    renderBugs();
+    renderQuestions();
+    updatePreview();
 </script>
 </body>
 </html>
