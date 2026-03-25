@@ -3,77 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Конструктор квеста | Найди предмет</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <title>Конструктор квеста "Найди предмет"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            margin: 0;
             font-family: 'Montserrat', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 30px;
         }
 
-        .container {
+        .main-container {
             max-width: 1400px;
             margin: 0 auto;
         }
 
         h1 {
+            font-family: 'Fredoka One', cursive;
             text-align: center;
             color: white;
-            font-family: 'Fredoka One', cursive;
             font-size: 2.5rem;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
         }
 
-        .editor-layout {
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        /* Две колонки */
+        .editor-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 25px;
         }
 
-        /* Панель настроек */
-        .settings-panel {
-            background: rgba(255,255,255,0.95);
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        /* Левая панель - настройки */
+        .settings-card {
+            background: white;
+            border-radius: 32px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             max-height: 85vh;
             overflow-y: auto;
         }
 
-        .settings-panel h2 {
-            color: #333;
-            font-size: 1.3rem;
-            margin: 0 0 15px 0;
-            padding-bottom: 8px;
-            border-bottom: 3px solid #ff9800;
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 20px;
         }
 
-        .setting-group {
-            margin-bottom: 25px;
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title span {
+            font-size: 1.3rem;
         }
 
         label {
             display: block;
             font-weight: 600;
-            margin-bottom: 8px;
-            color: #555;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 6px;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         input, textarea, select {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
+            padding: 12px 15px;
+            border: 2px solid #e5e5e5;
+            border-radius: 16px;
             font-size: 14px;
             font-family: inherit;
             transition: all 0.2s;
@@ -85,17 +103,62 @@
             box-shadow: 0 0 0 3px rgba(255,152,0,0.1);
         }
 
-        textarea {
-            resize: vertical;
-            min-height: 80px;
+        /* Фон комнаты */
+        .bg-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .bg-row input {
+            flex: 1;
+        }
+
+        .color-preview {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            border: 2px solid #e5e5e5;
+            cursor: pointer;
+        }
+
+        /* Выбор эмодзи */
+        .emoji-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .emoji-option {
+            background: #f5f5f5;
+            border: 2px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 8px;
+            text-align: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .emoji-option:hover {
+            background: #ff9800;
+            border-color: #ff9800;
+            transform: scale(1.05);
+        }
+
+        .emoji-option.selected {
+            background: #ff9800;
+            border-color: #ff9800;
+            box-shadow: 0 0 0 3px rgba(255,152,0,0.3);
         }
 
         /* Вопросы */
-        .question-card {
+        .question-item {
             background: #f9f9f9;
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             border-left: 4px solid #ff9800;
         }
 
@@ -109,16 +172,22 @@
         .question-number {
             font-weight: bold;
             color: #ff9800;
+            font-size: 0.85rem;
         }
 
-        .remove-btn {
+        .delete-btn {
             background: #ff6b6b;
             color: white;
             border: none;
             padding: 5px 12px;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .delete-btn:hover {
+            background: #ff5252;
         }
 
         .add-btn {
@@ -134,92 +203,85 @@
             font-size: 14px;
         }
 
-        .add-btn:hover, .remove-btn:hover {
-            opacity: 0.9;
+        .add-btn:hover {
+            background: #45a049;
         }
 
-        /* Предпросмотр */
-        .preview-panel {
-            background: rgba(0,0,0,0.3);
-            border-radius: 24px;
-            padding: 20px;
+        /* Летающие объекты */
+        .obstacle-item {
+            background: #fff5e8;
+            border-radius: 20px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .obstacle-item input:first-child {
+            width: 70px;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        .obstacle-item input:last-child {
+            flex: 1;
+        }
+
+        /* Правая панель - предпросмотр */
+        .preview-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 32px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
 
-        .game-preview {
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            padding: 20px;
+        .game-preview-area {
+            background: #f5f0e8;
+            border-radius: 24px;
             min-height: 500px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             position: relative;
             overflow: hidden;
         }
 
-        .room-preview {
-            text-align: center;
-            padding: 30px;
-            border-radius: 24px;
-            cursor: pointer;
-            transition: all 0.2s;
+        .game-preview-area iframe {
             width: 100%;
-            max-width: 400px;
-            margin: 0 auto;
+            height: 500px;
+            border: none;
+            border-radius: 20px;
         }
 
-        .room-preview:hover {
-            transform: scale(1.02);
-        }
-
-        .preview-item {
-            font-size: 80px;
-            margin-bottom: 15px;
-        }
-
-        .preview-room-name {
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .preview-hint {
-            font-size: 0.8rem;
-            color: #666;
-        }
-
-        .code-output {
+        .code-area {
             background: #1e1e1e;
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 15px;
             color: #d4d4d4;
             font-family: monospace;
             font-size: 11px;
             white-space: pre-wrap;
             word-break: break-all;
-            max-height: 300px;
+            max-height: 250px;
             overflow: auto;
         }
 
         .button-group {
             display: flex;
             gap: 12px;
-            margin-top: 15px;
         }
 
         .btn {
             flex: 1;
-            padding: 12px;
+            padding: 14px;
             border: none;
-            border-radius: 30px;
+            border-radius: 40px;
             font-weight: bold;
             cursor: pointer;
             font-size: 14px;
-            transition: 0.1s;
+            transition: transform 0.1s;
         }
 
         .btn-primary {
@@ -236,105 +298,104 @@
             transform: scale(0.98);
         }
 
-        .floating-object-preview {
-            position: absolute;
-            font-size: 30px;
-            animation: floatAnim 3s infinite;
-            pointer-events: none;
-        }
-
-        @keyframes floatAnim {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-        }
-
-        .bg-option {
-            display: flex;
-            gap: 15px;
+        .help-text {
+            font-size: 11px;
+            color: #888;
+            text-align: center;
             margin-top: 10px;
         }
 
-        .bg-option input {
-            flex: 1;
-        }
-
-        .color-preview {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            border: 2px solid #ddd;
-            cursor: pointer;
+        hr {
+            margin: 15px 0;
+            border: none;
+            border-top: 1px solid #e5e5e5;
         }
     </style>
 </head>
 <body>
-<div class="container">
+<div class="main-container">
     <h1>🔍 Конструктор квеста "Найди предмет"</h1>
-    
-    <div class="editor-layout">
+    <div class="subtitle">Настрой игру → смотри предпросмотр → копируй код для Genially</div>
+
+    <div class="editor-grid">
         <!-- ЛЕВАЯ ПАНЕЛЬ - НАСТРОЙКИ -->
-        <div class="settings-panel">
-            <h2>🏠 Комната</h2>
-            <div class="setting-group">
-                <label>Название комнаты</label>
-                <input type="text" id="roomName" value="Таинственная комната">
-            </div>
-            
-            <div class="setting-group">
-                <label>Фон комнаты</label>
-                <div class="bg-option">
+        <div class="settings-card">
+            <!-- ФОН КОМНАТЫ -->
+            <div class="section">
+                <div class="section-title">
+                    <span>🏠</span> ФОН КОМНАТЫ
+                </div>
+                <div class="bg-row">
                     <input type="text" id="roomImage" placeholder="Ссылка на картинку (https://...)" value="">
-                    <div class="color-preview" id="colorPreview" style="background: #f5e6d3;"></div>
+                    <div id="colorPreview" class="color-preview" style="background: #f5e6d3;"></div>
                 </div>
                 <input type="color" id="roomColor" value="#f5e6d3" style="margin-top: 8px;">
-                <div class="help-text" style="font-size: 11px; color: #888; margin-top: 5px;">Вставь ссылку на картинку или выбери цвет</div>
+                <div class="help-text" style="margin-top: 8px;">📷 Вставь ссылку на картинку ИЛИ выбери цвет</div>
             </div>
-            
-            <div class="setting-group">
-                <label>🎁 Эмодзи предмета</label>
-                <input type="text" id="itemEmoji" value="🔑">
+
+            <!-- НАЗВАНИЕ КОМНАТЫ И ПРЕДМЕТ -->
+            <div class="section">
+                <div class="section-title">
+                    <span>📝</span> НАЗВАНИЕ КОМНАТЫ
+                </div>
+                <input type="text" id="roomName" value="Таинственная комната">
+                
+                <div style="margin-top: 15px;">
+                    <label>🎁 ЭМОДЗИ ПРЕДМЕТА</label>
+                    <input type="text" id="itemEmoji" value="🔑">
+                    <div class="emoji-grid" id="emojiGrid"></div>
+                </div>
             </div>
-            
-            <h2>❓ Вопросы</h2>
-            <div id="questionsContainer"></div>
-            <button class="add-btn" id="addQuestionBtn">+ Добавить вопрос</button>
-            
-            <h2>✈️ Летающие объекты (мешают)</h2>
-            <div id="obstaclesContainer"></div>
-            <button class="add-btn" id="addObstacleBtn">+ Добавить объект</button>
-            
-            <div class="setting-group" style="margin-top: 20px;">
-                <label>Название игры</label>
+
+            <!-- ВОПРОСЫ -->
+            <div class="section">
+                <div class="section-title">
+                    <span>❓</span> ВОПРОСЫ
+                </div>
+                <div id="questionsList"></div>
+                <button class="add-btn" id="addQuestionBtn">+ Добавить вопрос</button>
+            </div>
+
+            <!-- ЛЕТАЮЩИЕ ОБЪЕКТЫ -->
+            <div class="section">
+                <div class="section-title">
+                    <span>✈️</span> ЛЕТАЮЩИЕ ОБЪЕКТЫ (мешаются)
+                </div>
+                <div id="obstaclesList"></div>
+                <button class="add-btn" id="addObstacleBtn">+ Добавить объект</button>
+                <div class="help-text" style="margin-top: 8px;">💡 При клике на них будет сообщение "Это не предмет!"</div>
+            </div>
+
+            <!-- НАЗВАНИЕ ИГРЫ -->
+            <div class="section">
+                <div class="section-title">
+                    <span>🎮</span> НАЗВАНИЕ ИГРЫ
+                </div>
                 <input type="text" id="gameTitle" value="🔍 Найди сокровище!">
             </div>
         </div>
-        
+
         <!-- ПРАВАЯ ПАНЕЛЬ - ПРЕВЬЮ И КОД -->
-        <div class="preview-panel">
-            <div class="game-preview" id="gamePreview">
-                <div class="room-preview" id="roomPreview" style="background: #f5e6d3;">
-                    <div class="preview-item" id="previewItem">🔑</div>
-                    <div class="preview-room-name" id="previewRoomName">Таинственная комната</div>
-                    <div class="preview-hint">🔍 нажми, чтобы найти предмет</div>
-                </div>
-                <div id="floatingPreview" style="position: relative; height: 60px; width: 100%;"></div>
+        <div class="preview-card">
+            <div class="game-preview-area" id="previewArea">
+                <iframe id="previewIframe" srcdoc="<div style='display:flex;align-items:center;justify-content:center;height:100%;color:#888;'>Загрузка...</div>"></iframe>
             </div>
             
             <div class="button-group">
-                <button class="btn btn-primary" id="generateBtn">✨ СГЕНЕРИРОВАТЬ КОД ✨</button>
+                <button class="btn btn-primary" id="generateBtn">✨ ОБНОВИТЬ ПРЕВЬЮ ✨</button>
                 <button class="btn btn-copy" id="copyBtn">📋 СКОПИРОВАТЬ КОД</button>
             </div>
             
-            <div class="code-output" id="codeOutput">
-                // Нажми "Сгенерировать код"
+            <div class="code-area" id="codeOutput">
+                // Нажми "Обновить превью"
             </div>
-            <div style="font-size: 11px; color: rgba(255,255,255,0.7); text-align: center;">✅ В Genially: Вставить → HTML-код → вставь код</div>
+            <div class="help-text">✅ В Genially: Вставить → HTML-код → вставь код → растяни на весь экран</div>
         </div>
     </div>
 </div>
 
 <script>
-    // Данные
+    // Данные по умолчанию
     let questions = [
         { text: "Назови столицу Франции?", answer: "париж", hint: "Город любви и Эйфелева башня" }
     ];
@@ -344,29 +405,54 @@
         { emoji: "👻", name: "Призрак" }
     ];
     
+    // Список эмодзи для выбора
+    const emojiList = ["🔑", "🎁", "💎", "👑", "🗝️", "🏆", "💍", "🔮", "📿", "⚜️", "🌟", "⭐", "💎", "🔔", "🎈", "🧸"];
+    
+    // Рендер сетки эмодзи
+    function renderEmojiGrid() {
+        const container = document.getElementById('emojiGrid');
+        container.innerHTML = '';
+        const currentEmoji = document.getElementById('itemEmoji').value;
+        
+        emojiList.forEach(emoji => {
+            const btn = document.createElement('div');
+            btn.className = 'emoji-option';
+            if (emoji === currentEmoji) btn.classList.add('selected');
+            btn.textContent = emoji;
+            btn.onclick = () => {
+                document.getElementById('itemEmoji').value = emoji;
+                renderEmojiGrid();
+                updatePreview();
+            };
+            container.appendChild(btn);
+        });
+    }
+    
     // Рендер вопросов
     function renderQuestions() {
-        const container = document.getElementById('questionsContainer');
+        const container = document.getElementById('questionsList');
         container.innerHTML = '';
+        
         questions.forEach((q, idx) => {
-            const card = document.createElement('div');
-            card.className = 'question-card';
-            card.innerHTML = `
+            const div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `
                 <div class="question-header">
                     <span class="question-number">Вопрос ${idx + 1}</span>
-                    <button class="remove-btn" data-idx="${idx}">🗑️ Удалить</button>
+                    <button class="delete-btn" data-idx="${idx}">🗑️ Удалить</button>
                 </div>
                 <label>Текст вопроса</label>
-                <textarea class="q-text" data-idx="${idx}">${escapeHtml(q.text)}</textarea>
-                <label>✅ Правильный ответ</label>
+                <textarea class="q-text" data-idx="${idx}" rows="2">${escapeHtml(q.text)}</textarea>
+                <label style="margin-top: 10px;">✅ Правильный ответ</label>
                 <input type="text" class="q-answer" data-idx="${idx}" value="${escapeHtml(q.answer)}">
-                <label>💡 Подсказка</label>
+                <label style="margin-top: 10px;">💡 Подсказка</label>
                 <input type="text" class="q-hint" data-idx="${idx}" value="${escapeHtml(q.hint)}">
             `;
-            container.appendChild(card);
+            container.appendChild(div);
         });
         
-        document.querySelectorAll('.remove-btn').forEach(btn => {
+        // Привязываем события
+        document.querySelectorAll('.delete-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const idx = parseInt(btn.dataset.idx);
                 questions.splice(idx, 1);
@@ -376,7 +462,7 @@
         });
         
         document.querySelectorAll('.q-text').forEach(ta => {
-            ta.addEventListener('change', (e) => {
+            ta.addEventListener('input', (e) => {
                 const idx = parseInt(ta.dataset.idx);
                 questions[idx].text = ta.value;
                 updatePreview();
@@ -384,7 +470,7 @@
         });
         
         document.querySelectorAll('.q-answer').forEach(inp => {
-            inp.addEventListener('change', (e) => {
+            inp.addEventListener('input', (e) => {
                 const idx = parseInt(inp.dataset.idx);
                 questions[idx].answer = inp.value.toLowerCase().trim();
                 updatePreview();
@@ -392,7 +478,7 @@
         });
         
         document.querySelectorAll('.q-hint').forEach(inp => {
-            inp.addEventListener('change', (e) => {
+            inp.addEventListener('input', (e) => {
                 const idx = parseInt(inp.dataset.idx);
                 questions[idx].hint = inp.value;
                 updatePreview();
@@ -402,26 +488,21 @@
     
     // Рендер летающих объектов
     function renderObstacles() {
-        const container = document.getElementById('obstaclesContainer');
+        const container = document.getElementById('obstaclesList');
         container.innerHTML = '';
+        
         obstacles.forEach((obs, idx) => {
-            const card = document.createElement('div');
-            card.className = 'question-card';
-            card.style.borderLeftColor = '#ff6b6b';
-            card.innerHTML = `
-                <div class="question-header">
-                    <span class="question-number">${obs.emoji} ${obs.name}</span>
-                    <button class="remove-btn" data-idx="${idx}">🗑️</button>
-                </div>
-                <label>Эмодзи</label>
-                <input type="text" class="obs-emoji" data-idx="${idx}" value="${escapeHtml(obs.emoji)}">
-                <label>Название</label>
-                <input type="text" class="obs-name" data-idx="${idx}" value="${escapeHtml(obs.name)}">
+            const div = document.createElement('div');
+            div.className = 'obstacle-item';
+            div.innerHTML = `
+                <input type="text" class="obs-emoji" data-idx="${idx}" value="${escapeHtml(obs.emoji)}" style="width: 60px; text-align: center; font-size: 1.5rem;">
+                <input type="text" class="obs-name" data-idx="${idx}" value="${escapeHtml(obs.name)}" placeholder="Название">
+                <button class="delete-btn" data-idx="${idx}" style="background: #ff6b6b; padding: 8px 12px;">🗑️</button>
             `;
-            container.appendChild(card);
+            container.appendChild(div);
         });
         
-        document.querySelectorAll('#obstaclesContainer .remove-btn').forEach(btn => {
+        document.querySelectorAll('#obstaclesList .delete-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const idx = parseInt(btn.dataset.idx);
                 obstacles.splice(idx, 1);
@@ -431,7 +512,7 @@
         });
         
         document.querySelectorAll('.obs-emoji').forEach(inp => {
-            inp.addEventListener('change', (e) => {
+            inp.addEventListener('input', (e) => {
                 const idx = parseInt(inp.dataset.idx);
                 obstacles[idx].emoji = inp.value;
                 updatePreview();
@@ -439,7 +520,7 @@
         });
         
         document.querySelectorAll('.obs-name').forEach(inp => {
-            inp.addEventListener('change', (e) => {
+            inp.addEventListener('input', (e) => {
                 const idx = parseInt(inp.dataset.idx);
                 obstacles[idx].name = inp.value;
                 updatePreview();
@@ -449,7 +530,7 @@
     
     function escapeHtml(str) {
         if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
+        return String(str).replace(/[&<>]/g, function(m) {
             if (m === '&') return '&amp;';
             if (m === '<') return '&lt;';
             if (m === '>') return '&gt;';
@@ -457,45 +538,7 @@
         });
     }
     
-    // Обновление превью
-    function updatePreview() {
-        const roomName = document.getElementById('roomName').value;
-        const itemEmoji = document.getElementById('itemEmoji').value;
-        const roomColor = document.getElementById('roomColor').value;
-        const roomImage = document.getElementById('roomImage').value;
-        
-        const previewRoom = document.getElementById('roomPreview');
-        if (roomImage && roomImage.trim() !== '') {
-            previewRoom.style.background = `url(${roomImage}) center/cover no-repeat`;
-            previewRoom.style.backgroundSize = 'cover';
-        } else {
-            previewRoom.style.background = roomColor;
-            previewRoom.style.backgroundSize = 'auto';
-        }
-        
-        document.getElementById('previewItem').textContent = itemEmoji;
-        document.getElementById('previewRoomName').textContent = roomName;
-        
-        // Превью летающих объектов
-        const floatingPreview = document.getElementById('floatingPreview');
-        floatingPreview.innerHTML = '';
-        obstacles.forEach((obs, idx) => {
-            const div = document.createElement('div');
-            div.className = 'floating-object-preview';
-            div.style.position = 'absolute';
-            div.style.left = `${(idx * 70) % 80 + 10}%`;
-            div.style.top = `${(idx * 40) % 50 + 20}%`;
-            div.style.animationDelay = `${idx * 0.5}s`;
-            div.innerHTML = obs.emoji;
-            div.title = obs.name;
-            floatingPreview.appendChild(div);
-        });
-        
-        // Обновление цвета превью
-        document.getElementById('colorPreview').style.background = roomColor;
-    }
-    
-    // Генерация финального HTML кода
+    // Генерация HTML игры
     function generateGameHTML() {
         const gameTitle = document.getElementById('gameTitle').value;
         const roomName = document.getElementById('roomName').value;
@@ -503,7 +546,7 @@
         const roomColor = document.getElementById('roomColor').value;
         const roomImage = document.getElementById('roomImage').value;
         
-        const finalQuestions = questions.filter(q => q.text.trim() !== '');
+        const finalQuestions = questions.filter(q => q.text && q.text.trim() !== '');
         const finalObstacles = obstacles.filter(o => o.emoji && o.emoji.trim() !== '');
         
         const roomBg = (roomImage && roomImage.trim() !== '') 
@@ -518,15 +561,16 @@
     <title>Квест | Найди предмет</title>
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
             user-select: none;
         }
         
         body {
-            margin: 0;
             min-height: 100vh;
             background: transparent;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -534,40 +578,44 @@
         }
         
         .game-container {
-            max-width: 500px;
+            max-width: 550px;
             width: 100%;
-            background: rgba(255,255,255,0.95);
+            background: rgba(255,255,255,0.96);
             border-radius: 48px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
             position: relative;
             overflow: hidden;
         }
         
         h1 {
             text-align: center;
-            margin: 0 0 10px;
+            margin: 0 0 20px;
             color: #333;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
+            font-weight: bold;
         }
         
         .room-card {
             background: ${roomBg};
             border-radius: 32px;
             text-align: center;
-            padding: 40px 20px;
+            padding: 50px 20px;
             cursor: pointer;
             transition: all 0.2s;
             border: 3px solid #ff9800;
-            min-height: 350px;
+            min-height: 380px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            position: relative;
+            z-index: 5;
         }
         
         .room-card:hover {
             transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
         
         .room-card:active {
@@ -575,7 +623,7 @@
         }
         
         .room-card.disabled {
-            opacity: 0.7;
+            opacity: 0.8;
             cursor: default;
         }
         
@@ -587,36 +635,46 @@
             font-size: 100px;
             display: block;
             margin-bottom: 20px;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
         }
         
         .room-name {
             font-weight: bold;
-            font-size: 1.3rem;
-            background: rgba(0,0,0,0.6);
+            font-size: 1.4rem;
+            background: rgba(0,0,0,0.7);
             display: inline-block;
-            padding: 8px 20px;
-            border-radius: 40px;
+            padding: 8px 24px;
+            border-radius: 50px;
             color: white;
+            margin-bottom: 15px;
+        }
+        
+        .click-hint {
+            font-size: 0.85rem;
+            color: white;
+            background: rgba(0,0,0,0.5);
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 30px;
         }
         
         .taken-badge {
             background: #4caf50;
-            padding: 8px 20px;
+            padding: 8px 24px;
             border-radius: 40px;
             font-size: 1rem;
-            margin-top: 15px;
             color: white;
+            font-weight: bold;
         }
         
-        /* Летающие объекты */
         .floating-object {
             position: absolute;
-            font-size: 35px;
+            font-size: 38px;
             cursor: pointer;
             animation: floatAnim 4s infinite ease-in-out;
-            z-index: 10;
+            z-index: 20;
             transition: transform 0.1s;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
         }
         
         .floating-object:active {
@@ -629,7 +687,6 @@
             75% { transform: translateY(8px) rotate(-3deg); }
         }
         
-        /* Модальное окно */
         .modal {
             display: none;
             position: fixed;
@@ -638,7 +695,7 @@
             background: rgba(0,0,0,0.85);
             justify-content: center;
             align-items: center;
-            z-index: 2000;
+            z-index: 1000;
         }
         
         .modal-card {
@@ -646,9 +703,14 @@
             max-width: 420px;
             width: 90%;
             border-radius: 48px;
-            padding: 24px;
+            padding: 28px;
             text-align: center;
             border-top: 8px solid #ff9800;
+        }
+        
+        .modal-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
         }
         
         .task-text {
@@ -658,16 +720,23 @@
             margin: 20px 0;
             font-weight: bold;
             font-size: 1.1rem;
+            line-height: 1.4;
         }
         
         .answer-input {
             width: 100%;
             padding: 14px;
             border-radius: 60px;
-            border: 2px solid #ddd;
+            border: 2px solid #e0e0e0;
             margin-bottom: 20px;
             text-align: center;
             font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .answer-input:focus {
+            outline: none;
+            border-color: #ff9800;
         }
         
         .btn-check {
@@ -679,6 +748,7 @@
             cursor: pointer;
             font-weight: bold;
             margin: 5px;
+            font-size: 0.9rem;
         }
         
         .btn-close {
@@ -688,12 +758,15 @@
             padding: 12px 28px;
             border-radius: 40px;
             cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
         }
         
         .feedback {
             margin-top: 12px;
             padding: 10px;
             border-radius: 28px;
+            font-size: 0.85rem;
         }
         
         .correct-feedback { background: #c8e6c9; color: #1e4a1e; }
@@ -705,7 +778,7 @@
             align-items: center;
             background: #f5f5f5;
             border-radius: 60px;
-            padding: 10px 20px;
+            padding: 12px 20px;
             margin-top: 20px;
         }
         
@@ -728,9 +801,10 @@
             color: white;
             padding: 12px 24px;
             border-radius: 60px;
-            z-index: 3000;
+            z-index: 2000;
             font-weight: bold;
             animation: fadeOut 2s forwards;
+            white-space: nowrap;
         }
         
         @keyframes fadeOut {
@@ -742,7 +816,7 @@
         .hint-text {
             font-size: 0.7rem;
             color: #888;
-            margin-top: 10px;
+            margin-top: 12px;
         }
     </style>
 </head>
@@ -752,7 +826,7 @@
     <div id="roomCard" class="room-card">
         <div class="item-icon" id="itemIcon">${escapeHtml(itemEmoji)}</div>
         <div class="room-name">${escapeHtml(roomName)}</div>
-        <div style="font-size:0.8rem; margin-top:15px; color:white; background:rgba(0,0,0,0.5); display:inline-block; padding:5px 15px; border-radius:30px;">🔍 нажми, чтобы найти</div>
+        <div class="click-hint">🔍 нажми, чтобы найти предмет</div>
     </div>
     <div class="score-panel">
         <span>🎯 Статус:</span>
@@ -783,7 +857,6 @@
     
     let currentQuestionIndex = 0;
     let itemFound = false;
-    let gameActive = true;
     
     function showToast(msg) {
         const toast = document.createElement('div');
@@ -801,7 +874,7 @@
             el.innerHTML = obs.emoji;
             el.title = obs.name;
             el.style.left = Math.random() * 80 + 10 + '%';
-            el.style.top = Math.random() * 70 + 15 + '%';
+            el.style.top = Math.random() * 65 + 20 + '%';
             el.style.animationDuration = (Math.random() * 3 + 2) + 's';
             el.style.animationDelay = (idx * 0.3) + 's';
             el.onclick = (e) => {
@@ -815,24 +888,23 @@
     }
     
     function openQuestionModal() {
-        if (itemFound || !gameActive) return;
+        if (itemFound) return;
         if (currentQuestionIndex >= QUESTIONS.length) {
-            showToast("🎉 Поздравляю! Ты ответил на все вопросы! Предмет твой!");
             itemFound = true;
             document.getElementById('roomCard').classList.add('disabled');
             document.getElementById('itemIcon').innerHTML = '🏆';
             document.getElementById('gameStatus').innerHTML = '🏆 ПОБЕДА! 🏆';
+            showToast("🎉 ПОБЕДА! Ты нашёл предмет и ответил на все вопросы!");
             return;
         }
         
         const q = QUESTIONS[currentQuestionIndex];
-        const modal = document.getElementById('taskModal');
         document.getElementById('modalTask').innerHTML = q.text;
         document.getElementById('hintText').innerHTML = '💡 Подсказка: ' + (q.hint || 'нет подсказки');
         document.getElementById('answerInput').value = '';
         document.getElementById('modalFeedback').innerHTML = '';
         document.getElementById('modalFeedback').className = 'feedback';
-        modal.style.display = 'flex';
+        document.getElementById('taskModal').style.display = 'flex';
         document.getElementById('answerInput').focus();
     }
     
@@ -842,7 +914,7 @@
         const feedback = document.getElementById('modalFeedback');
         
         if (answer === q.answer.toLowerCase().trim()) {
-            feedback.innerHTML = '✨ ВЕРНО! +1 очко ✨';
+            feedback.innerHTML = '✨ ВЕРНО! ✨';
             feedback.classList.add('correct-feedback');
             currentQuestionIndex++;
             
@@ -853,11 +925,11 @@
                     document.getElementById('roomCard').classList.add('disabled');
                     document.getElementById('itemIcon').innerHTML = '🏆';
                     document.getElementById('gameStatus').innerHTML = '🏆 ПОБЕДА! 🏆';
-                    showToast("🎉 ПОБЕДА! Ты нашёл предмет и ответил на все вопросы!");
+                    showToast("🎉 ПОБЕДА! Ты нашёл предмет!");
                 } else {
                     showToast("✅ Правильно! Следующий вопрос!");
                 }
-            }, 1000);
+            }, 800);
         } else {
             feedback.innerHTML = \`❌ НЕВЕРНО! Ответ "\${answer}" неправильный. Попробуй ещё раз!\`;
             feedback.classList.add('wrong-feedback');
@@ -873,11 +945,10 @@
     function resetGame() {
         currentQuestionIndex = 0;
         itemFound = false;
-        gameActive = true;
         document.getElementById('roomCard').classList.remove('disabled');
         document.getElementById('itemIcon').innerHTML = ITEM_EMOJI;
         document.getElementById('gameStatus').innerHTML = '🔍 Ищем предмет...';
-        showToast("🔄 Игра перезапущена!");
+        showToast("🔄 Игра перезапущена! Ищи " + ITEM_EMOJI);
     }
     
     document.getElementById('roomCard').onclick = openQuestionModal;
@@ -894,73 +965,51 @@
     createFloatingObjects();
     
     if (QUESTIONS.length === 0) {
-        document.getElementById('roomCard').style.opacity = '0.5';
-        document.getElementById('gameStatus').innerHTML = '⚠️ Нет вопросов! Добавьте вопросы в редакторе';
+        document.getElementById('gameStatus').innerHTML = '⚠️ Добавьте вопросы в редакторе';
     }
 </script>
 </body>
 </html>`;
     }
     
-    // Генерация и обновление
-    function generateAndPreview() {
-        const html = generateGameHTML();
-        const previewDiv = document.getElementById('gamePreview');
-        
-        // Создаем iframe для предпросмотра
-        const iframe = document.createElement('iframe');
-        iframe.style.width = '100%';
-        iframe.style.height = '500px';
-        iframe.style.border = 'none';
-        iframe.style.borderRadius = '16px';
-        iframe.srcdoc = html;
-        
-        // Очищаем и добавляем iframe
-        previewDiv.innerHTML = '';
-        previewDiv.appendChild(iframe);
-        
-        // Код для вставки в Genially
-        const outputCode = `<iframe srcdoc="${html.replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" width="100%" height="600" frameborder="0" style="background:transparent;display:block" allow="autoplay"></iframe>`;
-        document.getElementById('codeOutput').textContent = outputCode;
+    // Обновление предпросмотра
+    let updateTimeout;
+    function updatePreview() {
+        if (updateTimeout) clearTimeout(updateTimeout);
+        updateTimeout = setTimeout(() => {
+            const html = generateGameHTML();
+            const iframe = document.getElementById('previewIframe');
+            iframe.srcdoc = html;
+            
+            const outputCode = `<iframe srcdoc="${html.replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" width="100%" height="600" frameborder="0" style="background:transparent;display:block" allow="autoplay"></iframe>`;
+            document.getElementById('codeOutput').textContent = outputCode;
+        }, 300);
     }
     
+    // Копирование
     async function copyCode() {
         const code = document.getElementById('codeOutput').textContent;
         try {
             await navigator.clipboard.writeText(code);
             alert('✅ Код скопирован! Вставь его в Genially через "Вставить HTML"');
         } catch(err) {
-            alert('❌ Не удалось скопировать, выдели текст вручную Ctrl+C');
+            alert('❌ Выдели текст вручную Ctrl+C');
         }
     }
     
-    // Инициализация
-    renderQuestions();
-    renderObstacles();
+    // Обновление цвета превью
+    function updateColorPreview() {
+        const color = document.getElementById('roomColor').value;
+        document.getElementById('colorPreview').style.background = color;
+    }
     
     // События
-    document.getElementById('addQuestionBtn').onclick = () => {
-        questions.push({ text: "Новый вопрос", answer: "ответ", hint: "подсказка" });
-        renderQuestions();
-        generateAndPreview();
-    };
-    
-    document.getElementById('addObstacleBtn').onclick = () => {
-        obstacles.push({ emoji: "🦇", name: "Новый объект" });
-        renderObstacles();
-        generateAndPreview();
-    };
-    
-    document.getElementById('roomName').oninput = () => { updatePreview(); generateAndPreview(); };
-    document.getElementById('itemEmoji').oninput = () => { updatePreview(); generateAndPreview(); };
-    document.getElementById('roomColor').oninput = () => { updatePreview(); generateAndPreview(); };
-    document.getElementById('roomImage').oninput = () => { updatePreview(); generateAndPreview(); };
-    document.getElementById('gameTitle').oninput = generateAndPreview;
-    document.getElementById('generateBtn').onclick = generateAndPreview;
+    document.getElementById('roomName').oninput = updatePreview;
+    document.getElementById('itemEmoji').oninput = () => { renderEmojiGrid(); updatePreview(); };
+    document.getElementById('roomColor').oninput = () => { updateColorPreview(); updatePreview(); };
+    document.getElementById('roomImage').oninput = updatePreview;
+    document.getElementById('gameTitle').oninput = updatePreview;
+    document.getElementById('generateBtn').onclick = updatePreview;
     document.getElementById('copyBtn').onclick = copyCode;
     
-    updatePreview();
-    generateAndPreview();
-</script>
-</body>
-</html>
+    document
