@@ -2,61 +2,63 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Конструктор квеста "Замок" | PRO v2.0</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Конструктор квеста "Найди предмет" | Для Genially</title>
     <style>
         * {
             box-sizing: border-box;
         }
 
         body {
-            background: linear-gradient(135deg, #1a2a3a 0%, #0e1a24 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
-            color: #eee;
+            background: #f0f2f5;
+        }
+
+        /* ПРОЗРАЧНЫЙ ФОН ДЛЯ GENIALLY */
+        .genially-clean {
+            background: transparent;
         }
 
         .builder-layout {
             display: flex;
             gap: 25px;
-            max-width: 1800px;
+            max-width: 1600px;
             margin: 0 auto;
             flex-wrap: wrap;
         }
 
         .settings-panel {
-            flex: 1.2;
-            min-width: 420px;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(12px);
-            border-radius: 32px;
+            flex: 1;
+            min-width: 380px;
+            background: white;
+            border-radius: 24px;
             padding: 20px;
-            border: 1px solid #d4af37;
-            height: fit-content;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             max-height: 90vh;
             overflow-y: auto;
         }
 
         .preview-panel {
-            flex: 2;
+            flex: 1.2;
             min-width: 450px;
-            background: rgba(0,0,0,0.4);
-            border-radius: 32px;
+            background: #f8f9fa;
+            border-radius: 24px;
             padding: 20px;
-            border: 1px solid #b89a5a;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
         .setting-group {
             margin-bottom: 25px;
-            border-bottom: 1px solid #aa8c54;
+            border-bottom: 1px solid #e0e0e0;
             padding-bottom: 15px;
         }
 
         .setting-group h3 {
             margin: 0 0 12px 0;
-            color: #ffdfa5;
-            font-size: 1.2rem;
+            color: #2c3e2b;
+            font-size: 1.1rem;
         }
 
         label {
@@ -64,29 +66,17 @@
             margin: 8px 0 4px;
             font-weight: bold;
             font-size: 0.85rem;
-            letter-spacing: 1px;
+            color: #2c3e2b;
         }
 
         select, input, textarea {
             width: 100%;
             padding: 10px;
-            border-radius: 20px;
-            border: none;
-            background: #2e241d;
-            color: #f5e2b0;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            background: white;
             font-size: 0.9rem;
             margin-bottom: 8px;
-        }
-
-        input[type="range"] {
-            padding: 0;
-            height: 6px;
-            background: #5a4a3a;
-        }
-
-        input[type="color"] {
-            height: 45px;
-            cursor: pointer;
         }
 
         textarea {
@@ -94,146 +84,156 @@
             resize: vertical;
         }
 
-        /* Таблица быстрого переименования */
-        .quick-rename-table {
-            background: #1f2a1f;
-            border-radius: 20px;
+        .obstacle-card {
+            background: #fff3e0;
+            border-radius: 16px;
             padding: 12px;
-            margin-top: 10px;
+            margin-bottom: 12px;
+            border-left: 4px solid #ff6b6b;
         }
-        .rename-row {
+
+        .obstacle-header {
             display: flex;
-            gap: 10px;
+            justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
-        }
-        .rename-row span {
-            min-width: 35px;
-            font-weight: bold;
-            color: #ffdfa5;
-        }
-        .rename-row input {
-            flex: 1;
-            margin-bottom: 0;
-            font-size: 0.85rem;
+            margin-bottom: 10px;
         }
 
-        .room-editor {
-            background: #1f2a1f;
-            border-radius: 24px;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-left: 5px solid #e4b363;
-            transition: 0.2s;
-        }
-
-        .room-title {
-            font-weight: bold;
-            background: #00000055;
-            display: inline-block;
+        .remove-obstacle {
+            background: #ff6b6b;
+            border: none;
+            color: white;
             padding: 4px 12px;
             border-radius: 20px;
-            margin-bottom: 12px;
-            font-size: 1rem;
+            cursor: pointer;
+            font-size: 0.75rem;
         }
 
-        .color-preview {
-            width: 40px;
-            height: 40px;
+        .add-obstacle-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .room-tile {
+            background: #e8e8e8;
             border-radius: 12px;
-            border: 2px solid gold;
-            display: inline-block;
-            vertical-align: middle;
-            margin-left: 10px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .room-tile.selected {
+            border-color: #ff9800;
+            background: #fff3e0;
+            box-shadow: 0 0 0 2px #ff9800;
+        }
+
+        .room-tile:hover {
+            background: #d0d0d0;
         }
 
         .button-group {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             margin-top: 20px;
             flex-wrap: wrap;
         }
 
         .btn {
-            background: #c9a03d;
+            background: #e0e0e0;
             border: none;
-            padding: 12px 24px;
-            border-radius: 40px;
+            padding: 12px 20px;
+            border-radius: 30px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.1s linear;
-            color: #1e2a1a;
-            font-size: 1rem;
+            transition: 0.1s;
+            font-size: 0.9rem;
+            flex: 1;
         }
 
         .btn-primary {
-            background: #2b7a3e;
+            background: #4caf50;
             color: white;
-            box-shadow: 0 4px 0 #154e23;
         }
 
         .btn-copy {
-            background: #2c6e9e;
+            background: #2196f3;
             color: white;
         }
 
-        .btn:active {
-            transform: translateY(2px);
-        }
-
         .generated-code {
-            background: #0f0f0a;
+            background: #1e1e1e;
             padding: 15px;
-            border-radius: 20px;
+            border-radius: 16px;
             font-family: monospace;
-            font-size: 11px;
+            font-size: 10px;
             white-space: pre-wrap;
             word-break: break-all;
-            max-height: 450px;
+            max-height: 400px;
             overflow: auto;
-            color: #b3ffaa;
-            border: 1px solid #5a7a3a;
+            color: #d4d4d4;
+            border: 1px solid #555;
         }
 
-        .glow-demo {
-            font-size: 40px;
-            text-align: center;
-            padding: 15px;
-        }
-
-        .image-preview {
-            max-width: 60px;
-            max-height: 60px;
-            border-radius: 12px;
-            margin-top: 5px;
-            border: 1px solid gold;
-        }
-
-        .music-controls {
-            background: #2a241a;
-            padding: 12px;
+        .preview-game {
+            background: #e0e8f0;
             border-radius: 20px;
-            margin-top: 10px;
+            padding: 20px;
+            min-height: 400px;
+            position: relative;
+            overflow: hidden;
         }
 
-        hr {
-            border-color: #aa8c54;
-            margin: 15px 0;
+        .preview-grid-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
-        .badge {
-            background: #d4af37;
-            color: #1a2a1a;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            margin-left: 8px;
+        .preview-room-card {
+            background: #d4c4a8;
+            border-radius: 16px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            transition: all 0.2s;
         }
 
-        .tooltip-hint {
-            font-size: 0.75rem;
-            color: #cdb28b;
-            margin-top: 4px;
+        .preview-room-card.highlight {
+            background: #ffd966;
+            box-shadow: 0 0 0 3px #ff9800;
+        }
+
+        .preview-item {
+            font-size: 40px;
+        }
+
+        .floating-object {
+            position: absolute;
+            font-size: 30px;
+            animation: floatAnim 3s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes floatAnim {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
         }
     </style>
 </head>
@@ -241,59 +241,49 @@
 <div class="builder-layout">
     <!-- ЛЕВАЯ ПАНЕЛЬ: НАСТРОЙКИ -->
     <div class="settings-panel">
-        <h1>🏰 Конструктор квеста "Замок" PRO v2.0 🏰</h1>
-        <p style="font-size:0.8rem;">Настрой всё: язык, шрифт, сияние, музыку, цвета комнат, описания и картинки</p>
+        <h1>🎮 Конструктор квеста "Найди предмет" 🎮</h1>
+        <p style="color:#666;">Для Genially — прозрачный фон, летающие объекты</p>
 
         <div class="setting-group">
-            <h3>🌐 Язык интерфейса</h3>
-            <select id="langSelect">
-                <option value="ru">Русский</option>
-                <option value="en">English</option>
-            </select>
+            <h3>📦 Где спрятан предмет?</h3>
+            <div class="room-grid" id="roomSelectorGrid"></div>
+            <label>🎁 Эмодзи предмета</label>
+            <input type="text" id="itemEmoji" value="🔑" placeholder="🔑 🎁 💎 👑 🗝️">
         </div>
 
         <div class="setting-group">
-            <h3>✍️ Стиль текста</h3>
+            <h3>✈️ Летающие мешающие объекты</h3>
+            <p style="font-size:0.75rem; color:#666;">Игрок должен кликнуть на предмет, а не на эти объекты</p>
+            <div id="obstaclesContainer"></div>
+            <button class="add-obstacle-btn" id="addObstacleBtn">+ Добавить летающий объект</button>
+        </div>
+
+        <div class="setting-group">
+            <h3>❓ Вопрос (когда найден предмет)</h3>
+            <label>Текст вопроса</label>
+            <textarea id="questionText" rows="2" placeholder="Введите вопрос...">Назови столицу Франции?</textarea>
+            <label>✅ Правильный ответ</label>
+            <input type="text" id="correctAnswer" value="париж" placeholder="Правильный ответ">
+            <label>💡 Подсказка</label>
+            <input type="text" id="hintText" value="Город любви и Эйфелева башня" placeholder="Подсказка">
+        </div>
+
+        <div class="setting-group">
+            <h3>🎨 Настройки</h3>
+            <label>Название игры</label>
+            <input type="text" id="gameTitle" value="🔍 Найди сокровище! 🔍">
             <label>Шрифт</label>
             <select id="fontSelect">
-                <option value="'Segoe UI', system-ui">Segoe UI (Современный)</option>
-                <option value="'MedievalSharp', 'Courier New', monospace">Medieval (Средневековый)</option>
-                <option value="'Comic Neue', cursive">Comic (Игровой)</option>
-                <option value="'Courier New', monospace">Моноширинный</option>
+                <option value="'Segoe UI', system-ui">Современный</option>
+                <option value="'MedievalSharp', 'Courier New', monospace">Средневековый</option>
+                <option value="'Comic Neue', cursive">Игровой</option>
             </select>
-            <label>Размер текста (px)</label>
-            <input type="number" id="fontSize" value="16" min="10" max="28" step="1">
-        </div>
-
-        <div class="setting-group">
-            <h3>✨ Сияние предметов</h3>
-            <select id="glowSelect">
-                <option value="none">Нет сияния</option>
-                <option value="soft">Мягкое свечение</option>
-                <option value="pulse">Пульсирующее сияние</option>
-                <option value="rainbow">Радужный нимб</option>
+            <label>Цветовая тема (фон Genially прозрачный)</label>
+            <select id="colorTheme">
+                <option value="light">Светлая тема</option>
+                <option value="dark">Тёмная тема</option>
+                <option value="medieval">Средневековая</option>
             </select>
-            <div class="glow-demo" id="glowDemo">🔮 Пример</div>
-        </div>
-
-        <div class="setting-group">
-            <h3>🎵 Фоновая музыка</h3>
-            <label>Ссылка на MP3/OGG (URL)</label>
-            <input type="text" id="musicUrl" placeholder="https://example.com/music.mp3" value="">
-            <label>Громкость (0-100%)</label>
-            <input type="range" id="musicVolume" min="0" max="100" value="30">
-            <span id="volumeValue">30%</span>
-        </div>
-
-        <!-- НОВАЯ СЕКЦИЯ: БЫСТРОЕ ПЕРЕИМЕНОВАНИЕ ВСЕХ КОМНАТ -->
-        <div class="setting-group">
-            <h3>⚡ Быстрое переименование всех комнат</h3>
-            <div class="quick-rename-table" id="quickRenameContainer"></div>
-        </div>
-
-        <div class="setting-group">
-            <h3>🏠 Детальные настройки комнат (9 шт)</h3>
-            <div id="roomsEditorContainer"></div>
         </div>
 
         <div class="button-group">
@@ -302,492 +292,594 @@
         </div>
     </div>
 
-    <!-- ПРАВАЯ ПАНЕЛЬ -->
+    <!-- ПРАВАЯ ПАНЕЛЬ: ПРЕВЬЮ -->
     <div class="preview-panel">
-        <h2>📦 Финальный код для Genially</h2>
-        <div class="preview-card" id="stylePreview" style="background:#221c14; border-radius:24px; padding:15px; margin-bottom:20px; text-align:center;">
-            <span id="stylePreviewText">Предпросмотр стиля</span>
+        <h2>👁️ Предпросмотр игры</h2>
+        <div class="preview-game" id="previewGameArea">
+            <div style="font-size: 1.2rem; font-weight: bold; text-align: center;" id="previewTitle">🔍 Найди сокровище! 🔍</div>
+            <div class="preview-grid-demo" id="previewGrid"></div>
+            <div style="position: relative; height: 60px;" id="floatingPreview"></div>
+            <p style="margin-top: 15px; font-size: 0.75rem; text-align: center; color:#666;">⭐ Предмет в золотой комнате ⭐</p>
         </div>
+        <hr>
+        <h3>📦 Финальный код (вставь в Genially)</h3>
         <div id="generatedCodeContainer" class="generated-code">
             // Нажми "Сгенерировать код"
         </div>
-        <p style="font-size:12px; margin-top:12px;">✅ Скопируй код и вставь в Genially через элемент «Вставить HTML»</p>
+        <p style="font-size: 11px; margin-top: 8px;">✅ В Genially: Вставить → HTML-код → вставь код → растяни на весь экран</p>
     </div>
 </div>
 
 <script>
-    // ДАННЫЕ КОМНАТ (расширенные: добавлены color и description)
-    let roomsData = [
-        { name: "Тронный зал", item: "👑 Корона", task: "Назови столицу Франции?", answer: "париж", hint: "Город любви", image: "", color: "#2c2118", description: "Величественный зал с золотым троном" },
-        { name: "Библиотека", item: "📖 Старинная книга", task: "Сколько будет 7 x 8?", answer: "56", hint: "Таблица умножения", image: "", color: "#2c2118", description: "Тысячи древних свитков и книг" },
-        { name: "Кухня", item: "🍎 Золотое яблоко", task: "Антоним к слову 'день'?", answer: "ночь", hint: "Темное время суток", image: "", color: "#2c2118", description: "Ароматы средневековых блюд" },
-        { name: "Оружейная", item: "⚔️ Меч рыцаря", task: "Какой газ мы вдыхаем?", answer: "кислород", hint: "O2", image: "", color: "#2c2118", description: "Стойка с рыцарскими доспехами" },
-        { name: "Тайная комната", item: "🔮 Хрустальный шар", task: "Президент России в 2020?", answer: "путин", hint: "Владимир", image: "", color: "#2c2118", description: "Скрытая комната за книжной полкой" },
-        { name: "Соколиный двор", item: "🦅 Золотое перо", task: "Сколько цветов в радуге?", answer: "7", hint: "7 цветов", image: "", color: "#2c2118", description: "Птицы парят в небе над замком" },
-        { name: "Подземелье", item: "💎 Рубин дракона", task: "Самая высокая гора?", answer: "эверест", hint: "Джомолунгма", image: "", color: "#2c2118", description: "Тёмные коридоры под замком" },
-        { name: "Сад камней", item: "🌸 Волшебный цветок", task: "Ближайшая к Солнцу планета?", answer: "меркурий", hint: "Первая", image: "", color: "#2c2118", description: "Японский сад с редкими растениями" },
-        { name: "Смотровая башня", item: "🔭 Подзорная труба", task: "Год высадки на Луну?", answer: "1969", hint: "Аполлон-11", image: "", color: "#2c2118", description: "Отсюда видно всю округу" }
+    // Данные
+    let selectedRoom = 4; // центр
+    let obstacles = [
+        { emoji: "🦇", text: "Летучая мышь" },
+        { emoji: "👻", text: "Призрак" },
+        { emoji: "🕷️", text: "Паук" }
+    ];
+    
+    const roomNames = [
+        "Тронный зал", "Библиотека", "Кухня",
+        "Оружейная", "Тайная комната", "Соколиный двор",
+        "Подземелье", "Сад камней", "Смотровая башня"
     ];
 
-    // Функция для быстрого переименования
-    function renderQuickRename() {
-        const container = document.getElementById('quickRenameContainer');
+    // Обновление превью
+    function updatePreview() {
+        const container = document.getElementById('previewGrid');
+        if (!container) return;
+        
         container.innerHTML = '';
-        roomsData.forEach((room, idx) => {
-            const row = document.createElement('div');
-            row.className = 'rename-row';
-            row.innerHTML = `
-                <span>${idx+1}.</span>
-                <input type="text" class="quick-name-input" value="${escapeHtml(room.name)}" data-idx="${idx}" placeholder="Название комнаты">
+        for (let i = 0; i < 9; i++) {
+            const card = document.createElement('div');
+            card.className = 'preview-room-card';
+            if (i === selectedRoom) card.classList.add('highlight');
+            card.innerHTML = `
+                <div class="preview-item">${i === selectedRoom ? document.getElementById('itemEmoji').value : '❓'}</div>
+                <div style="margin-top: 8px; font-size: 0.75rem;">${roomNames[i]}</div>
             `;
-            container.appendChild(row);
-        });
-        document.querySelectorAll('.quick-name-input').forEach(inp => {
-            inp.addEventListener('change', (e) => {
-                let idx = parseInt(inp.dataset.idx);
-                roomsData[idx].name = inp.value;
-                renderRoomsEditor(); // обновляем детальный редактор
-                renderQuickRename();  // обновляем саму таблицу (чтобы синхронизировать)
-            });
-        });
-    }
-
-    // Детальный редактор комнат
-    function renderRoomsEditor() {
-        const container = document.getElementById('roomsEditorContainer');
-        container.innerHTML = '';
-        roomsData.forEach((room, idx) => {
-            const div = document.createElement('div');
-            div.className = 'room-editor';
-            div.style.borderLeftColor = room.color !== '#2c2118' ? room.color : '#e4b363';
-            div.innerHTML = `
-                <div class="room-title">🏰 Комната ${idx+1}: ${room.name}</div>
-                
-                <label>🎨 Индивидуальный цвет/фон комнаты</label>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <input type="color" class="room-color-input" value="${room.color}" data-idx="${idx}" style="flex:1;">
-                    <span class="color-preview" style="background: ${room.color};"></span>
-                </div>
-                
-                <label>📝 Название комнаты</label>
-                <input type="text" class="room-name-input" value="${escapeHtml(room.name)}" data-idx="${idx}" data-field="name">
-                
-                <label>📖 Описание комнаты (показывается при наведении)</label>
-                <textarea rows="2" class="room-desc-input" data-idx="${idx}" placeholder="Опиши эту комнату...">${escapeHtml(room.description || '')}</textarea>
-                <div class="tooltip-hint">💡 Этот текст появится, если навести курсор на комнату</div>
-                
-                <label>🔮 Предмет (эмодзи + текст)</label>
-                <input type="text" class="room-item-input" value="${escapeHtml(room.item)}" data-idx="${idx}" data-field="item">
-                
-                <label>🖼️ Ссылка на картинку локации (URL)</label>
-                <input type="text" class="room-image-input" value="${escapeHtml(room.image || '')}" data-idx="${idx}" data-field="image" placeholder="https://example.com/castle-room.jpg">
-                ${room.image ? `<img src="${escapeHtml(room.image)}" class="image-preview" onerror="this.style.display='none'" onload="this.style.display='inline-block'">` : '<small style="color:#aaa;">📷 Оставь пустым — будет эмодзи вместо картинки</small>'}
-                
-                <label>❓ Задание (вопрос учителя)</label>
-                <textarea rows="2" class="room-task-input" data-idx="${idx}" data-field="task">${escapeHtml(room.task)}</textarea>
-                
-                <label>✅ Правильный ответ</label>
-                <input type="text" class="room-answer-input" value="${escapeHtml(room.answer)}" data-idx="${idx}" data-field="answer">
-                
-                <label>💡 Подсказка</label>
-                <input type="text" class="room-hint-input" value="${escapeHtml(room.hint)}" data-idx="${idx}" data-field="hint">
-            `;
-            container.appendChild(div);
-        });
-        attachRoomEvents();
-    }
-
-    function escapeHtml(str) { 
-        if(!str) return '';
-        return str.replace(/[&<>]/g, function(m){
-            if(m==='&') return '&amp;'; 
-            if(m==='<') return '&lt;'; 
-            if(m==='>') return '&gt;'; 
-            return m;
-        }); 
-    }
-
-    function attachRoomEvents() {
-        // Цвет комнаты
-        document.querySelectorAll('.room-color-input').forEach(inp => {
-            inp.addEventListener('change', (e) => {
-                let idx = parseInt(inp.dataset.idx);
-                roomsData[idx].color = inp.value;
-                renderRoomsEditor();
-            });
-        });
-        // Название
-        document.querySelectorAll('.room-name-input').forEach(inp => {
-            inp.addEventListener('change', (e) => { 
-                let idx = parseInt(inp.dataset.idx); 
-                roomsData[idx].name = inp.value;
-                renderQuickRename();
-                renderRoomsEditor();
-            });
-        });
-        // Описание
-        document.querySelectorAll('.room-desc-input').forEach(inp => {
-            inp.addEventListener('change', (e) => { 
-                let idx = parseInt(inp.dataset.idx); 
-                roomsData[idx].description = inp.value;
-            });
-        });
-        // Предмет
-        document.querySelectorAll('.room-item-input').forEach(inp => {
-            inp.addEventListener('change', (e) => { 
-                let idx = parseInt(inp.dataset.idx); 
-                roomsData[idx].item = inp.value;
-            });
-        });
-        // Картинка
-        document.querySelectorAll('.room-image-input').forEach(inp => {
-            inp.addEventListener('change', (e) => { 
-                let idx = parseInt(inp.dataset.idx); 
-                roomsData[idx].image = inp.value;
-                renderRoomsEditor();
-            });
-        });
-        // Задание
-        document.querySelectorAll('.room-task-input').forEach(inp => {
-            inp.addEventListener('change', (e) => { 
-                let idx = parseInt(inp.dataset.idx); 
-                roomsData[idx].task = inp.value;
-            });
-        });
-        // Ответ
-        document.querySelectorAll('.room-answer-input').forEach(inp => {
-            inp.addEventListener('change', (e) => { 
-                let idx = parseInt(inp.dataset.idx); 
-                roomsData[idx].answer = inp.value;
-            });
-        });
-        // Подсказка
-        document.querySelectorAll('.room-hint-input').forEach(inp => {
-            inp.addEventListener('change', (e) => { 
-                let idx = parseInt(inp.dataset.idx); 
-                roomsData[idx].hint = inp.value;
-            });
-        });
-    }
-
-    // Громкость
-    const volumeSlider = document.getElementById('musicVolume');
-    const volumeSpan = document.getElementById('volumeValue');
-    volumeSlider.addEventListener('input', () => { volumeSpan.innerText = volumeSlider.value + '%'; });
-
-    // Демо сияния
-    function updateGlowDemo() {
-        const glowType = document.getElementById('glowSelect').value;
-        const demo = document.getElementById('glowDemo');
-        if (glowType === 'soft') demo.style.textShadow = '0 0 8px gold, 0 0 12px orange';
-        else if (glowType === 'pulse') demo.style.animation = 'pulseGlow 1s infinite';
-        else if (glowType === 'rainbow') demo.style.animation = 'rainbowGlow 1.5s infinite';
-        else { demo.style.textShadow = 'none'; demo.style.animation = 'none'; }
-    }
-    
-    const styleSheet = document.createElement("style");
-    styleSheet.textContent = `
-        @keyframes pulseGlow { 0% { text-shadow: 0 0 0px gold; } 100% { text-shadow: 0 0 15px #ffaa33, 0 0 20px #ff7700; } }
-        @keyframes rainbowGlow { 0% { text-shadow: 0 0 6px red; } 33% { text-shadow: 0 0 6px lime; } 66% { text-shadow: 0 0 6px blue; } 100% { text-shadow: 0 0 6px red; } }
-    `;
-    document.head.appendChild(styleSheet);
-    document.getElementById('glowSelect').addEventListener('change', updateGlowDemo);
-    updateGlowDemo();
-
-    // Предпросмотр шрифта
-    function updateStylePreview() {
-        const font = document.getElementById('fontSelect').value;
-        const size = document.getElementById('fontSize').value;
-        const previewSpan = document.getElementById('stylePreviewText');
-        previewSpan.style.fontFamily = font;
-        previewSpan.style.fontSize = size + 'px';
-        previewSpan.innerText = `Шрифт: ${font.split(',')[0]} | Размер ${size}px`;
-    }
-    document.getElementById('fontSelect').addEventListener('change', updateStylePreview);
-    document.getElementById('fontSize').addEventListener('input', updateStylePreview);
-    updateStylePreview();
-
-    // ========= ГЕНЕРАЦИЯ ФИНАЛЬНОГО HTML-КОДА ==========
-    function generateFinalCode() {
-        const lang = document.getElementById('langSelect').value;
-        const fontFamily = document.getElementById('fontSelect').value;
-        const fontSizeBase = document.getElementById('fontSize').value;
-        const glowType = document.getElementById('glowSelect').value;
-        const musicUrl = document.getElementById('musicUrl').value;
-        const musicVolume = document.getElementById('musicVolume').value;
-
-        const finalRooms = roomsData.map(room => ({
-            name: room.name,
-            item: room.item,
-            task: room.task,
-            answer: room.answer,
-            hint: room.hint,
-            image: room.image || '',
-            color: room.color || '#2c2118',
-            description: room.description || ''
-        }));
-
-        // Тексты на языке
-        let langStrings = {};
-        if (lang === 'ru') {
-            langStrings = {
-                title: "🏰 ТАЙНЫ ЗАМКА 🏰",
-                sub: "Найди предмет → выполни задание учителя → забери находку",
-                scoreLabel: "📜 СОКРОВИЩА В РЮКЗАКЕ:",
-                resetBtn: "🔄 НОВАЯ ИГРА",
-                modalTitle: "📖 ЗАДАНИЕ УЧИТЕЛЯ",
-                placeholder: "Введи ответ...",
-                btnSubmit: "✅ ОТВЕТИТЬ",
-                btnClose: "❌ ЗАКРЫТЬ",
-                takenStatus: "✔ В коллекции",
-                clickHint: "🔍 нажми, чтобы найти",
-                emptyMsg: "Это место пусто, ты уже забрал находку!",
-                correctMsg: "ВЕРНО! Ты забираешь находку в свою коллекцию! +1 очко",
-                wrongMsg: "ПРОМАХ!",
-                tryAgain: "Попробуй ещё раз!",
-                resetFeedback: "🔁 Игра сброшена! Все предметы снова спрятаны в замке.",
-                winMsg: "🏆 ПОЗДРАВЛЯЮ! Ты собрал все сокровища замка! Великий искатель! 🏆"
-            };
-        } else {
-            langStrings = {
-                title: "🏰 SECRETS OF THE CASTLE 🏰",
-                sub: "Find an item → complete teacher's task → take the treasure",
-                scoreLabel: "📜 TREASURES IN BACKPACK:",
-                resetBtn: "🔄 NEW GAME",
-                modalTitle: "📖 TEACHER'S TASK",
-                placeholder: "Enter answer...",
-                btnSubmit: "✅ ANSWER",
-                btnClose: "❌ CLOSE",
-                takenStatus: "✔ In collection",
-                clickHint: "🔍 click to search",
-                emptyMsg: "This place is empty, you already took the item!",
-                correctMsg: "CORRECT! You take the treasure! +1 point",
-                wrongMsg: "MISS!",
-                tryAgain: "Try again!",
-                resetFeedback: "🔁 Game reset! All items are hidden again.",
-                winMsg: "🏆 CONGRATULATIONS! You collected all castle treasures! Great explorer! 🏆"
-            };
+            container.appendChild(card);
         }
+        
+        document.getElementById('previewTitle').innerText = document.getElementById('gameTitle').value;
+        
+        // Превью летающих объектов
+        const floatingPreview = document.getElementById('floatingPreview');
+        floatingPreview.innerHTML = '';
+        obstacles.forEach((obs, idx) => {
+            const div = document.createElement('div');
+            div.className = 'floating-object';
+            div.style.left = `${(idx * 70) % 80 + 10}%`;
+            div.style.top = `${(idx * 40) % 60 + 20}%`;
+            div.style.animationDelay = `${idx * 0.5}s`;
+            div.innerHTML = obs.emoji;
+            div.title = obs.text;
+            floatingPreview.appendChild(div);
+        });
+    }
 
-        const roomDataJSON = JSON.stringify(finalRooms);
-        const musicBlock = musicUrl ? `
-        <audio id="bgMusic" loop style="display:none;">
-            <source src="${musicUrl}" type="audio/mpeg">
-        </audio>
-        <script>
-            const music = document.getElementById('bgMusic');
-            music.volume = ${musicVolume / 100};
-            document.body.addEventListener('click', function initMusic() {
-                music.play().catch(e => console.log("Автовоспроизведение заблокировано"));
-                document.body.removeEventListener('click', initMusic);
+    // Рендер выбора комнаты
+    function renderRoomSelector() {
+        const container = document.getElementById('roomSelectorGrid');
+        container.innerHTML = '';
+        for (let i = 0; i < 9; i++) {
+            const tile = document.createElement('div');
+            tile.className = 'room-tile';
+            if (i === selectedRoom) tile.classList.add('selected');
+            tile.innerHTML = `<div style="font-size: 1.5rem;">${i === selectedRoom ? '📍' : '🏠'}</div><div style="font-size: 0.7rem;">${roomNames[i].slice(0, 12)}</div>`;
+            tile.onclick = () => {
+                selectedRoom = i;
+                renderRoomSelector();
+                updatePreview();
+            };
+            container.appendChild(tile);
+        }
+    }
+
+    // Рендер летающих объектов
+    function renderObstacles() {
+        const container = document.getElementById('obstaclesContainer');
+        container.innerHTML = '';
+        obstacles.forEach((obs, idx) => {
+            const card = document.createElement('div');
+            card.className = 'obstacle-card';
+            card.innerHTML = `
+                <div class="obstacle-header">
+                    <span style="font-size: 1.5rem;">${obs.emoji}</span>
+                    <button class="remove-obstacle" data-idx="${idx}">🗑️ Удалить</button>
+                </div>
+                <label>Эмодзи</label>
+                <input type="text" class="obs-emoji" data-idx="${idx}" value="${escapeHtml(obs.emoji)}">
+                <label>Название (для подсказки)</label>
+                <input type="text" class="obs-text" data-idx="${idx}" value="${escapeHtml(obs.text)}">
+            `;
+            container.appendChild(card);
+        });
+        
+        document.querySelectorAll('.remove-obstacle').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const idx = parseInt(btn.dataset.idx);
+                obstacles.splice(idx, 1);
+                renderObstacles();
+                updatePreview();
             });
-        <\/script>
-        ` : '';
+        });
+        
+        document.querySelectorAll('.obs-emoji').forEach(inp => {
+            inp.addEventListener('change', (e) => {
+                const idx = parseInt(inp.dataset.idx);
+                obstacles[idx].emoji = inp.value;
+                updatePreview();
+            });
+        });
+        
+        document.querySelectorAll('.obs-text').forEach(inp => {
+            inp.addEventListener('change', (e) => {
+                const idx = parseInt(inp.dataset.idx);
+                obstacles[idx].text = inp.value;
+                updatePreview();
+            });
+        });
+    }
 
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // Генерация финального кода (для Genially)
+    function generateFinalCode() {
+        const gameTitle = document.getElementById('gameTitle').value;
+        const itemEmoji = document.getElementById('itemEmoji').value;
+        const fontFamily = document.getElementById('fontSelect').value;
+        const colorTheme = document.getElementById('colorTheme').value;
+        const questionText = document.getElementById('questionText').value;
+        const correctAnswer = document.getElementById('correctAnswer').value.toLowerCase().trim();
+        const hintText = document.getElementById('hintText').value;
+        
+        const finalObstacles = obstacles.filter(o => o.emoji && o.emoji.trim() !== '');
+        
+        // Тема оформления
+        let themeColors = {};
+        if (colorTheme === 'light') {
+            themeColors = { bg: 'rgba(255,255,240,0.95)', cardBg: '#f5f0e0', text: '#2c3e2b', border: '#d4af37' };
+        } else if (colorTheme === 'dark') {
+            themeColors = { bg: 'rgba(30,30,40,0.95)', cardBg: '#2c2418', text: '#f5e7c8', border: '#c9a87b' };
+        } else {
+            themeColors = { bg: 'rgba(42,35,25,0.95)', cardBg: '#5c4b3a', text: '#f5e7c8', border: '#e4b363' };
+        }
+        
         return `<!DOCTYPE html>
-<html lang="${lang}">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Castle Quest | Genially</title>
+    <title>Квест | Найди предмет</title>
     <style>
-        * { box-sizing: border-box; user-select: none; }
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+        
         body {
             margin: 0;
             min-height: 100vh;
-            background: linear-gradient(145deg, #1a2a3a 0%, #0e1a24 100%);
+            background: transparent;
             font-family: ${fontFamily}, monospace;
-            font-size: ${fontSizeBase}px;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
-        .castle-container {
-            max-width: 1000px;
+        
+        .game-container {
+            max-width: 950px;
             width: 100%;
-            background: rgba(0,0,0,0.5);
+            background: ${themeColors.bg};
             border-radius: 48px;
             padding: 20px;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.5);
-            backdrop-filter: blur(3px);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            border: 1px solid ${themeColors.border};
+            position: relative;
+            overflow: hidden;
         }
-        h1 { text-align: center; margin: 0 0 10px; color: #f5e7c8; text-shadow: 3px 3px 0 #5a3e1b; }
-        .sub { text-align: center; color: #cdb28b; margin-bottom: 20px; }
-        .grid {
+        
+        h1 {
+            text-align: center;
+            margin: 0 0 5px;
+            color: ${themeColors.text};
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+            font-size: 1.6rem;
+        }
+        
+        .sub {
+            text-align: center;
+            color: ${themeColors.text}cc;
+            margin-bottom: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .rooms-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            margin-bottom: 25px;
+            gap: 15px;
+            margin-bottom: 20px;
         }
+        
         .room-card {
+            background: ${themeColors.cardBg};
             border-radius: 24px;
-            border: 2px solid #c9a87b;
+            border: 2px solid ${themeColors.border};
             cursor: pointer;
             text-align: center;
-            padding: 15px 8px;
-            color: #f0e2c5;
-            transition: 0.05s linear;
-            box-shadow: 0 8px 0 #4a2e1a;
-            min-height: 210px;
+            padding: 20px 8px;
+            transition: all 0.1s;
+            box-shadow: 0 6px 0 rgba(0,0,0,0.2);
+            position: relative;
+            min-height: 160px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative;
         }
-        .room-card:active { transform: translateY(3px); box-shadow: 0 4px 0 #4a2e1a; }
-        .room-card:hover::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1a1a1aee;
-            color: #ffdfa5;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            white-space: nowrap;
-            z-index: 100;
-            margin-bottom: 8px;
-            border: 1px solid gold;
-            pointer-events: none;
+        
+        .room-card:active {
+            transform: translateY(3px);
+            box-shadow: 0 3px 0 rgba(0,0,0,0.2);
         }
-        .room-image {
-            max-width: 100px;
-            max-height: 80px;
-            object-fit: cover;
-            border-radius: 16px;
-            margin-bottom: 10px;
-            border: 2px solid #d4af37;
+        
+        .room-card.disabled {
+            opacity: 0.6;
+            cursor: default;
         }
+        
+        .room-card.disabled:active {
+            transform: none;
+        }
+        
         .item-icon {
-            font-size: 48px;
+            font-size: 54px;
             display: block;
             margin-bottom: 8px;
-            filter: drop-shadow(2px 4px 6px black);
-            ${glowType === 'soft' ? 'text-shadow: 0 0 6px gold, 0 0 10px orange;' : ''}
-            ${glowType === 'pulse' ? 'animation: pulseGlowItem 1s infinite;' : ''}
-            ${glowType === 'rainbow' ? 'animation: rainbowGlowItem 1.8s infinite;' : ''}
         }
-        @keyframes pulseGlowItem { 0% { text-shadow: 0 0 0px gold; } 100% { text-shadow: 0 0 14px #ffaa33, 0 0 20px #ff7700; } }
-        @keyframes rainbowGlowItem { 0% { text-shadow: 0 0 5px red; } 33% { text-shadow: 0 0 5px lime; } 66% { text-shadow: 0 0 5px blue; } 100% { text-shadow: 0 0 5px red; } }
-        .room-name { font-weight: bold; background: #00000099; display: inline-block; padding: 4px 12px; border-radius: 40px; margin-top: 5px; font-size: 0.9rem; }
-        .status-taken { font-size: 11px; background: #2e7d32; color: white; border-radius: 20px; padding: 4px 8px; margin-top: 8px; display: inline-block; }
-        .score-panel { background: #000000aa; border-radius: 60px; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-top: 15px; }
-        .score-box { background: #1f2a1b; padding: 6px 20px; border-radius: 40px; font-size: 1.8rem; font-weight: bold; color: #ffd966; }
-        .reset-btn { background: #7a4c2c; border: none; color: white; padding: 8px 24px; border-radius: 40px; cursor: pointer; font-size: 0.9rem; }
-        .modal { display: none; position: fixed; top:0;left:0; width:100%;height:100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1000; }
-        .modal-card { background: #fff9ef; max-width: 420px; width: 90%; border-radius: 48px; padding: 20px; text-align: center; }
-        .task-text { background: #f4e5cf; padding: 16px; border-radius: 28px; margin: 20px 0; font-weight: bold; }
-        .answer-input { width: 100%; padding: 14px; border-radius: 60px; border: 1px solid #bba88a; margin-bottom: 20px; text-align: center; }
-        .btn-check { background: #2e6b2f; color: white; border: none; padding: 10px 24px; border-radius: 40px; cursor: pointer; }
-        .btn-close { background: #8b5a2b; color: white; border: none; padding: 10px 24px; border-radius: 40px; cursor: pointer; }
-        .feedback { margin-top: 12px; padding: 6px; border-radius: 28px; }
+        
+        .room-name {
+            font-weight: bold;
+            background: rgba(0,0,0,0.5);
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            color: #ffdfa5;
+        }
+        
+        .taken-badge {
+            background: #4caf50;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-top: 8px;
+        }
+        
+        /* Летающие объекты */
+        .floating-object {
+            position: absolute;
+            font-size: 40px;
+            cursor: pointer;
+            animation: floatAnim 4s infinite ease-in-out;
+            z-index: 10;
+            transition: transform 0.1s;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+        }
+        
+        .floating-object:active {
+            transform: scale(0.9);
+        }
+        
+        @keyframes floatAnim {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-12px) rotate(3deg); }
+            75% { transform: translateY(8px) rotate(-3deg); }
+        }
+        
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        
+        .modal-card {
+            background: #fff9ef;
+            max-width: 420px;
+            width: 90%;
+            border-radius: 48px;
+            padding: 24px;
+            text-align: center;
+            border-top: 8px solid #d4af37;
+        }
+        
+        .task-text {
+            background: #f4e5cf;
+            padding: 16px;
+            border-radius: 28px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        
+        .answer-input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 60px;
+            border: 1px solid #bba88a;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1rem;
+        }
+        
+        .btn-check {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+        
+        .btn-close {
+            background: #8b5a2b;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            cursor: pointer;
+        }
+        
+        .feedback {
+            margin-top: 12px;
+            padding: 10px;
+            border-radius: 28px;
+        }
+        
         .correct-feedback { background: #c8e6c9; color: #1e4a1e; }
         .wrong-feedback { background: #ffcdd2; color: #a11d1d; }
+        
+        .score-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.5);
+            border-radius: 60px;
+            padding: 10px 20px;
+            margin-top: 15px;
+        }
+        
+        .reset-btn {
+            background: #7a4c2c;
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+        }
+        
+        .win-message {
+            text-align: center;
+            font-size: 1.3rem;
+            padding: 20px;
+            background: gold;
+            border-radius: 40px;
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
-${musicBlock}
-<div class="castle-container">
-    <h1>${langStrings.title}</h1>
-    <div class="sub">${langStrings.sub}</div>
-    <div class="grid" id="roomsGrid"></div>
-    <div class="score-panel"><span>${langStrings.scoreLabel}</span><div class="score-box" id="scoreDisplay">0</div><button class="reset-btn" id="resetGameBtn">${langStrings.resetBtn}</button></div>
+<div class="game-container" id="gameContainer">
+    <h1>${escapeHtml(gameTitle)}</h1>
+    <div class="sub">Найди ${escapeHtml(itemEmoji)} → ответь на вопрос → получи награду!</div>
+    
+    <div class="rooms-grid" id="roomsGrid"></div>
+    
+    <div class="score-panel">
+        <span>🎯 Статус:</span>
+        <span id="gameStatus">🔍 Ищем предмет...</span>
+        <button class="reset-btn" id="resetBtn">🔄 Новая игра</button>
+    </div>
 </div>
-<div id="taskModal" class="modal"><div class="modal-card"><h3>${langStrings.modalTitle}</h3><div id="modalItemName"></div><div class="task-text" id="modalTask"></div><input type="text" id="answerInput" class="answer-input" placeholder="${langStrings.placeholder}"><div class="modal-buttons"><button class="btn-check" id="submitAnswerBtn">${langStrings.btnSubmit}</button><button class="btn-close" id="closeModalBtn">${langStrings.btnClose}</button></div><div id="modalFeedback" class="feedback"></div></div></div>
+
+<div id="taskModal" class="modal">
+    <div class="modal-card">
+        <h3>📖 ЗАДАНИЕ</h3>
+        <div id="modalItemIcon" style="font-size: 3rem;">${escapeHtml(itemEmoji)}</div>
+        <div class="task-text" id="modalTask">${escapeHtml(questionText)}</div>
+        <input type="text" id="answerInput" class="answer-input" placeholder="Введи ответ...">
+        <div>
+            <button class="btn-check" id="submitBtn">✅ ОТВЕТИТЬ</button>
+            <button class="btn-close" id="closeModalBtn">❌ ЗАКРЫТЬ</button>
+        </div>
+        <div id="modalFeedback" class="feedback"></div>
+        <div style="font-size:0.7rem; margin-top:10px; color:#886633;">💡 Подсказка: ${escapeHtml(hintText)}</div>
+    </div>
+</div>
+
 <script>
-    const questData = ${roomDataJSON};
-    let collected = new Array(9).fill(false);
-    let score = 0;
-    let activeRoomIndex = null;
-    const gridDiv = document.getElementById('roomsGrid');
-    const scoreSpan = document.getElementById('scoreDisplay');
-    const resetBtnG = document.getElementById('resetGameBtn');
-    const modal = document.getElementById('taskModal');
-    const modalItemName = document.getElementById('modalItemName');
-    const modalTask = document.getElementById('modalTask');
-    const answerInp = document.getElementById('answerInput');
-    const modalFeedback = document.getElementById('modalFeedback');
-    const submitAnswer = document.getElementById('submitAnswerBtn');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    function saveProgress() { localStorage.setItem('castleQuestData', JSON.stringify({collected,score})); }
-    function loadProgress() { const saved = localStorage.getItem('castleQuestData'); if(saved){ const d=JSON.parse(saved); collected=d.collected; score=d.score; } else{ collected.fill(false); score=0; } updateUI(); }
-    function updateUI(){
-        gridDiv.innerHTML='';
-        for(let i=0;i<questData.length;i++){
-            const r=questData[i];
-            const taken=collected[i];
-            const card=document.createElement('div');
-            card.className='room-card';
-            card.style.background = r.color || '#2c2118';
-            if(r.description) card.setAttribute('data-tooltip', r.description);
+    // Данные игры
+    const ITEM_EMOJI = "${escapeHtml(itemEmoji)}";
+    const QUESTION_TEXT = "${escapeHtml(questionText)}";
+    const CORRECT_ANSWER = "${correctAnswer}";
+    const HINT_TEXT = "${escapeHtml(hintText)}";
+    const SELECTED_ROOM = ${selectedRoom};
+    
+    const OBSTACLES = ${JSON.stringify(finalObstacles)};
+    const ROOM_NAMES = ${JSON.stringify(roomNames)};
+    
+    let gameActive = true;
+    let itemFound = false;
+    let activeModal = false;
+    
+    // Создаём летающие объекты
+    function createFloatingObjects() {
+        const container = document.getElementById('gameContainer');
+        OBSTACLES.forEach((obs, idx) => {
+            const el = document.createElement('div');
+            el.className = 'floating-object';
+            el.innerHTML = obs.emoji;
+            el.title = obs.text;
+            el.style.left = Math.random() * 80 + 10 + '%';
+            el.style.top = Math.random() * 60 + 20 + '%';
+            el.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            el.style.animationDelay = (idx * 0.3) + 's';
+            el.onclick = (e) => {
+                e.stopPropagation();
+                // Эффект "промах" - мешающий объект
+                el.style.transform = 'scale(1.2)';
+                setTimeout(() => { el.style.transform = ''; }, 200);
+                showToast("❌ Это не предмет! Ищи " + ITEM_EMOJI);
+            };
+            container.appendChild(el);
+        });
+    }
+    
+    function showToast(msg) {
+        const toast = document.createElement('div');
+        toast.innerText = msg;
+        toast.style.position = 'fixed';
+        toast.style.bottom = '30px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.background = '#b71c1c';
+        toast.style.color = 'white';
+        toast.style.padding = '12px 24px';
+        toast.style.borderRadius = '60px';
+        toast.style.zIndex = '3000';
+        toast.style.fontWeight = 'bold';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2000);
+    }
+    
+    function renderRooms() {
+        const grid = document.getElementById('roomsGrid');
+        grid.innerHTML = '';
+        for (let i = 0; i < 9; i++) {
+            const card = document.createElement('div');
+            card.className = 'room-card';
+            if (itemFound) card.classList.add('disabled');
+            
             let content = '';
-            if(r.image && r.image.trim() !== '' && !taken){
-                content += \`<img src="\${r.image}" class="room-image" onerror="this.style.display='none'" alt="room">\`;
-            }
-            if(!taken){
-                content += \`<span class="item-icon">\${r.item}</span>\`;
-                content += \`<div class="room-name">\${r.name}</div>\`;
-                content += \`<div style="font-size:10px; margin-top:5px;">${langStrings.clickHint}</div>\`;
-                card.addEventListener('click',()=>openTaskModal(i));
+            if (i === SELECTED_ROOM && !itemFound) {
+                content = \`
+                    <div class="item-icon">${ITEM_EMOJI}</div>
+                    <div class="room-name">\${ROOM_NAMES[i]}</div>
+                    <div style="font-size:0.7rem; margin-top:6px;">🔍 нажми, чтобы найти</div>
+                \`;
+                card.onclick = () => openQuestionModal();
             } else {
-                content += \`<span class="item-icon" style="opacity:0.6;">📦 \${r.item.split(' ')[0] || '✔'}</span>\`;
-                content += \`<div class="room-name">\${r.name}</div>\`;
-                content += \`<div class="status-taken">${langStrings.takenStatus}</div>\`;
-                card.style.cursor='default';
-                card.addEventListener('click',()=>showToast("${langStrings.emptyMsg}"));
+                content = \`
+                    <div class="item-icon" style="opacity:0.4;">❓</div>
+                    <div class="room-name">\${ROOM_NAMES[i]}</div>
+                    \${itemFound ? '<div class="taken-badge">✨ Уже найдено</div>' : '<div style="font-size:0.7rem;">🔒 пустая комната</div>'}
+                \`;
+                card.onclick = () => {
+                    if (!itemFound) showToast("🔍 Здесь ничего нет... Ищи " + ITEM_EMOJI);
+                };
             }
             card.innerHTML = content;
-            gridDiv.appendChild(card);
+            grid.appendChild(card);
         }
-        scoreSpan.innerText=score;
-        saveProgress();
-    }
-    function showToast(msg){ const d=document.createElement('div'); d.innerText=msg; d.style.position='fixed'; d.style.bottom='30px'; d.style.left='50%'; d.style.transform='translateX(-50%)'; d.style.background='#b71c1c'; d.style.color='white'; d.style.padding='12px 24px'; d.style.borderRadius='60px'; d.style.zIndex='1001'; document.body.appendChild(d); setTimeout(()=>d.remove(),1500); }
-    function openTaskModal(idx){
-        if(collected[idx]){ showToast("${langStrings.emptyMsg}"); return; }
-        activeRoomIndex=idx;
-        const r=questData[idx];
-        modalItemName.innerHTML=\`🏺 \${r.item}\`;
-        modalTask.innerHTML=\`\${r.task}<br><span style="font-size:0.8rem;">💡 \${r.hint}</span>\`;
-        answerInp.value='';
-        modalFeedback.innerHTML='';
-        modal.style.display='flex';
-        answerInp.focus();
-    }
-    function checkAnswer(){
-        if(activeRoomIndex===null) return;
-        if(collected[activeRoomIndex]){ closeModal(); showToast("${langStrings.emptyMsg}"); return; }
-        const r=questData[activeRoomIndex];
-        const userAns=answerInp.value.trim().toLowerCase();
-        const correct=r.answer.toString().toLowerCase();
-        if(userAns===correct){
-            collected[activeRoomIndex]=true;
-            score++;
-            updateUI();
-            modalFeedback.innerHTML='✨ ${langStrings.correctMsg} ✨';
-            modalFeedback.classList.add('correct-feedback');
-            setTimeout(()=>{ closeModal(); if(collected.filter(v=>v===true).length===questData.length) setTimeout(()=>alert("${langStrings.winMsg}"),200); },1000);
+        
+        const statusSpan = document.getElementById('gameStatus');
+        if (itemFound) {
+            statusSpan.innerHTML = '🏆 ПОБЕДА! Предмет найден! 🏆';
+            statusSpan.style.color = '#ffd966';
         } else {
-            modalFeedback.innerHTML=\`❌ ${langStrings.wrongMsg} «\${answerInp.value}» ${langStrings.tryAgain} 💡 \${r.hint} ❌\`;
-            modalFeedback.classList.add('wrong-feedback');
-            answerInp.value='';
-            answerInp.focus();
+            statusSpan.innerHTML = '🔍 Ищи ' + ITEM_EMOJI + '... Осторожно, летают препятствия!';
         }
-        saveProgress();
     }
-    function closeModal(){ modal.style.display='none'; activeRoomIndex=null; modalFeedback.innerHTML=''; }
-    function resetGame(){ collected.fill(false); score=0; updateUI(); closeModal(); showToast("${langStrings.resetFeedback}"); saveProgress(); }
-    submitAnswer.addEventListener('click',checkAnswer);
-    closeModalBtn.addEventListener('click',closeModal);
-    resetBtnG.addEventListener('click',resetGame);
-    modal.addEventListener('click',(e)=>{ if(e.target===modal) closeModal(); });
-    answerInp.addEventListener('keypress',(e)=>{ if(e.key==='Enter') checkAnswer(); });
-    loadProgress();
-<\/script>
+    
+    function openQuestionModal() {
+        if (itemFound || !gameActive) return;
+        
+        const modal = document.getElementById('taskModal');
+        const modalTask = document.getElementById('modalTask');
+        const answerInput = document.getElementById('answerInput');
+        const feedback = document.getElementById('modalFeedback');
+        
+        modalTask.innerHTML = QUESTION_TEXT;
+        answerInput.value = '';
+        feedback.innerHTML = '';
+        feedback.className = 'feedback';
+        modal.style.display = 'flex';
+        answerInput.focus();
+        activeModal = true;
+    }
+    
+    function checkAnswer() {
+        const answer = document.getElementById('answerInput').value.trim().toLowerCase();
+        const feedback = document.getElementById('modalFeedback');
+        
+        if (answer === CORRECT_ANSWER) {
+            itemFound = true;
+            gameActive = true;
+            feedback.innerHTML = '✨ ВЕРНО! Ты нашёл предмет! Поздравляю! ✨';
+            feedback.classList.add('correct-feedback');
+            setTimeout(() => {
+                closeModal();
+                renderRooms();
+                showToast("🎉 ПОБЕДА! Ты справился с заданием! 🎉");
+            }, 1500);
+        } else {
+            feedback.innerHTML = \`❌ НЕВЕРНО! Ответ "\${answer}" неправильный. Попробуй ещё раз! 💡 \${HINT_TEXT}\`;
+            feedback.classList.add('wrong-feedback');
+            document.getElementById('answerInput').value = '';
+            document.getElementById('answerInput').focus();
+        }
+    }
+    
+    function closeModal() {
+        document.getElementById('taskModal').style.display = 'none';
+        activeModal = false;
+    }
+    
+    function resetGame() {
+        itemFound = false;
+        gameActive = true;
+        renderRooms();
+        showToast("🔄 Игра перезапущена! Ищи " + ITEM_EMOJI);
+    }
+    
+    // Инициализация
+    window.onload = () => {
+        renderRooms();
+        createFloatingObjects();
+        
+        document.getElementById('submitBtn').onclick = checkAnswer;
+        document.getElementById('closeModalBtn').onclick = closeModal;
+        document.getElementById('resetBtn').onclick = resetGame;
+        
+        document.getElementById('answerInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkAnswer();
+        });
+        
+        // Закрытие по клику вне
+        document.getElementById('taskModal').onclick = (e) => {
+            if (e.target === document.getElementById('taskModal')) closeModal();
+        };
+    };
+</script>
 </body>
 </html>`;
     }
@@ -801,17 +893,28 @@ ${musicBlock}
         const code = generateFinalCode();
         try {
             await navigator.clipboard.writeText(code);
-            alert('✅ Код скопирован! Теперь вставь его в Genially (вставить HTML)');
+            alert('✅ Код скопирован! Вставь его в Genially через "Вставить HTML"');
         } catch(err) {
             alert('❌ Не удалось скопировать, выдели текст вручную Ctrl+C');
         }
     }
 
+    // Привязка событий
+    document.getElementById('addObstacleBtn').onclick = () => {
+        obstacles.push({ emoji: "🦇", text: "Новое препятствие" });
+        renderObstacles();
+        updatePreview();
+    };
+    
+    document.getElementById('generateBtn').onclick = displayGeneratedCode;
+    document.getElementById('copyBtn').onclick = copyCode;
+    document.getElementById('itemEmoji').oninput = () => updatePreview();
+    document.getElementById('gameTitle').oninput = () => updatePreview();
+    
     // Инициализация
-    renderQuickRename();
-    renderRoomsEditor();
-    document.getElementById('generateBtn').addEventListener('click', displayGeneratedCode);
-    document.getElementById('copyBtn').addEventListener('click', copyCode);
+    renderRoomSelector();
+    renderObstacles();
+    updatePreview();
     displayGeneratedCode();
 </script>
 </body>
