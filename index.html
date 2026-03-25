@@ -2,321 +2,352 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Конструктор квеста "Найди предмет" | Для Genially</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конструктор квеста "Найди предмет" | Genially</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #FF9800;
+            --accent: #FF4081;
+            --glass: rgba(255,255,255,0.95);
+            --dark: #121212;
+        }
         * {
             box-sizing: border-box;
         }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 20px;
-            background: #f0f2f5;
+            font-family: 'Montserrat', sans-serif;
+            background: radial-gradient(circle at center, #2a003b 0%, #000000 100%);
+            color: #222;
+            padding: 28px 14px;
+            min-height: 100vh;
         }
-
-        /* ПРОЗРАЧНЫЙ ФОН ДЛЯ GENIALLY */
-        .genially-clean {
-            background: transparent;
+        .bg-float {
+            position: fixed;
+            font-size: 46px;
+            opacity: .25;
+            z-index: -1;
+            animation: floatSpace 22s infinite linear;
         }
-
-        .builder-layout {
-            display: flex;
-            gap: 25px;
-            max-width: 1600px;
+        @keyframes floatSpace {
+            0% { transform: translateY(110vh) rotate(0deg); }
+            100% { transform: translateY(-10vh) rotate(360deg); }
+        }
+        .wrap {
+            max-width: 1300px;
             margin: 0 auto;
-            flex-wrap: wrap;
+            background: var(--glass);
+            border-radius: 28px;
+            border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 18px var(--primary), 0 0 60px rgba(255,152,0,.18);
+            padding: 24px;
         }
-
-        .settings-panel {
-            flex: 1;
-            min-width: 380px;
-            background: white;
-            border-radius: 24px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            max-height: 90vh;
-            overflow-y: auto;
+        h1 {
+            margin: 0 0 10px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 42px;
+            text-align: center;
+            text-shadow: 2px 2px 0 var(--primary);
         }
-
-        .preview-panel {
-            flex: 1.2;
-            min-width: 450px;
-            background: #f8f9fa;
-            border-radius: 24px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        .sub {
+            text-align: center;
+            color: #444;
+            margin-bottom: 24px;
+            font-size: 13px;
         }
-
-        .setting-group {
-            margin-bottom: 25px;
-            border-bottom: 1px solid #e0e0e0;
-            padding-bottom: 15px;
-        }
-
-        .setting-group h3 {
-            margin: 0 0 12px 0;
-            color: #2c3e2b;
-            font-size: 1.1rem;
-        }
-
-        label {
-            display: block;
-            margin: 8px 0 4px;
-            font-weight: bold;
-            font-size: 0.85rem;
-            color: #2c3e2b;
-        }
-
-        select, input, textarea {
-            width: 100%;
-            padding: 10px;
-            border-radius: 12px;
-            border: 1px solid #ddd;
-            background: white;
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-        }
-
-        textarea {
-            font-family: monospace;
-            resize: vertical;
-        }
-
-        .obstacle-card {
-            background: #fff3e0;
-            border-radius: 16px;
-            padding: 12px;
-            margin-bottom: 12px;
-            border-left: 4px solid #ff6b6b;
-        }
-
-        .obstacle-header {
+        .topbar {
             display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
-
-        .remove-obstacle {
-            background: #ff6b6b;
-            border: none;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.75rem;
-        }
-
-        .add-obstacle-btn {
-            background: #4caf50;
-            color: white;
-            border: none;
+        .pill {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            background: rgba(0,0,0,.06);
+            border-radius: 999px;
             padding: 8px 16px;
-            border-radius: 25px;
-            cursor: pointer;
-            margin-top: 10px;
-            width: 100%;
         }
-
+        label {
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: #555;
+        }
+        select, input, textarea {
+            padding: 10px 14px;
+            border-radius: 14px;
+            border: 2px solid #ddd;
+            font-family: 'Montserrat', sans-serif;
+            outline: none;
+            transition: .2s;
+            background: white;
+            font-size: 14px;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(255,152,0,.25);
+        }
+        .editor-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-height: 70vh;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .card {
+            background: rgba(255,255,255,.8);
+            border: 1px solid rgba(0,0,0,.08);
+            border-radius: 20px;
+            padding: 16px;
+        }
+        .card h2 {
+            margin: 0 0 12px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 8px;
+        }
         .room-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 10px;
+            gap: 8px;
+            margin: 12px 0;
         }
-
         .room-tile {
-            background: #e8e8e8;
+            background: #f5f0e0;
             border-radius: 12px;
-            padding: 12px;
+            padding: 8px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s;
             border: 2px solid transparent;
         }
-
         .room-tile.selected {
-            border-color: #ff9800;
+            border-color: var(--primary);
             background: #fff3e0;
-            box-shadow: 0 0 0 2px #ff9800;
+            box-shadow: 0 0 0 2px var(--primary);
         }
-
         .room-tile:hover {
-            background: #d0d0d0;
+            background: #e8e0c8;
         }
-
-        .button-group {
+        .obstacle-item {
+            background: #fff0e0;
+            border-radius: 12px;
+            padding: 10px;
+            margin-bottom: 10px;
             display: flex;
-            gap: 12px;
-            margin-top: 20px;
-            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
         }
-
-        .btn {
-            background: #e0e0e0;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 30px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.1s;
-            font-size: 0.9rem;
+        .obstacle-item input {
             flex: 1;
+            margin: 0;
         }
-
-        .btn-primary {
-            background: #4caf50;
+        .btn-add {
+            background: var(--primary);
+            border: none;
+            padding: 10px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
             color: white;
+            width: 100%;
+            margin-top: 8px;
         }
-
+        .btn-remove {
+            background: #ff6b6b;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            color: white;
+            font-size: 12px;
+        }
+        .btn {
+            background: linear-gradient(45deg, var(--primary), #ffb74d);
+            border: none;
+            border-radius: 40px;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            color: white;
+            font-family: 'Fredoka One', cursive;
+            transition: .1s;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
         .btn-copy {
-            background: #2196f3;
-            color: white;
+            background: linear-gradient(45deg, #2196f3, #64b5f6);
         }
-
-        .generated-code {
+        .output-code {
             background: #1e1e1e;
+            color: #d4d4d4;
             padding: 15px;
             border-radius: 16px;
             font-family: monospace;
-            font-size: 10px;
+            font-size: 11px;
             white-space: pre-wrap;
             word-break: break-all;
-            max-height: 400px;
+            max-height: 250px;
             overflow: auto;
-            color: #d4d4d4;
-            border: 1px solid #555;
         }
-
-        .preview-game {
-            background: #e0e8f0;
-            border-radius: 20px;
-            padding: 20px;
-            min-height: 400px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .preview-grid-demo {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .preview-room-card {
-            background: #d4c4a8;
+        .preview-frame {
+            width: 100%;
+            height: 500px;
+            border: 0;
             border-radius: 16px;
-            padding: 15px;
-            text-align: center;
-            position: relative;
-            transition: all 0.2s;
+            background: transparent;
+            display: block;
         }
-
-        .preview-room-card.highlight {
-            background: #ffd966;
-            box-shadow: 0 0 0 3px #ff9800;
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
         }
-
-        .preview-item {
-            font-size: 40px;
+        .emoji-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
         }
-
-        .floating-object {
-            position: absolute;
-            font-size: 30px;
-            animation: floatAnim 3s infinite ease-in-out;
-            pointer-events: none;
+        .emoji-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            font-size: 22px;
+            transition: .1s;
         }
-
-        @keyframes floatAnim {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
+        .emoji-btn:hover {
+            transform: scale(1.05);
+        }
+        hr {
+            margin: 15px 0;
+            border-color: #ddd;
+        }
+        .help-text {
+            font-size: 11px;
+            color: #888;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
-<div class="builder-layout">
-    <!-- ЛЕВАЯ ПАНЕЛЬ: НАСТРОЙКИ -->
-    <div class="settings-panel">
-        <h1>🎮 Конструктор квеста "Найди предмет" 🎮</h1>
-        <p style="color:#666;">Для Genially — прозрачный фон, летающие объекты</p>
+<div class="bg-float" style="left:10%; animation-duration: 26s;">🔍</div>
+<div class="bg-float" style="left:80%; animation-duration: 30s;">🎁</div>
+<div class="bg-float" style="left:30%; animation-duration: 22s;">👑</div>
 
-        <div class="setting-group">
-            <h3>📦 Где спрятан предмет?</h3>
-            <div class="room-grid" id="roomSelectorGrid"></div>
-            <label>🎁 Эмодзи предмета</label>
-            <input type="text" id="itemEmoji" value="🔑" placeholder="🔑 🎁 💎 👑 🗝️">
-        </div>
+<div class="wrap">
+    <h1>🔍 КОНСТРУКТОР КВЕСТА "НАЙДИ ПРЕДМЕТ" 🔍</h1>
+    <div class="sub">Редактор генерирует HTML-код для вставки в Genially. Есть предпросмотр!</div>
 
-        <div class="setting-group">
-            <h3>✈️ Летающие мешающие объекты</h3>
-            <p style="font-size:0.75rem; color:#666;">Игрок должен кликнуть на предмет, а не на эти объекты</p>
-            <div id="obstaclesContainer"></div>
-            <button class="add-obstacle-btn" id="addObstacleBtn">+ Добавить летающий объект</button>
-        </div>
-
-        <div class="setting-group">
-            <h3>❓ Вопрос (когда найден предмет)</h3>
-            <label>Текст вопроса</label>
-            <textarea id="questionText" rows="2" placeholder="Введите вопрос...">Назови столицу Франции?</textarea>
-            <label>✅ Правильный ответ</label>
-            <input type="text" id="correctAnswer" value="париж" placeholder="Правильный ответ">
-            <label>💡 Подсказка</label>
-            <input type="text" id="hintText" value="Город любви и Эйфелева башня" placeholder="Подсказка">
-        </div>
-
-        <div class="setting-group">
-            <h3>🎨 Настройки</h3>
-            <label>Название игры</label>
-            <input type="text" id="gameTitle" value="🔍 Найди сокровище! 🔍">
-            <label>Шрифт</label>
-            <select id="fontSelect">
-                <option value="'Segoe UI', system-ui">Современный</option>
-                <option value="'MedievalSharp', 'Courier New', monospace">Средневековый</option>
-                <option value="'Comic Neue', cursive">Игровой</option>
-            </select>
-            <label>Цветовая тема (фон Genially прозрачный)</label>
-            <select id="colorTheme">
-                <option value="light">Светлая тема</option>
-                <option value="dark">Тёмная тема</option>
+    <div class="topbar">
+        <div class="pill">
+            <label>🎨 Тема</label>
+            <select id="themeSelect">
+                <option value="light">Светлая</option>
+                <option value="dark">Тёмная</option>
                 <option value="medieval">Средневековая</option>
             </select>
+            <label style="margin-left:10px;">📝 Шрифт</label>
+            <select id="fontSelect">
+                <option value="'Segoe UI', system-ui">Современный</option>
+                <option value="'Fredoka One', cursive">Игровой</option>
+                <option value="'MedievalSharp', monospace">Средневековый</option>
+            </select>
         </div>
-
-        <div class="button-group">
-            <button class="btn btn-primary" id="generateBtn">✨ СГЕНЕРИРОВАТЬ КОД ✨</button>
-            <button class="btn btn-copy" id="copyBtn">📋 СКОПИРОВАТЬ КОД</button>
+        <div class="pill">
+            <button class="btn" id="generateBtn">✨ СОЗДАТЬ ✨</button>
+            <button class="btn btn-copy" id="copyBtn">📋 КОПИРОВАТЬ</button>
         </div>
     </div>
 
-    <!-- ПРАВАЯ ПАНЕЛЬ: ПРЕВЬЮ -->
-    <div class="preview-panel">
-        <h2>👁️ Предпросмотр игры</h2>
-        <div class="preview-game" id="previewGameArea">
-            <div style="font-size: 1.2rem; font-weight: bold; text-align: center;" id="previewTitle">🔍 Найди сокровище! 🔍</div>
-            <div class="preview-grid-demo" id="previewGrid"></div>
-            <div style="position: relative; height: 60px;" id="floatingPreview"></div>
-            <p style="margin-top: 15px; font-size: 0.75rem; text-align: center; color:#666;">⭐ Предмет в золотой комнате ⭐</p>
+    <div class="editor-layout">
+        <!-- ЛЕВАЯ ПАНЕЛЬ - НАСТРОЙКИ -->
+        <div class="left-panel">
+            <!-- Выбор комнаты -->
+            <div class="card">
+                <h2>📍 ГДЕ СПРЯТАН ПРЕДМЕТ?</h2>
+                <div class="room-grid" id="roomGrid"></div>
+                <label>🎁 Эмодзи предмета</label>
+                <input type="text" id="itemEmoji" value="🔑">
+                <div class="emoji-bar" id="itemEmojiBar"></div>
+            </div>
+
+            <!-- Летающие объекты -->
+            <div class="card">
+                <h2>✈️ ЛЕТАЮЩИЕ МЕШАЮЩИЕ ОБЪЕКТЫ</h2>
+                <div id="obstaclesList"></div>
+                <button class="btn-add" id="addObstacleBtn">+ Добавить объект</button>
+                <div class="help-text">Нажми на объект в игре — будет сообщение "Это не предмет!"</div>
+            </div>
+
+            <!-- Вопрос -->
+            <div class="card">
+                <h2>❓ ВОПРОС (когда нашли предмет)</h2>
+                <label>Текст вопроса</label>
+                <textarea id="questionText" rows="2">Назови столицу Франции?</textarea>
+                <label>✅ Правильный ответ</label>
+                <input type="text" id="correctAnswer" value="париж">
+                <label>💡 Подсказка</label>
+                <input type="text" id="hintText" value="Город любви и Эйфелева башня">
+            </div>
+
+            <!-- Название игры -->
+            <div class="card">
+                <h2>🎮 НАСТРОЙКИ</h2>
+                <label>Название игры</label>
+                <input type="text" id="gameTitle" value="🔍 НАЙДИ СОКРОВИЩЕ! 🔍">
+            </div>
         </div>
-        <hr>
-        <h3>📦 Финальный код (вставь в Genially)</h3>
-        <div id="generatedCodeContainer" class="generated-code">
-            // Нажми "Сгенерировать код"
+
+        <!-- ПРАВАЯ ПАНЕЛЬ - ПРЕВЬЮ И ВЫВОД -->
+        <div class="right-panel">
+            <div class="card">
+                <h2>👁️ ПРЕДПРОСМОТР ИГРЫ</h2>
+                <iframe id="previewFrame" class="preview-frame" allow="autoplay"></iframe>
+            </div>
+
+            <div class="card">
+                <h2>📦 ГОТОВЫЙ КОД (вставь в Genially)</h2>
+                <div id="outputCode" class="output-code">// Нажми "Создать"</div>
+                <div class="help-text">✅ В Genially: Вставить → HTML-код → вставь код → растяни на весь экран</div>
+            </div>
         </div>
-        <p style="font-size: 11px; margin-top: 8px;">✅ В Genially: Вставить → HTML-код → вставь код → растяни на весь экран</p>
     </div>
 </div>
 
 <script>
     // Данные
-    let selectedRoom = 4; // центр
+    let selectedRoom = 4;
     let obstacles = [
-        { emoji: "🦇", text: "Летучая мышь" },
-        { emoji: "👻", text: "Призрак" },
-        { emoji: "🕷️", text: "Паук" }
+        { emoji: "🦇", name: "Летучая мышь" },
+        { emoji: "👻", name: "Призрак" },
+        { emoji: "🕷️", name: "Паук" }
     ];
     
     const roomNames = [
@@ -324,54 +355,24 @@
         "Оружейная", "Тайная комната", "Соколиный двор",
         "Подземелье", "Сад камней", "Смотровая башня"
     ];
-
-    // Обновление превью
-    function updatePreview() {
-        const container = document.getElementById('previewGrid');
-        if (!container) return;
-        
-        container.innerHTML = '';
-        for (let i = 0; i < 9; i++) {
-            const card = document.createElement('div');
-            card.className = 'preview-room-card';
-            if (i === selectedRoom) card.classList.add('highlight');
-            card.innerHTML = `
-                <div class="preview-item">${i === selectedRoom ? document.getElementById('itemEmoji').value : '❓'}</div>
-                <div style="margin-top: 8px; font-size: 0.75rem;">${roomNames[i]}</div>
-            `;
-            container.appendChild(card);
-        }
-        
-        document.getElementById('previewTitle').innerText = document.getElementById('gameTitle').value;
-        
-        // Превью летающих объектов
-        const floatingPreview = document.getElementById('floatingPreview');
-        floatingPreview.innerHTML = '';
-        obstacles.forEach((obs, idx) => {
-            const div = document.createElement('div');
-            div.className = 'floating-object';
-            div.style.left = `${(idx * 70) % 80 + 10}%`;
-            div.style.top = `${(idx * 40) % 60 + 20}%`;
-            div.style.animationDelay = `${idx * 0.5}s`;
-            div.innerHTML = obs.emoji;
-            div.title = obs.text;
-            floatingPreview.appendChild(div);
-        });
-    }
+    
+    const itemEmojis = ["🔑", "🎁", "💎", "👑", "🗝️", "📿", "🏆", "💍", "🔮"];
+    const commonEmojis = ["🦇", "👻", "🕷️", "🧙", "🐉", "⚡", "💀", "🧛", "🐺", "🦉", "🐍", "🦂"];
 
     // Рендер выбора комнаты
     function renderRoomSelector() {
-        const container = document.getElementById('roomSelectorGrid');
+        const container = document.getElementById('roomGrid');
         container.innerHTML = '';
         for (let i = 0; i < 9; i++) {
             const tile = document.createElement('div');
             tile.className = 'room-tile';
             if (i === selectedRoom) tile.classList.add('selected');
-            tile.innerHTML = `<div style="font-size: 1.5rem;">${i === selectedRoom ? '📍' : '🏠'}</div><div style="font-size: 0.7rem;">${roomNames[i].slice(0, 12)}</div>`;
+            tile.innerHTML = `<div style="font-size: 1.8rem;">${i === selectedRoom ? '📍' : '🏠'}</div>
+                             <div style="font-size: 0.7rem;">${roomNames[i].slice(0, 12)}</div>`;
             tile.onclick = () => {
                 selectedRoom = i;
                 renderRoomSelector();
-                updatePreview();
+                generatePreview();
             };
             container.appendChild(tile);
         }
@@ -379,48 +380,65 @@
 
     // Рендер летающих объектов
     function renderObstacles() {
-        const container = document.getElementById('obstaclesContainer');
+        const container = document.getElementById('obstaclesList');
         container.innerHTML = '';
         obstacles.forEach((obs, idx) => {
-            const card = document.createElement('div');
-            card.className = 'obstacle-card';
-            card.innerHTML = `
-                <div class="obstacle-header">
-                    <span style="font-size: 1.5rem;">${obs.emoji}</span>
-                    <button class="remove-obstacle" data-idx="${idx}">🗑️ Удалить</button>
-                </div>
-                <label>Эмодзи</label>
-                <input type="text" class="obs-emoji" data-idx="${idx}" value="${escapeHtml(obs.emoji)}">
-                <label>Название (для подсказки)</label>
-                <input type="text" class="obs-text" data-idx="${idx}" value="${escapeHtml(obs.text)}">
+            const div = document.createElement('div');
+            div.className = 'obstacle-item';
+            div.innerHTML = `
+                <span style="font-size: 1.5rem;">${obs.emoji}</span>
+                <input type="text" value="${escapeHtml(obs.name)}" data-idx="${idx}" class="obs-name-input" placeholder="Название">
+                <button class="btn-remove" data-idx="${idx}">🗑️</button>
             `;
-            container.appendChild(card);
+            container.appendChild(div);
         });
         
-        document.querySelectorAll('.remove-obstacle').forEach(btn => {
+        document.querySelectorAll('.obs-name-input').forEach(inp => {
+            inp.addEventListener('change', (e) => {
+                const idx = parseInt(inp.dataset.idx);
+                obstacles[idx].name = inp.value;
+                generatePreview();
+            });
+        });
+        
+        document.querySelectorAll('.btn-remove').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const idx = parseInt(btn.dataset.idx);
                 obstacles.splice(idx, 1);
                 renderObstacles();
-                updatePreview();
+                generatePreview();
             });
+        });
+    }
+
+    // Эмодзи бары
+    function setupEmojiBars() {
+        const itemBar = document.getElementById('itemEmojiBar');
+        itemEmojis.forEach(emoji => {
+            const btn = document.createElement('button');
+            btn.className = 'emoji-btn';
+            btn.textContent = emoji;
+            btn.onclick = () => {
+                document.getElementById('itemEmoji').value = emoji;
+                generatePreview();
+            };
+            itemBar.appendChild(btn);
         });
         
-        document.querySelectorAll('.obs-emoji').forEach(inp => {
-            inp.addEventListener('change', (e) => {
-                const idx = parseInt(inp.dataset.idx);
-                obstacles[idx].emoji = inp.value;
-                updatePreview();
-            });
+        const commonBar = document.createElement('div');
+        commonBar.className = 'emoji-bar';
+        commonEmojis.forEach(emoji => {
+            const btn = document.createElement('button');
+            btn.className = 'emoji-btn';
+            btn.textContent = emoji;
+            btn.onclick = () => {
+                obstacles.push({ emoji: emoji, name: "Мешающий объект" });
+                renderObstacles();
+                generatePreview();
+            };
+            commonBar.appendChild(btn);
         });
-        
-        document.querySelectorAll('.obs-text').forEach(inp => {
-            inp.addEventListener('change', (e) => {
-                const idx = parseInt(inp.dataset.idx);
-                obstacles[idx].text = inp.value;
-                updatePreview();
-            });
-        });
+        document.querySelector('.card:first-child .emoji-bar').after(commonBar);
     }
 
     function escapeHtml(str) {
@@ -433,27 +451,27 @@
         });
     }
 
-    // Генерация финального кода (для Genially)
-    function generateFinalCode() {
+    // Генерация HTML игры
+    function buildGameHTML() {
         const gameTitle = document.getElementById('gameTitle').value;
         const itemEmoji = document.getElementById('itemEmoji').value;
         const fontFamily = document.getElementById('fontSelect').value;
-        const colorTheme = document.getElementById('colorTheme').value;
+        const theme = document.getElementById('themeSelect').value;
         const questionText = document.getElementById('questionText').value;
         const correctAnswer = document.getElementById('correctAnswer').value.toLowerCase().trim();
         const hintText = document.getElementById('hintText').value;
         
-        const finalObstacles = obstacles.filter(o => o.emoji && o.emoji.trim() !== '');
-        
-        // Тема оформления
+        // Цвета темы
         let themeColors = {};
-        if (colorTheme === 'light') {
-            themeColors = { bg: 'rgba(255,255,240,0.95)', cardBg: '#f5f0e0', text: '#2c3e2b', border: '#d4af37' };
-        } else if (colorTheme === 'dark') {
-            themeColors = { bg: 'rgba(30,30,40,0.95)', cardBg: '#2c2418', text: '#f5e7c8', border: '#c9a87b' };
+        if (theme === 'light') {
+            themeColors = { bg: 'rgba(255,255,240,0.95)', cardBg: '#f5f0e0', text: '#2c3e2b', border: '#ff9800', cardHover: '#fff3e0' };
+        } else if (theme === 'dark') {
+            themeColors = { bg: 'rgba(30,30,40,0.95)', cardBg: '#2c2418', text: '#f5e7c8', border: '#c9a87b', cardHover: '#3a2e22' };
         } else {
-            themeColors = { bg: 'rgba(42,35,25,0.95)', cardBg: '#5c4b3a', text: '#f5e7c8', border: '#e4b363' };
+            themeColors = { bg: 'rgba(42,35,25,0.95)', cardBg: '#5c4b3a', text: '#f5e7c8', border: '#e4b363', cardHover: '#6b583f' };
         }
+        
+        const finalObstacles = obstacles.filter(o => o.emoji && o.emoji.trim() !== '');
         
         return `<!DOCTYPE html>
 <html lang="ru">
@@ -461,6 +479,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Квест | Найди предмет</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -497,6 +516,7 @@
             color: ${themeColors.text};
             text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
             font-size: 1.6rem;
+            font-family: 'Fredoka One', cursive;
         }
         
         .sub {
@@ -528,6 +548,11 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+        }
+        
+        .room-card:hover {
+            background: ${themeColors.cardHover};
+            transform: translateY(-2px);
         }
         
         .room-card:active {
@@ -685,6 +710,26 @@
             border-radius: 40px;
             margin-top: 15px;
         }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #b71c1c;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 60px;
+            z-index: 3000;
+            font-weight: bold;
+            animation: fadeOut 2s forwards;
+        }
+        
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
     </style>
 </head>
 <body>
@@ -717,56 +762,21 @@
 </div>
 
 <script>
-    // Данные игры
     const ITEM_EMOJI = "${escapeHtml(itemEmoji)}";
     const QUESTION_TEXT = "${escapeHtml(questionText)}";
     const CORRECT_ANSWER = "${correctAnswer}";
     const HINT_TEXT = "${escapeHtml(hintText)}";
     const SELECTED_ROOM = ${selectedRoom};
-    
-    const OBSTACLES = ${JSON.stringify(finalObstacles)};
     const ROOM_NAMES = ${JSON.stringify(roomNames)};
+    const OBSTACLES = ${JSON.stringify(finalObstacles)};
     
-    let gameActive = true;
     let itemFound = false;
-    let activeModal = false;
-    
-    // Создаём летающие объекты
-    function createFloatingObjects() {
-        const container = document.getElementById('gameContainer');
-        OBSTACLES.forEach((obs, idx) => {
-            const el = document.createElement('div');
-            el.className = 'floating-object';
-            el.innerHTML = obs.emoji;
-            el.title = obs.text;
-            el.style.left = Math.random() * 80 + 10 + '%';
-            el.style.top = Math.random() * 60 + 20 + '%';
-            el.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            el.style.animationDelay = (idx * 0.3) + 's';
-            el.onclick = (e) => {
-                e.stopPropagation();
-                // Эффект "промах" - мешающий объект
-                el.style.transform = 'scale(1.2)';
-                setTimeout(() => { el.style.transform = ''; }, 200);
-                showToast("❌ Это не предмет! Ищи " + ITEM_EMOJI);
-            };
-            container.appendChild(el);
-        });
-    }
+    let gameActive = true;
     
     function showToast(msg) {
         const toast = document.createElement('div');
+        toast.className = 'toast';
         toast.innerText = msg;
-        toast.style.position = 'fixed';
-        toast.style.bottom = '30px';
-        toast.style.left = '50%';
-        toast.style.transform = 'translateX(-50%)';
-        toast.style.background = '#b71c1c';
-        toast.style.color = 'white';
-        toast.style.padding = '12px 24px';
-        toast.style.borderRadius = '60px';
-        toast.style.zIndex = '3000';
-        toast.style.fontWeight = 'bold';
         document.body.appendChild(toast);
         setTimeout(() => toast.remove(), 2000);
     }
@@ -779,40 +789,57 @@
             card.className = 'room-card';
             if (itemFound) card.classList.add('disabled');
             
-            let content = '';
             if (i === SELECTED_ROOM && !itemFound) {
-                content = \`
+                card.innerHTML = \`
                     <div class="item-icon">${ITEM_EMOJI}</div>
                     <div class="room-name">\${ROOM_NAMES[i]}</div>
                     <div style="font-size:0.7rem; margin-top:6px;">🔍 нажми, чтобы найти</div>
                 \`;
                 card.onclick = () => openQuestionModal();
             } else {
-                content = \`
+                card.innerHTML = \`
                     <div class="item-icon" style="opacity:0.4;">❓</div>
                     <div class="room-name">\${ROOM_NAMES[i]}</div>
-                    \${itemFound ? '<div class="taken-badge">✨ Уже найдено</div>' : '<div style="font-size:0.7rem;">🔒 пустая комната</div>'}
+                    \${itemFound ? '<div class="taken-badge">✨ Найдено</div>' : '<div style="font-size:0.7rem;">🔒 пусто</div>'}
                 \`;
                 card.onclick = () => {
                     if (!itemFound) showToast("🔍 Здесь ничего нет... Ищи " + ITEM_EMOJI);
                 };
             }
-            card.innerHTML = content;
             grid.appendChild(card);
         }
         
         const statusSpan = document.getElementById('gameStatus');
         if (itemFound) {
             statusSpan.innerHTML = '🏆 ПОБЕДА! Предмет найден! 🏆';
-            statusSpan.style.color = '#ffd966';
         } else {
             statusSpan.innerHTML = '🔍 Ищи ' + ITEM_EMOJI + '... Осторожно, летают препятствия!';
         }
     }
     
+    function createFloatingObjects() {
+        const container = document.getElementById('gameContainer');
+        OBSTACLES.forEach((obs, idx) => {
+            const el = document.createElement('div');
+            el.className = 'floating-object';
+            el.innerHTML = obs.emoji;
+            el.title = obs.name;
+            el.style.left = Math.random() * 80 + 10 + '%';
+            el.style.top = Math.random() * 60 + 20 + '%';
+            el.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            el.style.animationDelay = (idx * 0.3) + 's';
+            el.onclick = (e) => {
+                e.stopPropagation();
+                el.style.transform = 'scale(1.2)';
+                setTimeout(() => el.style.transform = '', 200);
+                showToast("❌ Это не предмет! Ищи " + ITEM_EMOJI);
+            };
+            container.appendChild(el);
+        });
+    }
+    
     function openQuestionModal() {
         if (itemFound || !gameActive) return;
-        
         const modal = document.getElementById('taskModal');
         const modalTask = document.getElementById('modalTask');
         const answerInput = document.getElementById('answerInput');
@@ -824,7 +851,6 @@
         feedback.className = 'feedback';
         modal.style.display = 'flex';
         answerInput.focus();
-        activeModal = true;
     }
     
     function checkAnswer() {
@@ -833,7 +859,6 @@
         
         if (answer === CORRECT_ANSWER) {
             itemFound = true;
-            gameActive = true;
             feedback.innerHTML = '✨ ВЕРНО! Ты нашёл предмет! Поздравляю! ✨';
             feedback.classList.add('correct-feedback');
             setTimeout(() => {
@@ -851,7 +876,6 @@
     
     function closeModal() {
         document.getElementById('taskModal').style.display = 'none';
-        activeModal = false;
     }
     
     function resetGame() {
@@ -861,7 +885,6 @@
         showToast("🔄 Игра перезапущена! Ищи " + ITEM_EMOJI);
     }
     
-    // Инициализация
     window.onload = () => {
         renderRooms();
         createFloatingObjects();
@@ -874,23 +897,27 @@
             if (e.key === 'Enter') checkAnswer();
         });
         
-        // Закрытие по клику вне
         document.getElementById('taskModal').onclick = (e) => {
             if (e.target === document.getElementById('taskModal')) closeModal();
         };
     };
-</script>
+<\/script>
 </body>
 </html>`;
     }
 
-    function displayGeneratedCode() {
-        const code = generateFinalCode();
-        document.getElementById('generatedCodeContainer').innerText = code;
+    // Генерация и обновление предпросмотра
+    function generatePreview() {
+        const html = buildGameHTML();
+        const previewFrame = document.getElementById('previewFrame');
+        previewFrame.srcdoc = html;
+        document.getElementById('outputCode').textContent = 
+            `<iframe srcdoc="${html.replace(/[&]/g, '&amp;').replace(/"/g, '&quot;')}" width="100%" height="600" frameborder="0" style="background:transparent;display:block" allow="autoplay"></iframe>`;
     }
-
+    
+    // Копирование кода
     async function copyCode() {
-        const code = generateFinalCode();
+        const code = document.getElementById('outputCode').textContent;
         try {
             await navigator.clipboard.writeText(code);
             alert('✅ Код скопирован! Вставь его в Genially через "Вставить HTML"');
@@ -899,23 +926,29 @@
         }
     }
 
-    // Привязка событий
-    document.getElementById('addObstacleBtn').onclick = () => {
-        obstacles.push({ emoji: "🦇", text: "Новое препятствие" });
-        renderObstacles();
-        updatePreview();
-    };
-    
-    document.getElementById('generateBtn').onclick = displayGeneratedCode;
-    document.getElementById('copyBtn').onclick = copyCode;
-    document.getElementById('itemEmoji').oninput = () => updatePreview();
-    document.getElementById('gameTitle').oninput = () => updatePreview();
-    
     // Инициализация
     renderRoomSelector();
     renderObstacles();
-    updatePreview();
-    displayGeneratedCode();
+    setupEmojiBars();
+    
+    document.getElementById('addObstacleBtn').onclick = () => {
+        obstacles.push({ emoji: "🦇", name: "Новое препятствие" });
+        renderObstacles();
+        generatePreview();
+    };
+    
+    document.getElementById('generateBtn').onclick = generatePreview;
+    document.getElementById('copyBtn').onclick = copyCode;
+    
+    document.getElementById('itemEmoji').oninput = generatePreview;
+    document.getElementById('questionText').oninput = generatePreview;
+    document.getElementById('correctAnswer').oninput = generatePreview;
+    document.getElementById('hintText').oninput = generatePreview;
+    document.getElementById('gameTitle').oninput = generatePreview;
+    document.getElementById('themeSelect').onchange = generatePreview;
+    document.getElementById('fontSelect').onchange = generatePreview;
+    
+    generatePreview();
 </script>
 </body>
 </html>
