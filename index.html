@@ -3,193 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Поймай насекомое - конструктор | 3D локации</title>
+    <title>Редактор игры "Поймай насекомое" для Genially</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a472a 0%, #0d2a1a 100%);
+            min-height: 100vh;
             padding: 20px;
         }
-        .main {
+
+        .main-container {
             max-width: 1400px;
             margin: 0 auto;
         }
+
         h1 {
             text-align: center;
             color: white;
             margin-bottom: 20px;
+            font-size: 28px;
             text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
         }
-        .row {
+
+        .editor-layout {
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
         }
-        .left {
-            width: 400px;
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
+
+        /* Панель настроек */
+        .settings-panel {
+            flex: 1;
+            min-width: 350px;
+            background: white;
+            border-radius: 24px;
             padding: 20px;
             max-height: 85vh;
             overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
-        .right {
-            flex: 1;
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
+
+        /* Панель предпросмотра */
+        .preview-panel {
+            flex: 1.2;
+            min-width: 500px;
+            background: white;
+            border-radius: 24px;
             padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
-        .block {
+
+        .section {
             margin-bottom: 25px;
-            border-bottom: 1px solid #eee;
             padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
         }
-        .block h3 {
-            margin-bottom: 12px;
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
             color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+
         label {
             display: block;
             font-size: 12px;
-            font-weight: bold;
-            margin-top: 8px;
-            margin-bottom: 4px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 5px;
+            text-transform: uppercase;
         }
-        input, textarea {
+
+        input, textarea, select {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 8px;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 14px;
+            margin-bottom: 10px;
         }
-        button {
-            background: #ff9800;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            margin-top: 5px;
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #ff9800;
         }
-        .bug-row {
-            display: flex;
+
+        /* Сетка эмодзи */
+        .emoji-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
             gap: 8px;
-            margin-bottom: 8px;
-            align-items: center;
+            margin: 10px 0;
         }
-        .bug-row input:first-child {
+
+        .emoji-option {
+            background: #f5f5f5;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 8px;
+            text-align: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .emoji-option:hover {
+            background: #ff9800;
+            transform: scale(1.05);
+        }
+
+        .emoji-option.selected {
+            background: #ff9800;
+            border-color: #ff9800;
+        }
+
+        /* Список насекомых */
+        .bug-item {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: #fff5e8;
+            border-radius: 12px;
+            padding: 8px;
+            margin-bottom: 8px;
+        }
+
+        .bug-item input:first-child {
             width: 60px;
             text-align: center;
             font-size: 24px;
+            margin-bottom: 0;
         }
-        .bug-row input:nth-child(2) {
+
+        .bug-item input:nth-child(2) {
             flex: 1;
+            margin-bottom: 0;
         }
-        .del {
-            background: #e74c3c;
-            padding: 5px 10px;
+
+        .delete-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
         }
-        .q-item {
-            background: #f9f9f9;
+
+        .add-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
             padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            border-left: 3px solid #ff9800;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            font-weight: bold;
         }
-        .q-header {
+
+        /* Вопросы */
+        .question-item {
+            background: #f9f9f9;
+            border-radius: 16px;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid #ff9800;
+        }
+
+        .question-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
-        .preview {
-            width: 100%;
-            height: 500px;
-            border: 2px solid #ddd;
-            border-radius: 12px;
-            margin-bottom: 15px;
-        }
-        .code {
-            background: #1e1e1e;
-            color: #0f0;
-            padding: 12px;
-            font-family: monospace;
-            font-size: 11px;
-            white-space: pre-wrap;
-            word-break: break-all;
-            max-height: 150px;
-            overflow: auto;
-            margin: 10px 0;
-            border-radius: 8px;
-        }
-        .btn-row {
-            display: flex;
-            gap: 10px;
-            margin: 10px 0;
-        }
-        .btn1 {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 25px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .orange { background: #ff9800; color: white; }
-        .blue { background: #2196f3; color: white; }
-        .hint {
-            font-size: 11px;
-            color: #888;
-            margin-top: 5px;
-        }
-        .emoji-panel {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin: 10px 0;
-            padding: 8px;
-            background: #f5f5f5;
-            border-radius: 12px;
-        }
-        .emoji-btn {
-            width: 45px;
-            height: 45px;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            font-size: 24px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .emoji-btn:hover {
-            background: #ff9800;
-        }
-        .fullscreen-option {
-            margin-top: 10px;
-            padding: 8px;
-            background: #e8f5e9;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .fullscreen-option input {
-            width: auto;
-            margin: 0;
-        }
-        /* 3D локации */
-        .location-3d {
+
+        /* Локации 3D */
+        .location-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
             margin: 10px 0;
         }
+
         .location-card {
             background: #f0f0f0;
             border-radius: 16px;
@@ -199,114 +203,198 @@
             transition: all 0.2s;
             border: 2px solid transparent;
         }
+
         .location-card:hover {
             transform: translateY(-3px);
         }
+
         .location-card.selected {
             border-color: #ff9800;
             background: #fff3e0;
             box-shadow: 0 0 0 2px #ff9800;
         }
-        .location-preview {
+
+        .location-emoji {
             font-size: 48px;
             margin-bottom: 8px;
         }
+
         .location-name {
             font-size: 12px;
             font-weight: bold;
             color: #333;
         }
-        .location-desc {
-            font-size: 10px;
+
+        /* Предпросмотр */
+        .preview-frame {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 16px;
+            background: #1a1a2e;
+            margin-bottom: 15px;
+        }
+
+        .code-box {
+            background: #1e1e1e;
+            color: #0f0;
+            padding: 12px;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 11px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 150px;
+            overflow: auto;
+            margin: 15px 0;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #ff9800;
+            color: white;
+        }
+
+        .btn-copy {
+            background: #2196f3;
+            color: white;
+        }
+
+        .help-text {
+            font-size: 11px;
             color: #888;
-            margin-top: 4px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .fullscreen-option {
+            margin-top: 10px;
+            padding: 8px;
+            background: #e8f5e9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .fullscreen-option input {
+            width: auto;
+            margin: 0;
+        }
+
+        .speed-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .speed-row input {
+            flex: 1;
+            margin-bottom: 0;
         }
     </style>
 </head>
 <body>
-<div class="main">
-    <h1>🐞 ПОЙМАЙ НАСЕКОМОЕ 🦋 | 3D ЛОКАЦИИ</h1>
+<div class="main-container">
+    <h1>🐞 РЕДАКТОР ИГРЫ "ПОЙМАЙ НАСЕКОМОЕ" ДЛЯ GENIALLY 🦋</h1>
     
-    <div class="row">
-        <!-- ЛЕВАЯ ПАНЕЛЬ -->
-        <div class="left">
-            <div class="block">
-                <h3>🎯 КОГО ЛОВИМ?</h3>
+    <div class="editor-layout">
+        <!-- ЛЕВАЯ ПАНЕЛЬ - НАСТРОЙКИ -->
+        <div class="settings-panel">
+            <!-- Главное насекомое -->
+            <div class="section">
+                <div class="section-title">🎯 КОГО ЛОВИМ?</div>
                 <input type="text" id="targetBug" value="🐞" style="font-size: 28px; text-align: center;">
-                <div class="emoji-panel" id="targetEmojiPanel"></div>
+                <div class="emoji-grid" id="targetGrid"></div>
             </div>
 
-            <div class="block">
-                <h3>🦟 ДРУГИЕ НАСЕКОМЫЕ</h3>
-                <div id="bugsList"></div>
-                <button onclick="addBug()">+ Добавить насекомое</button>
-                <div class="emoji-panel" id="otherEmojiPanel"></div>
-                <div class="hint">⚠️ При клике на них — теряешь жизнь</div>
+            <!-- Другие насекомые -->
+            <div class="section">
+                <div class="section-title">🦟 ДРУГИЕ НАСЕКОМЫЕ (мешают)</div>
+                <div id="bugsContainer"></div>
+                <button class="add-btn" id="addBugBtn">+ Добавить насекомое</button>
+                <div class="emoji-grid" id="otherGrid"></div>
+                <div class="help-text">⚠️ При клике на них — теряешь жизнь</div>
             </div>
 
-            <div class="block">
-                <h3>❓ ВОПРОСЫ (после поимки)</h3>
-                <div id="questionsList"></div>
-                <button onclick="addQuestion()">+ Добавить вопрос</button>
+            <!-- Вопросы -->
+            <div class="section">
+                <div class="section-title">❓ ВОПРОСЫ (после поимки)</div>
+                <div id="questionsContainer"></div>
+                <button class="add-btn" id="addQuestionBtn">+ Добавить вопрос</button>
             </div>
 
-            <div class="block">
-                <h3>⚙️ НАСТРОЙКИ</h3>
+            <!-- Настройки -->
+            <div class="section">
+                <div class="section-title">⚙️ НАСТРОЙКИ</div>
                 
-                <label>🎨 3D ЛОКАЦИЯ</label>
-                <div class="location-3d" id="locationSelector">
+                <label>🏞️ 3D ЛОКАЦИЯ</label>
+                <div class="location-grid" id="locationGrid">
                     <div class="location-card" data-loc="castle">
-                        <div class="location-preview">🏰</div>
+                        <div class="location-emoji">🏰</div>
                         <div class="location-name">Замок</div>
-                        <div class="location-desc">Средневековый замок</div>
                     </div>
                     <div class="location-card" data-loc="forest">
-                        <div class="location-preview">🌲</div>
+                        <div class="location-emoji">🌲</div>
                         <div class="location-name">Лес</div>
-                        <div class="location-desc">Таинственный лес</div>
                     </div>
                     <div class="location-card" data-loc="space">
-                        <div class="location-preview">🚀</div>
+                        <div class="location-emoji">🚀</div>
                         <div class="location-name">Космос</div>
-                        <div class="location-desc">Звёздное пространство</div>
                     </div>
                 </div>
                 
-                <label style="margin-top: 10px;">Скорость появления (сек)</label>
-                <input type="range" id="speed" min="0.5" max="3" step="0.1" value="1.5" oninput="document.getElementById('speedVal').innerText=this.value+' сек'">
-                <span id="speedVal">1.5 сек</span>
+                <label style="margin-top: 10px;">⚡ Скорость появления (сек)</label>
+                <div class="speed-row">
+                    <input type="range" id="speedRange" min="0.5" max="3" step="0.1" value="1.5">
+                    <span id="speedValue">1.5 сек</span>
+                </div>
                 
-                <label style="margin-top: 10px;">Название игры</label>
+                <label style="margin-top: 10px;">📝 Название игры</label>
                 <input type="text" id="gameTitle" value="🐞 ПОЙМАЙ ЖУКА! 🐞">
                 
                 <div class="fullscreen-option">
                     <input type="checkbox" id="fullscreenMode" checked>
                     <label style="margin:0;">📱 Полноэкранный режим (100% ширина и высота)</label>
                 </div>
-                <div class="hint">✅ Включи для Genially — игра растянется на весь экран</div>
+                <div class="help-text">✅ Включи для Genially — игра растянется на весь экран</div>
             </div>
         </div>
 
-        <!-- ПРАВАЯ ПАНЕЛЬ -->
-        <div class="right">
-            <h3>👁️ ПРЕДПРОСМОТР</h3>
-            <iframe id="previewFrame" class="preview"></iframe>
+        <!-- ПРАВАЯ ПАНЕЛЬ - ПРЕВЬЮ И КОД -->
+        <div class="preview-panel">
+            <div class="section-title">👁️ ПРЕДПРОСМОТР</div>
+            <iframe id="previewFrame" class="preview-frame"></iframe>
             
-            <div class="btn-row">
-                <button class="btn1 orange" onclick="updatePreview()">🔄 ОБНОВИТЬ</button>
-                <button class="btn1 blue" onclick="copyCode()">📋 КОПИРОВАТЬ КОД</button>
+            <div class="button-group">
+                <button class="btn btn-primary" id="refreshBtn">🔄 ОБНОВИТЬ ПРЕВЬЮ</button>
+                <button class="btn btn-copy" id="copyBtn">📋 СКОПИРОВАТЬ КОД</button>
             </div>
             
-            <h3>📦 КОД ДЛЯ GENIALLY</h3>
-            <div id="codeBox" class="code">Нажми "Обновить"</div>
-            <div class="hint">✅ В Genially: Вставить → HTML-код → вставь код → растяни на весь экран</div>
+            <div class="section-title" style="margin-top: 15px;">📦 КОД ДЛЯ ВСТАВКИ В GENIALLY</div>
+            <div id="codeBox" class="code-box">Нажми "Обновить превью"</div>
+            <div class="help-text">✅ В Genially: Вставить → HTML-код → вставь код → растяни на весь экран</div>
         </div>
     </div>
 </div>
 
 <script>
     // ========== ДАННЫЕ ==========
-    let bugs = [
+    let otherBugs = [
         { emoji: "🦟", name: "Комар" },
         { emoji: "🕷️", name: "Паук" },
         { emoji: "🐛", name: "Гусеница" }
@@ -318,220 +406,201 @@
     
     let selectedLocation = "castle";
     
-    // 3D локации с фонами
+    const allEmojis = ["🐞", "🦋", "🐝", "🦗", "🐜", "🕷️", "🦟", "🐛", "🐌", "🦂", "🐞", "🦋"];
+    
+    // 3D локации
     const locations = {
         castle: {
             name: "Замок",
-            icon: "🏰",
-            bgStyle: "linear-gradient(135deg, #2c2c2c 0%, #1a1a2e 25%, #2d1b4e 50%, #1a1a2e 75%, #2c2c2c 100%), radial-gradient(circle at 20% 40%, rgba(255,215,0,0.1) 0%, transparent 50%)",
-            bgImage: "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 600\"%3E%3Cdefs%3E%3ClinearGradient id=\"g\" x1=\"0%%\" y1=\"0%%\" x2=\"100%%\" y2=\"100%%\"%3E%3Cstop offset=\"0%%\" stop-color=\"%232c2c2c\"/%3E%3Cstop offset=\"50%%\" stop-color=\"%231a1a2e\"/%3E%3Cstop offset=\"100%%\" stop-color=\"%232d1b4e\"/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=\"800\" height=\"600\" fill=\"url(%23g)\"/%3E%3Ccircle cx=\"200\" cy=\"300\" r=\"2\" fill=\"%23ffd700\" opacity=\"0.3\"/%3E%3Ccircle cx=\"600\" cy=\"200\" r=\"3\" fill=\"%23ffd700\" opacity=\"0.2\"/%3E%3C/svg%3E')",
-            objectEmoji: "🏰⚔️👑"
+            bgStyle: "linear-gradient(135deg, #2c2c2c 0%, #1a1a2e 50%, #2d1b4e 100%)",
+            pattern: "⚔️👑🏰"
         },
         forest: {
             name: "Лес",
-            icon: "🌲",
-            bgStyle: "linear-gradient(135deg, #1a472a 0%, #2d5a2c 25%, #0d3b1f 50%, #2d5a2c 75%, #1a472a 100%), radial-gradient(circle at 80% 20%, rgba(255,215,0,0.15) 0%, transparent 60%)",
-            bgImage: "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 600\"%3E%3Cdefs%3E%3ClinearGradient id=\"g\" x1=\"0%%\" y1=\"0%%\" x2=\"100%%\" y2=\"100%%\"%3E%3Cstop offset=\"0%%\" stop-color=\"%231a472a\"/%3E%3Cstop offset=\"50%%\" stop-color=\"%232d5a2c\"/%3E%3Cstop offset=\"100%%\" stop-color=\"%230d3b1f\"/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=\"800\" height=\"600\" fill=\"url(%23g)\"/%3E%3C/svg%3E')",
-            objectEmoji: "🌲🍄🌿"
+            bgStyle: "linear-gradient(135deg, #1a472a 0%, #2d5a2c 50%, #0d3b1f 100%)",
+            pattern: "🌲🍄🌿"
         },
         space: {
             name: "Космос",
-            icon: "🚀",
-            bgStyle: "linear-gradient(135deg, #0a0a2a 0%, #1a1a4e 25%, #0d0d3d 50%, #1a1a4e 75%, #0a0a2a 100%), radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 60%)",
-            bgImage: "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 600\"%3E%3Cdefs%3E%3ClinearGradient id=\"g\" x1=\"0%%\" y1=\"0%%\" x2=\"100%%\" y2=\"100%%\"%3E%3Cstop offset=\"0%%\" stop-color=\"%230a0a2a\"/%3E%3Cstop offset=\"50%%\" stop-color=\"%231a1a4e\"/%3E%3Cstop offset=\"100%%\" stop-color=\"%230d0d3d\"/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=\"800\" height=\"600\" fill=\"url(%23g)\"/%3E%3Ccircle cx=\"150\" cy=\"100\" r=\"2\" fill=\"white\" opacity=\"0.8\"/%3E%3Ccircle cx=\"650\" cy=\"400\" r=\"1.5\" fill=\"white\" opacity=\"0.6\"/%3E%3Ccircle cx=\"300\" cy=\"500\" r=\"1\" fill=\"white\" opacity=\"0.7\"/%3E%3C/svg%3E')",
-            objectEmoji: "⭐🪐🌙"
+            bgStyle: "linear-gradient(135deg, #0a0a2a 0%, #1a1a4e 50%, #0d0d3d 100%)",
+            pattern: "⭐🪐🌙"
         }
     };
     
-    // Список всех насекомых для выбора
-    const allEmojis = ["🐞", "🦋", "🐝", "🦗", "🐜", "🕷️", "🦟", "🐛", "🐌", "🦂", "🐞", "🦋", "🐝", "🦗"];
-    
-    // ========== ВЫБОР ЛОКАЦИИ ==========
-    function initLocationSelector() {
-        const container = document.getElementById('locationSelector');
+    // ========== ОТРИСОВКА СЕТОК ==========
+    function renderTargetGrid() {
+        const container = document.getElementById('targetGrid');
         if (!container) return;
-        
-        const cards = container.querySelectorAll('.location-card');
-        cards.forEach(card => {
-            card.addEventListener('click', () => {
-                selectedLocation = card.dataset.loc;
-                updateLocationUI();
-                updatePreview();
-            });
-        });
-    }
-    
-    function updateLocationUI() {
-        const container = document.getElementById('locationSelector');
-        const cards = container.querySelectorAll('.location-card');
-        cards.forEach(card => {
-            if (card.dataset.loc === selectedLocation) {
-                card.classList.add('selected');
-            } else {
-                card.classList.remove('selected');
-            }
-        });
-    }
-    
-    // ========== ОТРИСОВКА ПАНЕЛЕЙ С ЭМОДЗИ ==========
-    function renderTargetEmojiPanel() {
-        const panel = document.getElementById('targetEmojiPanel');
-        if (!panel) return;
-        panel.innerHTML = '';
+        container.innerHTML = '';
         const current = document.getElementById('targetBug').value;
         
         for (let emoji of allEmojis) {
             const btn = document.createElement('div');
-            btn.className = 'emoji-btn';
+            btn.className = 'emoji-option';
+            if (emoji === current) btn.classList.add('selected');
             btn.textContent = emoji;
-            if (emoji === current) btn.style.background = '#ff9800';
-            btn.onclick = function() {
+            btn.onclick = () => {
                 document.getElementById('targetBug').value = emoji;
-                renderTargetEmojiPanel();
+                renderTargetGrid();
                 updatePreview();
             };
-            panel.appendChild(btn);
+            container.appendChild(btn);
         }
     }
     
-    function renderOtherEmojiPanel() {
-        const panel = document.getElementById('otherEmojiPanel');
-        if (!panel) return;
-        panel.innerHTML = '';
-        
-        for (let emoji of allEmojis) {
-            const btn = document.createElement('div');
-            btn.className = 'emoji-btn';
-            btn.textContent = emoji;
-            btn.onclick = function() {
-                bugs.push({ emoji: emoji, name: "Новое насекомое" });
-                renderBugsList();
-                updatePreview();
-            };
-            panel.appendChild(btn);
-        }
-    }
-    
-    // ========== ОТРИСОВКА СПИСКА НАСЕКОМЫХ ==========
-    function renderBugsList() {
-        const container = document.getElementById('bugsList');
+    function renderOtherGrid() {
+        const container = document.getElementById('otherGrid');
         if (!container) return;
         container.innerHTML = '';
         
-        for (let i = 0; i < bugs.length; i++) {
-            const div = document.createElement('div');
-            div.className = 'bug-row';
-            div.innerHTML = `
-                <input type="text" id="bugEmoji_${i}" value="${bugs[i].emoji}" style="width:60px;font-size:24px;">
-                <input type="text" id="bugName_${i}" value="${bugs[i].name}">
-                <button class="del" onclick="deleteBug(${i})">🗑️</button>
-            `;
-            container.appendChild(div);
+        for (let emoji of allEmojis) {
+            const btn = document.createElement('div');
+            btn.className = 'emoji-option';
+            btn.textContent = emoji;
+            btn.onclick = () => {
+                otherBugs.push({ emoji: emoji, name: "Новое насекомое" });
+                renderBugsList();
+                updatePreview();
+            };
+            container.appendChild(btn);
         }
     }
     
-    function deleteBug(index) {
-        bugs.splice(index, 1);
-        renderBugsList();
-        updatePreview();
+    function renderBugsList() {
+        const container = document.getElementById('bugsContainer');
+        if (!container) return;
+        container.innerHTML = '';
+        
+        for (let i = 0; i < otherBugs.length; i++) {
+            const bug = otherBugs[i];
+            const div = document.createElement('div');
+            div.className = 'bug-item';
+            div.innerHTML = `
+                <input type="text" data-idx="${i}" class="bug-emoji" value="${escapeHtml(bug.emoji)}">
+                <input type="text" data-idx="${i}" class="bug-name" value="${escapeHtml(bug.name)}">
+                <button class="delete-btn" data-idx="${i}">🗑️</button>
+            `;
+            container.appendChild(div);
+        }
+        
+        document.querySelectorAll('#bugsContainer .delete-btn').forEach(btn => {
+            btn.onclick = () => {
+                const idx = parseInt(btn.dataset.idx);
+                otherBugs.splice(idx, 1);
+                renderBugsList();
+                updatePreview();
+            };
+        });
+        
+        document.querySelectorAll('.bug-emoji').forEach(inp => {
+            inp.oninput = () => {
+                const idx = parseInt(inp.dataset.idx);
+                otherBugs[idx].emoji = inp.value;
+                updatePreview();
+            };
+        });
+        
+        document.querySelectorAll('.bug-name').forEach(inp => {
+            inp.oninput = () => {
+                const idx = parseInt(inp.dataset.idx);
+                otherBugs[idx].name = inp.value;
+                updatePreview();
+            };
+        });
     }
     
-    function addBug() {
-        bugs.push({ emoji: "🦟", name: "Новое насекомое" });
-        renderBugsList();
-        updatePreview();
-    }
-    
-    // ========== ОТРИСОВКА ВОПРОСОВ ==========
-    function renderQuestionsList() {
-        const container = document.getElementById('questionsList');
+    function renderQuestions() {
+        const container = document.getElementById('questionsContainer');
         if (!container) return;
         container.innerHTML = '';
         
         for (let i = 0; i < questions.length; i++) {
+            const q = questions[i];
             const div = document.createElement('div');
-            div.className = 'q-item';
+            div.className = 'question-item';
             div.innerHTML = `
-                <div class="q-header">
-                    <b>Вопрос ${i+1}</b>
-                    <button class="del" onclick="deleteQuestion(${i})">🗑️</button>
+                <div class="question-header">
+                    <span style="font-weight: bold;">Вопрос ${i+1}</span>
+                    <button class="delete-btn" data-idx="${i}">🗑️</button>
                 </div>
                 <label>Текст вопроса</label>
-                <textarea id="qText_${i}" rows="2">${escapeHtml(questions[i].text)}</textarea>
-                <label>Правильный ответ</label>
-                <input type="text" id="qAnswer_${i}" value="${escapeHtml(questions[i].answer)}">
-                <label>Подсказка</label>
-                <input type="text" id="qHint_${i}" value="${escapeHtml(questions[i].hint)}">
+                <textarea data-idx="${i}" class="q-text" rows="2">${escapeHtml(q.text)}</textarea>
+                <label>✅ Правильный ответ</label>
+                <input type="text" data-idx="${i}" class="q-answer" value="${escapeHtml(q.answer)}">
+                <label>💡 Подсказка</label>
+                <input type="text" data-idx="${i}" class="q-hint" value="${escapeHtml(q.hint)}">
             `;
             container.appendChild(div);
         }
+        
+        document.querySelectorAll('#questionsContainer .delete-btn').forEach(btn => {
+            btn.onclick = () => {
+                const idx = parseInt(btn.dataset.idx);
+                questions.splice(idx, 1);
+                renderQuestions();
+                updatePreview();
+            };
+        });
+        
+        document.querySelectorAll('.q-text').forEach(ta => {
+            ta.oninput = () => {
+                const idx = parseInt(ta.dataset.idx);
+                questions[idx].text = ta.value;
+                updatePreview();
+            };
+        });
+        
+        document.querySelectorAll('.q-answer').forEach(inp => {
+            inp.oninput = () => {
+                const idx = parseInt(inp.dataset.idx);
+                questions[idx].answer = inp.value.toLowerCase().trim();
+                updatePreview();
+            };
+        });
+        
+        document.querySelectorAll('.q-hint').forEach(inp => {
+            inp.oninput = () => {
+                const idx = parseInt(inp.dataset.idx);
+                questions[idx].hint = inp.value;
+                updatePreview();
+            };
+        });
     }
     
-    function deleteQuestion(index) {
-        questions.splice(index, 1);
-        renderQuestionsList();
-        updatePreview();
-    }
-    
-    function addQuestion() {
-        questions.push({ text: "Новый вопрос", answer: "ответ", hint: "подсказка" });
-        renderQuestionsList();
-        updatePreview();
+    function renderLocationSelector() {
+        const container = document.getElementById('locationGrid');
+        const cards = container.querySelectorAll('.location-card');
+        cards.forEach(card => {
+            card.onclick = () => {
+                selectedLocation = card.dataset.loc;
+                document.querySelectorAll('.location-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                updatePreview();
+            };
+        });
     }
     
     function escapeHtml(str) {
         if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            return m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;');
-        });
+        return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;'));
     }
     
-    // ========== СБОР ДАННЫХ ==========
-    function collectData() {
-        for (let i = 0; i < bugs.length; i++) {
-            let emojiInput = document.getElementById(`bugEmoji_${i}`);
-            let nameInput = document.getElementById(`bugName_${i}`);
-            if (emojiInput && nameInput) {
-                bugs[i].emoji = emojiInput.value;
-                bugs[i].name = nameInput.value;
-            }
-        }
-        for (let i = 0; i < questions.length; i++) {
-            let textInput = document.getElementById(`qText_${i}`);
-            let answerInput = document.getElementById(`qAnswer_${i}`);
-            let hintInput = document.getElementById(`qHint_${i}`);
-            if (textInput && answerInput) {
-                questions[i].text = textInput.value;
-                questions[i].answer = answerInput.value.toLowerCase().trim();
-                if (hintInput) questions[i].hint = hintInput.value;
-            }
-        }
+    // ========== ГЕНЕРАЦИЯ ИГРЫ ==========
+    function generateGame() {
+        const target = document.getElementById('targetBug').value;
+        const speed = parseFloat(document.getElementById('speedRange').value);
+        const title = document.getElementById('gameTitle').value;
+        const fullscreen = document.getElementById('fullscreenMode').checked;
+        const loc = locations[selectedLocation];
         
-        return {
-            target: document.getElementById('targetBug').value,
-            bugs: bugs,
-            questions: questions,
-            speed: parseFloat(document.getElementById('speed').value),
-            title: document.getElementById('gameTitle').value,
-            fullscreen: document.getElementById('fullscreenMode').checked,
-            location: selectedLocation
-        };
-    }
-    
-    // ========== ГЕНЕРАЦИЯ HTML ИГРЫ ==========
-    function buildGame() {
-        let data = collectData();
-        let loc = locations[data.location];
+        const questionsData = questions.filter(q => q.text && q.text.trim());
+        const bugsData = otherBugs.filter(b => b.emoji && b.emoji.trim());
         
-        let bgStyle = `${loc.bgStyle}, ${loc.bgImage}`;
-        
-        let containerStyle = data.fullscreen 
+        let containerStyle = fullscreen 
             ? `width: 100vw; height: 100vh; max-width: none; border-radius: 0;` 
             : `width: 100%; max-width: 700px; border-radius: 40px;`;
         
-        let bodyStyle = data.fullscreen 
-            ? `margin: 0; padding: 0;` 
-            : `margin: 0; padding: 20px;`;
+        let bodyStyle = fullscreen ? `margin: 0; padding: 0;` : `margin: 0; padding: 20px;`;
         
         return `<!DOCTYPE html>
 <html>
@@ -540,459 +609,137 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Поймай насекомое | ${loc.name}</title>
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    user-select: none;
-}
-body {
-    background: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    ${bodyStyle}
-    min-height: 100vh;
-}
-.game {
-    ${containerStyle}
-    background: ${bgStyle};
-    background-size: cover;
-    background-position: center;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    position: relative;
-}
-.game::before {
-    content: "${loc.objectEmoji.split('')[0]}";
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    font-size: 60px;
-    opacity: 0.15;
-    pointer-events: none;
-    z-index: 0;
-}
-.game::after {
-    content: "${loc.objectEmoji.split('')[1] || '✨'}";
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    font-size: 50px;
-    opacity: 0.1;
-    pointer-events: none;
-    z-index: 0;
-}
-.header {
-    background: rgba(0,0,0,0.7);
-    color: white;
-    padding: 12px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    backdrop-filter: blur(5px);
-    position: relative;
-    z-index: 10;
-}
-.score {
-    background: #ff9800;
-    padding: 5px 12px;
-    border-radius: 25px;
-    font-weight: bold;
-}
-.lives {
-    font-size: 20px;
-    letter-spacing: 2px;
-}
-.reset {
-    background: #ff9800;
-    border: none;
-    padding: 5px 12px;
-    border-radius: 25px;
-    cursor: pointer;
-    color: white;
-    font-weight: bold;
-}
-.field {
-    position: relative;
-    height: calc(100vh - 70px);
-    min-height: 450px;
-    overflow: hidden;
-    cursor: crosshair;
-    z-index: 5;
-}
-@media (max-width: 700px) {
-    .game {
-        border-radius: 0;
-    }
-    .field {
-        height: calc(100vh - 80px);
-    }
-}
-.bug {
-    position: absolute;
-    font-size: 55px;
-    cursor: pointer;
-    filter: drop-shadow(2px 2px 10px rgba(0,0,0,0.5));
-    transition: transform 0.1s;
-    z-index: 20;
-}
-.bug:active {
-    transform: scale(0.9);
-}
-@keyframes fly {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(15px, -12px) rotate(5deg); }
-    50% { transform: translate(-12px, 10px) rotate(-3deg); }
-    75% { transform: translate(10px, -8px) rotate(2deg); }
-    100% { transform: translate(0, 0) rotate(0deg); }
-}
-.flying {
-    animation: fly 3s infinite ease-in-out;
-}
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.85);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-.modal-box {
-    background: white;
-    max-width: 380px;
-    width: 90%;
-    border-radius: 40px;
-    padding: 25px;
-    text-align: center;
-}
-.qtext {
-    background: #f5f5f5;
-    padding: 15px;
-    border-radius: 25px;
-    margin: 15px 0;
-    font-weight: bold;
-}
-.answer {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: 40px;
-    margin: 15px 0;
-    text-align: center;
-    font-size: 16px;
-}
-.btn {
-    background: #4caf50;
-    color: white;
-    border: none;
-    padding: 10px 25px;
-    border-radius: 40px;
-    cursor: pointer;
-    margin: 5px;
-    font-weight: bold;
-}
-.close {
-    background: #ff9800;
-}
-.feedback {
-    margin: 10px 0;
-    padding: 8px;
-    border-radius: 25px;
-}
-.good {
-    background: #c8e6c9;
-    color: green;
-}
-.bad {
-    background: #ffcdd2;
-    color: red;
-}
-.toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #b71c1c;
-    color: white;
-    padding: 8px 20px;
-    border-radius: 40px;
-    z-index: 2000;
-    animation: fade 2s forwards;
-    white-space: nowrap;
-    font-weight: bold;
-}
-.toast-good {
-    background: #4caf50;
-}
-@keyframes fade {
-    0% { opacity: 1; }
-    70% { opacity: 1; }
-    100% { opacity: 0; visibility: hidden; }
-}
-.end {
-    text-align: center;
-    padding: 60px 20px;
-}
-.end h2 {
-    margin-bottom: 15px;
-    font-size: 2rem;
-}
-.end button {
-    background: #ff9800;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 30px;
-    cursor: pointer;
-    margin-top: 15px;
-    font-size: 1rem;
-    font-weight: bold;
-}
+*{margin:0;padding:0;box-sizing:border-box;user-select:none;}
+body{background:transparent;display:flex;justify-content:center;align-items:center;font-family:Arial;${bodyStyle}min-height:100vh;}
+.game{${containerStyle}background:${loc.bgStyle};overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.3);position:relative;}
+.game::before{content:"${loc.pattern[0]}";position:absolute;bottom:20px;right:20px;font-size:60px;opacity:0.15;pointer-events:none;}
+.game::after{content:"${loc.pattern[1] || '✨'}";position:absolute;top:20px;left:20px;font-size:50px;opacity:0.1;pointer-events:none;}
+.header{background:rgba(0,0,0,0.7);color:white;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;backdrop-filter:blur(5px);}
+.score{background:#ff9800;padding:5px 12px;border-radius:25px;font-weight:bold;}
+.lives{font-size:20px;}
+.reset{background:#ff9800;border:none;padding:5px 12px;border-radius:25px;cursor:pointer;color:white;font-weight:bold;}
+.field{position:relative;height:calc(100vh - 70px);min-height:450px;overflow:hidden;cursor:crosshair;}
+@media(max-width:700px){.field{height:calc(100vh - 80px);}}
+.bug{position:absolute;font-size:55px;cursor:pointer;filter:drop-shadow(2px 2px 10px rgba(0,0,0,0.5));transition:transform 0.1s;}
+.bug:active{transform:scale(0.9);}
+@keyframes fly{0%{transform:translate(0,0);}25%{transform:translate(15px,-12px);}50%{transform:translate(-12px,10px);}75%{transform:translate(10px,-8px);}100%{transform:translate(0,0);}}
+.flying{animation:fly 3s infinite ease-in-out;}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);justify-content:center;align-items:center;z-index:1000;}
+.modal-box{background:white;max-width:380px;width:90%;border-radius:40px;padding:25px;text-align:center;}
+.qtext{background:#f5f5f5;padding:15px;border-radius:25px;margin:15px 0;font-weight:bold;}
+.answer{width:100%;padding:12px;border:2px solid #ddd;border-radius:40px;margin:15px 0;text-align:center;font-size:16px;}
+.btn{background:#4caf50;color:white;border:none;padding:10px 25px;border-radius:40px;cursor:pointer;margin:5px;font-weight:bold;}
+.close{background:#ff9800;}
+.feedback{margin:10px 0;padding:8px;border-radius:25px;}
+.good{background:#c8e6c9;color:green;}
+.bad{background:#ffcdd2;color:red;}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#b71c1c;color:white;padding:8px 20px;border-radius:40px;z-index:2000;animation:fade 2s forwards;white-space:nowrap;}
+.toast-good{background:#4caf50;}
+@keyframes fade{0%{opacity:1;}70%{opacity:1;}100%{opacity:0;}}
+.end{text-align:center;padding:60px 20px;}
+.end h2{margin-bottom:15px;font-size:2rem;}
+.end button{background:#ff9800;border:none;padding:10px 30px;border-radius:30px;cursor:pointer;margin-top:15px;font-size:1rem;font-weight:bold;}
 </style>
 </head>
 <body>
 <div class="game">
-    <div class="header">
-        <span>${escapeHtml(data.title)}</span>
-        <span class="score">🎯 <span id="scoreVal">0</span></span>
-        <span class="lives" id="livesVal">❤️❤️❤️</span>
-        <button class="reset" id="resetBtn">🔄 Новая</button>
-    </div>
-    <div class="field" id="field"></div>
+<div class="header">
+<span>${escapeHtml(title)}</span>
+<span class="score">🎯 <span id="scoreVal">0</span></span>
+<span class="lives" id="livesVal">❤️❤️❤️</span>
+<button class="reset" id="resetBtn">🔄 Новая</button>
+</div>
+<div class="field" id="field"></div>
 </div>
 <div id="modal" class="modal">
-    <div class="modal-box">
-        <h3>📖 ВОПРОС</h3>
-        <div class="qtext" id="qText">...</div>
-        <input type="text" id="answerInp" class="answer" placeholder="Введи ответ">
-        <div>
-            <button class="btn" id="submitBtn">✅ ОТВЕТИТЬ</button>
-            <button class="btn close" id="closeBtn">❌ ЗАКРЫТЬ</button>
-        </div>
-        <div id="fb" class="feedback"></div>
-        <div id="hint" style="font-size:12px;color:#888;">💡 Подсказка: ...</div>
-    </div>
+<div class="modal-box">
+<h3>📖 ВОПРОС</h3>
+<div class="qtext" id="qText">...</div>
+<input type="text" id="answerInp" class="answer" placeholder="Введи ответ">
+<div>
+<button class="btn" id="submitBtn">✅ ОТВЕТИТЬ</button>
+<button class="btn close" id="closeBtn">❌ ЗАКРЫТЬ</button>
+</div>
+<div id="fb" class="feedback"></div>
+<div id="hint" style="font-size:12px;color:#888;">💡 Подсказка: ...</div>
+</div>
 </div>
 <script>
-const TARGET = "${escapeHtml(data.target)}";
-const QUESTIONS = ${JSON.stringify(data.questions)};
-const OTHER = ${JSON.stringify(data.bugs)};
-const SPEED = ${data.speed * 1000};
+const TARGET = "${escapeHtml(target)}";
+const QUESTIONS = ${JSON.stringify(questionsData)};
+const OTHER = ${JSON.stringify(bugsData)};
+const SPEED = ${speed * 1000};
 
-let score = 0, lives = 3, active = true, qIndex = 0, interval = null;
+let score=0,lives=3,active=true,qIndex=0,interval=null;
 
-function toast(msg, good) {
-    let t = document.createElement('div');
-    t.className = 'toast';
-    if(good) t.classList.add('toast-good');
-    t.textContent = msg;
-    document.body.appendChild(t);
-    setTimeout(() => t.remove(), 2000);
-}
-
-function updateUI() {
-    document.getElementById('scoreVal').innerText = score;
-    let hearts = '';
-    for(let i=0;i<lives;i++) hearts += '❤️';
-    for(let i=lives;i<3;i++) hearts += '🖤';
-    document.getElementById('livesVal').innerText = hearts;
-}
-
-function createBug(isTarget) {
-    let field = document.getElementById('field');
-    let bug = document.createElement('div');
-    bug.className = 'bug flying';
-    
-    if(isTarget) {
-        bug.textContent = TARGET;
-        bug.dataset.type = 'target';
-    } else {
-        let r = OTHER[Math.floor(Math.random() * OTHER.length)];
-        bug.textContent = r.emoji;
-        bug.dataset.type = 'bad';
-        bug.title = r.name;
-    }
-    
-    let w = field.clientWidth - 70;
-    let h = field.clientHeight - 70;
-    bug.style.left = Math.random() * Math.max(0, w) + 'px';
-    bug.style.top = Math.random() * Math.max(0, h) + 'px';
-    
-    bug.onclick = function(e) {
-        e.stopPropagation();
-        if(!active) return;
-        if(this.dataset.type === 'target') {
-            this.remove();
-            openModal();
-        } else {
-            this.remove();
-            lives--;
-            updateUI();
-            toast("❌ " + (this.title || 'Не то') + "! -1 жизнь");
-            if(lives <= 0) gameOver();
-        }
-    };
-    
-    field.appendChild(bug);
-    
-    let hideTimeout = setTimeout(() => {
-        if(bug.parentNode && active) {
-            bug.style.transition = 'opacity 0.3s';
-            bug.style.opacity = '0';
-            setTimeout(() => { if(bug.parentNode) bug.remove(); }, 300);
-        }
-    }, Math.random() * 3000 + 2000);
-    
-    bug.hideTimeout = hideTimeout;
-    
-    setTimeout(() => {
-        if(bug.parentNode) {
-            if(bug.hideTimeout) clearTimeout(bug.hideTimeout);
-            bug.remove();
-        }
-    }, 6000);
-}
-
-function spawn() {
-    if(!active) return;
-    let isTarget = Math.random() < 0.4;
-    createBug(isTarget);
-}
-
-function openModal() {
-    if(!active) return;
-    if(qIndex >= QUESTIONS.length) { win(); return; }
-    let q = QUESTIONS[qIndex];
-    document.getElementById('qText').innerHTML = q.text;
-    document.getElementById('hint').innerHTML = '💡 ' + (q.hint || 'нет');
-    document.getElementById('answerInp').value = '';
-    document.getElementById('fb').innerHTML = '';
-    document.getElementById('modal').style.display = 'flex';
-}
-
-function check() {
-    let ans = document.getElementById('answerInp').value.trim().toLowerCase();
-    let q = QUESTIONS[qIndex];
-    let fb = document.getElementById('fb');
-    if(ans === q.answer.toLowerCase()) {
-        fb.innerHTML = '✅ ВЕРНО! +10 очков';
-        fb.className = 'feedback good';
-        score += 10;
-        updateUI();
-        qIndex++;
-        setTimeout(() => {
-            document.getElementById('modal').style.display = 'none';
-            toast("✅ +10 очков!", true);
-            if(qIndex >= QUESTIONS.length) win();
-        }, 800);
-    } else {
-        fb.innerHTML = '❌ НЕВЕРНО! Ответ "' + ans + '" неправильный';
-        fb.className = 'feedback bad';
-        document.getElementById('answerInp').value = '';
-    }
-}
-
-function closeModal() {
-    document.getElementById('modal').style.display = 'none';
-}
-
-function gameOver() {
-    active = false;
-    if(interval) clearInterval(interval);
-    let field = document.getElementById('field');
-    field.innerHTML = '<div class="end"><h2>💀 ИГРА ОКОНЧЕНА 💀</h2><p style="font-size:1.5rem">Счёт: ' + score + '</p><button onclick="location.reload()">🔄 Снова</button></div>';
-    toast("💀 Игра окончена!");
-}
-
-function win() {
-    active = false;
-    if(interval) clearInterval(interval);
-    let field = document.getElementById('field');
-    field.innerHTML = '<div class="end"><h2>🏆 ПОБЕДА! 🏆</h2><p style="font-size:1.5rem">Счёт: ' + score + '</p><button onclick="location.reload()">🔄 Снова</button></div>';
-    toast("🏆 ПОБЕДА!", true);
-}
-
-function reset() {
-    score = 0; lives = 3; qIndex = 0; active = true;
-    updateUI();
-    document.getElementById('field').innerHTML = '';
-    if(interval) clearInterval(interval);
-    interval = setInterval(() => spawn(), SPEED);
-}
-
-document.getElementById('submitBtn').onclick = check;
-document.getElementById('closeBtn').onclick = closeModal;
-document.getElementById('resetBtn').onclick = reset;
-document.getElementById('answerInp').onkeypress = (e) => { if(e.key === 'Enter') check(); };
-document.getElementById('modal').onclick = (e) => { if(e.target === this) closeModal(); };
-
-updateUI();
-interval = setInterval(() => spawn(), SPEED);
-if(QUESTIONS.length === 0) toast("⚠️ Добавьте вопросы!");
+function toast(msg,good){let t=document.createElement('div');t.className='toast';if(good)t.classList.add('toast-good');t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2000);}
+function updateUI(){document.getElementById('scoreVal').innerText=score;let h='';for(let i=0;i<lives;i++)h+='❤️';for(let i=lives;i<3;i++)h+='🖤';document.getElementById('livesVal').innerText=h;}
+function createBug(isTarget){let f=document.getElementById('field');let b=document.createElement('div');b.className='bug flying';if(isTarget){b.textContent=TARGET;b.dataset.type='target';}else{let r=OTHER[Math.floor(Math.random()*OTHER.length)];b.textContent=r.emoji;b.dataset.type='bad';b.title=r.name;}
+let w=f.clientWidth-70,h=f.clientHeight-70;b.style.left=Math.random()*Math.max(0,w)+'px';b.style.top=Math.random()*Math.max(0,h)+'px';
+b.onclick=function(e){e.stopPropagation();if(!active)return;if(this.dataset.type==='target'){this.remove();openModal();}else{this.remove();lives--;updateUI();toast("❌ "+(this.title||'Не то')+"! -1 жизнь");if(lives<=0)gameOver();}};
+f.appendChild(b);let ht=setTimeout(()=>{if(b.parentNode&&active){b.style.transition='opacity 0.3s';b.style.opacity='0';setTimeout(()=>{if(b.parentNode)b.remove();},300);}},Math.random()*3000+2000);b.hideTimeout=ht;
+setTimeout(()=>{if(b.parentNode){if(b.hideTimeout)clearTimeout(b.hideTimeout);b.remove();}},6000);}
+function spawn(){if(!active)return;createBug(Math.random()<0.4);}
+function openModal(){if(!active)return;if(qIndex>=QUESTIONS.length){win();return;}let q=QUESTIONS[qIndex];document.getElementById('qText').innerHTML=q.text;document.getElementById('hint').innerHTML='💡 '+(q.hint||'нет');document.getElementById('answerInp').value='';document.getElementById('fb').innerHTML='';document.getElementById('modal').style.display='flex';}
+function check(){let ans=document.getElementById('answerInp').value.trim().toLowerCase();let q=QUESTIONS[qIndex];let fb=document.getElementById('fb');if(ans===q.answer.toLowerCase()){fb.innerHTML='✅ ВЕРНО! +10 очков';fb.className='feedback good';score+=10;updateUI();qIndex++;setTimeout(()=>{document.getElementById('modal').style.display='none';toast("✅ +10 очков!",true);if(qIndex>=QUESTIONS.length)win();},800);}else{fb.innerHTML='❌ НЕВЕРНО! Ответ "'+ans+'" неправильный';fb.className='feedback bad';document.getElementById('answerInp').value='';}}
+function closeModal(){document.getElementById('modal').style.display='none';}
+function gameOver(){active=false;if(interval)clearInterval(interval);let f=document.getElementById('field');f.innerHTML='<div class="end"><h2>💀 ИГРА ОКОНЧЕНА 💀</h2><p style="font-size:1.5rem">Счёт: '+score+'</p><button onclick="location.reload()">🔄 Снова</button></div>';toast("💀 Игра окончена!");}
+function win(){active=false;if(interval)clearInterval(interval);let f=document.getElementById('field');f.innerHTML='<div class="end"><h2>🏆 ПОБЕДА! 🏆</h2><p style="font-size:1.5rem">Счёт: '+score+'</p><button onclick="location.reload()">🔄 Снова</button></div>';toast("🏆 ПОБЕДА!",true);}
+function reset(){score=0;lives=3;qIndex=0;active=true;updateUI();document.getElementById('field').innerHTML='';if(interval)clearInterval(interval);interval=setInterval(()=>spawn(),SPEED);}
+document.getElementById('submitBtn').onclick=check;document.getElementById('closeBtn').onclick=closeModal;document.getElementById('resetBtn').onclick=reset;document.getElementById('answerInp').onkeypress=e=>{if(e.key==='Enter')check();};document.getElementById('modal').onclick=e=>{if(e.target===this)closeModal();};
+updateUI();interval=setInterval(()=>spawn(),SPEED);if(QUESTIONS.length===0)toast("⚠️ Добавьте вопросы!");
 <\/script>
 </body>
 </html>`;
     }
     
-    // ========== ОБНОВЛЕНИЕ ПРЕВЬЮ ==========
+    // ========== ОБНОВЛЕНИЕ ==========
     function updatePreview() {
-        for (let i = 0; i < bugs.length; i++) {
-            let emojiInput = document.getElementById(`bugEmoji_${i}`);
-            let nameInput = document.getElementById(`bugName_${i}`);
-            if (emojiInput && nameInput) {
-                bugs[i].emoji = emojiInput.value;
-                bugs[i].name = nameInput.value;
-            }
+        for (let i = 0; i < otherBugs.length; i++) {
+            let emojiInp = document.getElementById(`bugEmoji_${i}`);
+            let nameInp = document.getElementById(`bugName_${i}`);
+            if (emojiInp) otherBugs[i].emoji = emojiInp.value;
+            if (nameInp) otherBugs[i].name = nameInp.value;
         }
         for (let i = 0; i < questions.length; i++) {
-            let textInput = document.getElementById(`qText_${i}`);
-            let answerInput = document.getElementById(`qAnswer_${i}`);
-            let hintInput = document.getElementById(`qHint_${i}`);
-            if (textInput && answerInput) {
-                questions[i].text = textInput.value;
-                questions[i].answer = answerInput.value.toLowerCase().trim();
-                if (hintInput) questions[i].hint = hintInput.value;
-            }
+            let textInp = document.getElementById(`qText_${i}`);
+            let ansInp = document.getElementById(`qAnswer_${i}`);
+            let hintInp = document.getElementById(`qHint_${i}`);
+            if (textInp) questions[i].text = textInp.value;
+            if (ansInp) questions[i].answer = ansInp.value.toLowerCase().trim();
+            if (hintInp) questions[i].hint = hintInp.value;
         }
         
-        let html = buildGame();
-        let iframe = document.getElementById('previewFrame');
-        iframe.srcdoc = html;
+        let html = generateGame();
+        document.getElementById('previewFrame').srcdoc = html;
         
         let fullscreen = document.getElementById('fullscreenMode').checked;
-        let simpleCode = `<iframe srcdoc="${html.replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" width="100%" height="${fullscreen ? '100%' : '600'}" frameborder="0" style="background:transparent;display:block;${fullscreen ? 'position:fixed;top:0;left:0;' : ''}" allow="autoplay"></iframe>`;
-        
-        document.getElementById('codeBox').innerHTML = simpleCode;
+        let code = `<iframe srcdoc="${html.replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" width="100%" height="${fullscreen ? '100%' : '600'}" frameborder="0" style="background:transparent;display:block;${fullscreen ? 'position:fixed;top:0;left:0;' : ''}" allow="autoplay"></iframe>`;
+        document.getElementById('codeBox').innerHTML = code;
     }
     
     function copyCode() {
         let code = document.getElementById('codeBox').innerHTML;
-        navigator.clipboard.writeText(code).then(() => {
-            alert('✅ Код скопирован! Вставь в Genially через "Вставить HTML"');
-        }).catch(() => {
-            alert('❌ Выдели текст вручную Ctrl+C');
-        });
+        navigator.clipboard.writeText(code).then(() => alert('✅ Код скопирован! Вставь в Genially через "Вставить HTML"')).catch(() => alert('❌ Выдели текст вручную Ctrl+C'));
     }
     
-    // ========== ЗАПУСК ==========
-    renderTargetEmojiPanel();
-    renderOtherEmojiPanel();
-    renderBugsList();
-    renderQuestionsList();
-    initLocationSelector();
-    updateLocationUI();
-    updatePreview();
-    
-    document.getElementById('targetBug').oninput = function() { renderTargetEmojiPanel(); updatePreview(); };
-    document.getElementById('speed').oninput = function() { document.getElementById('speedVal').innerText = this.value + ' сек'; updatePreview(); };
+    // ========== СОБЫТИЯ ==========
+    document.getElementById('refreshBtn').onclick = updatePreview;
+    document.getElementById('copyBtn').onclick = copyCode;
+    document.getElementById('targetBug').oninput = () => { renderTargetGrid(); updatePreview(); };
+    document.getElementById('speedRange').oninput = () => { document.getElementById('speedValue').innerText = document.getElementById('speedRange').value + ' сек'; updatePreview(); };
     document.getElementById('gameTitle').oninput = updatePreview;
     document.getElementById('fullscreenMode').onchange = updatePreview;
+    document.getElementById('addBugBtn').onclick = () => { otherBugs.push({ emoji: "🦟", name: "Новое насекомое" }); renderBugsList(); updatePreview(); };
+    document.getElementById('addQuestionBtn').onclick = () => { questions.push({ text: "Новый вопрос", answer: "ответ", hint: "подсказка" }); renderQuestions(); updatePreview(); };
+    
+    // ========== ЗАПУСК ==========
+    renderTargetGrid();
+    renderOtherGrid();
+    renderBugsList();
+    renderQuestions();
+    renderLocationSelector();
+    updatePreview();
 </script>
 </body>
 </html>
